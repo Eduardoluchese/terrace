@@ -1,0 +1,1392 @@
+
+    <!DOCTYPE html>
+    <html lang="pt-BR">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Quiz Exportado</title>
+      <style>
+      body {
+           font-family: 'Poppins', sans-serif;      
+                margin: 0;
+                padding: 0;
+                display: flex;
+                justify-content: center;
+                align-items: flex-start;
+                min-height: 100vh; /* Garante altura mínima de 100% */
+            }
+            #quiz-container {
+                width: 100%; /* Ocupa toda largura */
+                min-height: 100vh; /* Altura mínima de 100% da viewport */
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .quiz-section {
+                display: none;
+                width: 100%;
+                min-height: 100vh; /* Altura mínima de 100% */
+                padding: 20px 0;
+                box-sizing: border-box;
+            }
+            .quiz-section.active {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .content {
+                width: 100%;
+                max-width: 600px;
+                margin: 0 auto;
+                padding: 0 20px;
+                box-sizing: border-box;
+            }
+        /* Estilos para os botões exportados */
+    .mobile-button {
+  position: relative;
+  width: 100%;
+  min-height: 65px;
+  display: flex;
+  align-items: center;
+  border-radius: 0.75rem;
+  border: 1px solid;
+  font-size: 20px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+
+/* Efeito de hover para mobile-button */
+.mobile-button:hover {
+  background: linear-gradient(45deg, var(--hover-color), var(--hover-color)) !important;
+}
+        .mobile-button .emoji {
+          margin-left: -10px;
+          font-size: 40px;
+          margin-right: 20px;
+          flex-shrink: 0;
+        }
+        .mobile-button .text {
+          flex: 1;
+          text-align: left; /* Alinhamento padrão */
+        }
+        /* Efeito de hover para mobile-button */
+
+     
+        /* Estilos para links personalizados */
+        .mobile-button a {
+          text-decoration: none;
+          color: inherit;
+          display: flex;
+          align-items: center;
+          width: 100%;
+          height: 100%;
+        }
+        /* Estilos adicionais existentes */
+        button {
+          padding: 8px 16px;
+          border: none;
+          border-radius: 5px;
+          background-color: #89b4fa;
+          color: #1e1e2e;
+          cursor: pointer;
+          transition: background-color 0.3s;
+        }
+        button:hover {
+          background-color: #b4befe;
+        }
+        .mobile-progress {
+          width: 100%;
+          margin: 15px 0;
+          position: relative;
+        }
+        .progress-bar {
+          width: 100%;
+          height: 20px;
+          background-color: #313244;
+          border-radius: 10px;
+          overflow: hidden;
+        }
+        .progress-fill {
+          height: 100%;
+          background-color: #89b4fa;
+          transition: width 0.3s ease-out;
+          width: 0;
+        }
+        .progress-value {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          color: #ffffff;
+          font-size: 12px;
+          font-weight: bold;
+          text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+        }
+        .mobile-feedback {
+          width: 100%;
+          margin-bottom: 10px;
+          border-radius: 10px;
+          box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .feedback-container {
+          padding: 15px;
+          display: flex;
+          align-items: flex-start;
+          margin-bottom: 30px;
+        }
+        .feedback-image {
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          margin-right: 15px;
+        }
+        .feedback-content {
+          flex: 1;
+        }
+        .feedback-name {
+          font-weight: bold;
+          margin-bottom: 2px;
+        }
+        .feedback-location {
+          font-size: 0.9em;
+          margin-bottom: 5px;
+        }
+        .feedback-stars {
+          color: #FFD700;
+          margin-bottom: 5px;
+        }
+        .feedback-text {
+          font-style: italic;
+          line-height: 1.4;
+        }
+/* Estilos do Widget de Celular */
+.mobile-phone-widget {
+          width: 100%;
+          max-width: 600px;
+          margin: 0 auto 10px auto;
+        }
+        .mobile-phone-widget .elements {
+          background-color: #f9fafb;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+          position: relative;
+          height: 250px;
+          display: flex;
+          align-items: center;
+          border-radius: 40px 20px 20px 40px;
+          width: 100%;
+          max-width: 600px;
+          margin: 0 auto 30px auto;
+          border: 1px solid #e5e7eb;
+
+        }
+        .mobile-phone-widget .phone-frame {
+          position: absolute;
+          left: 0;
+          width: 120px;
+          height: 96%;
+          border: 6px solid black;
+          border-radius: 1.5rem;
+          overflow: hidden;
+          margin-left:-1px;
+        }
+        .mobile-phone-widget .phone-frame img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        .mobile-phone-widget .iphone-detalhe {
+          position: absolute;
+          height: 10px;
+          background-color: black;
+          width: 60px;
+          margin: 0 auto;
+          border-radius: 0px 0px 40px 40px;
+          left: 50%;
+          transform: translateX(-50%);
+          top: 0;
+        }
+
+        .mobile-phone-widget .text {
+          margin-left: 140px;
+          padding-right: 10px;
+        }
+        .mobile-phone-widget .text h2 {
+          margin-top: 0;
+        }
+   
+        .mobile-phone-widget[data-position="right"] .elements {
+          border-radius: 20px 40px 40px 20px;
+        }
+        .mobile-phone-widget[data-position="right"] .phone-frame {
+          left: auto;
+          right: 0;
+          margin-right: -1px;
+        }
+        .mobile-phone-widget[data-position="right"] .text {
+          margin-left: 20px;
+          margin-right: 140px;
+          padding-right: 0;
+        }
+        .mobile-phone-widget .phone-content {
+          padding: 0px;
+          box-sizing: border-box;
+          height: 100%;
+          width: 100%;
+          object-fit: cover;
+        }
+        .mobile-text {
+          width: 100%;
+          max-width: 600px;
+          margin: 0 auto 10px auto;
+        }
+
+        .mobile-image {
+    width: 100%;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.mobile-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 1rem;
+    object-fit: contain;
+}
+   
+          /* Estilos da Nota */
+.mobile-note {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.notes {
+  font-family: "Poppins", sans-serif;
+  border-radius: 0.75rem;
+  position: relative;
+  background-color: #f9fafb;
+  display: flex;
+  padding: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+}
+
+.texts-notes {
+  padding-left: 42px;
+  flex: 1;
+}
+
+.icon {
+  flex-shrink: 0;
+}
+
+.icon svg {
+  width: 32px;
+  height: 32px;
+  fill: #f59e0b;
+}
+
+.title-notes {
+  font-size: 1.25rem;
+  font-weight: 700;
+  padding-bottom: 10px;
+}
+.icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 10px 0px 0px 10px;
+}
+  /* Estilos para o Multiple Choice exportado */
+.mobile-multiple-choice {
+ width: 100%;
+ margin-bottom: 20px;
+}
+
+.options-grid {
+ display: flex;
+ flex-direction: column;
+ gap: 10px;
+}
+
+.option-button {
+ position: relative;
+ width: 100%;
+ min-height: 65px;
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ border-radius: 0.75rem;
+ border: 1px solid rgb(214, 214, 214);
+ background: linear-gradient(45deg, rgb(244, 244, 244), rgb(255, 255, 255));
+ font-size: 20px;
+ margin-bottom: 10px;
+ cursor: pointer;
+ padding: 0;
+ transition: all 0.3s;
+}
+
+.option-content {
+ display: flex;
+ align-items: center;
+ width: 100%;
+ padding: 15px 20px;
+}
+
+.emoji {
+ font-size: 40px;
+ margin-right: 20px;
+ margin-left: -10px;
+ flex-shrink: 0;
+}
+
+.option-text {
+ text-align: left;
+ font-size: 1rem;
+ flex: 1;
+ line-height: 1.3;
+}
+
+.checkbox {
+ width: 24px;
+ height: 24px;
+ border: 2px solid #d6d6d6;
+ border-radius: 4px;
+ background: white;
+ position: relative;
+ flex-shrink: 0;
+}
+
+.option-button.active .checkbox {
+ background: #9333ea;
+ border-color: #9333ea;
+}
+
+.option-button.active .checkbox::after {
+ content: "";
+ position: absolute;
+ top: 50%;
+ left: 50%;
+ transform: translate(-50%, -50%) scale(1);
+ width: 16px;
+ height: 16px;
+ background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3Cpath fill='white' d='M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z'/%3E%3C/svg%3E");
+ background-repeat: no-repeat;
+ background-position: center;
+}
+
+.continue-button {
+ width: 100%;
+ min-height: 65px;
+ border-radius: 0.75rem;
+ border: none;
+ background: #9333ea;
+ color: white;
+ font-size: 20px;
+ margin-top: 20px;
+ cursor: not-allowed;
+ opacity: 0.5;
+ transition: all 0.3s;
+}
+
+.continue-button.active {
+ opacity: 1;
+ cursor: pointer;
+}
+
+.continue-button:hover {
+ opacity: 0.9;
+}
+
+.input-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+  box-sizing: border-box;
+}
+.input-widget input.input-field {
+  width: 100%;
+  padding: 24px 60px;
+  border: 1px solid rgb(229, 231, 235);
+  border-radius: 0.75rem;
+  font-size: 17px;
+  background-color: rgb(249, 250, 251);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 2px 8px rgba(0, 0, 0, 0.02);
+  transition: all 0.3s;
+  box-sizing: border-box;
+  color: black;
+  margin: 0 !important;
+}
+.input-field::placeholder {
+  font-size: 17px;
+}
+.input-field:focus {
+  outline: none;
+  box-shadow: inset 0 0 0 2px currentColor;
+}
+
+.user-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 40px;
+  pointer-events: none;
+}
+
+
+
+.user-icon svg {
+  height: 40px;
+  fill: currentColor;
+  stroke: none;
+}
+
+.user-icon svg path {
+  fill: currentColor;
+  stroke: none;
+  stroke-width: 0;
+}
+.input-widget input.input-field::placeholder {
+  color: var(--placeholder-color, currentColor);
+  opacity: 0.5;
+  font-size: 17px;
+}
+  /* Estilos do Video Player */
+  /* Atualização dos estilos do vídeo */
+      .mobile-video .container {
+        container-type: inline-size;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .mobile-video .video-container {
+        position: relative;
+        width: 100%;
+        height: 0;
+        padding-bottom: 133.33%;
+        background-color: transparent;
+        overflow: hidden;
+        border-radius: 1rem;
+      }
+
+      .video-iframe {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 101%; /* Aumentado levemente para cobrir possíveis gaps */
+        height: 101%; /* Aumentado levemente para cobrir possíveis gaps */
+        transform: translate(-50%, -50%);
+        border: none;
+        background: #000; /* Fundo preto para espaços vazios */
+      }
+
+      .mobile-video .blur-background {
+        position: absolute;
+        top: -1px; /* Ajuste para eliminar gaps */
+        left: -1px; /* Ajuste para eliminar gaps */
+        width: calc(100% + 2px); /* Compensação para os gaps */
+        height: calc(100% + 2px); /* Compensação para os gaps */
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        z-index: 199;
+        display: block;
+      }
+
+      .mobile-video .overlay {
+        color: #fff;
+        position: absolute;
+        padding: 2cqw;
+        width: 50%;
+        height: 40%;
+        background-color: #5d3f92;
+        z-index: 200;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2cqw;
+        text-align: center;
+        border-radius: 8px;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+    .mobile-video .overlay-title {
+      font-family: Arial, sans-serif;
+      font-size: 5cqw;
+      font-weight: bold;
+      margin: 0;
+      text-transform: uppercase;
+    }
+
+    .mobile-video .overlay-text {
+      font-family: Arial, sans-serif;
+      font-size: 5cqw;
+      margin: 0;
+    }
+
+    .mobile-video .play-icon {
+      position: relative;
+      height: 50%;
+    }
+
+    .mobile-video .top-overlay,
+    .mobile-video .bottom-overlay {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      background-color: transparent;
+      z-index: 300;
+      pointer-events: auto;
+    }
+
+    .mobile-video .top-overlay {
+      top: 0;
+      height: 20%;
+    }
+
+    .mobile-video .bottom-overlay {
+      bottom: 0;
+      height: 20%;
+    }
+
+    .mobile-video .hidden {
+      display: none;
+    }
+
+    .mobile-video .play-icon path,
+    .mobile-video .play-icon circle {
+      transition: all 0.3s ease;
+    }
+          /* Estilos da Galeria */
+
+
+.mobile-gallery {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto 20px;
+}
+
+.gallery-container {
+  border-radius: 0.75rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.gallery-track {
+  display: flex;
+  transition: transform 0.3s ease;
+  width: 100%;
+}
+
+.gallery-slide {
+  flex: 0 0 100%;
+  width: 100%;
+}
+
+.gallery-slide img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.gallery-nav {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+.gallery-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  opacity: 1;
+}
+
+.gallery-dot.active {
+  transform: scale(1.2);
+}
+
+
+
+       .mobile-button,
+        .mobile-text,
+        .mobile-image,
+        .mobile-progress,
+        .mobile-feedback,
+        .mobile-phone-widget,
+        .mobile-note,
+        .mobile-multiple-choice,
+        .input-widget,
+        .mobile-video .container,
+        .mobile-gallery {
+          width: 100%;
+          margin:0 auto;
+          margin-bottom: 40px; /* Padronizando o espaçamento */
+        }
+      </style>
+    </head>
+    <body>
+       <div id="quiz-container">
+            <section id="section-0" class="quiz-section active" style="background-color: #ffffff">
+                <div class="content" style="color: #000000;">
+                    <div class="mobile-text" id="text-1735586446482" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(131, 17, 0); position: relative;"><h2>Eu duvido que você não queira comprar um apartamento de 1 milhão após terminar esta apresentação…
+</h2></div><div class="mobile-text" id="text-1735586600313" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(122, 122, 122);"><p>Clique em no botão para começar!</p></div><div id="image-1735586638926" class="mobile-image" style="position: relative; max-width: 393px; width: 100%; margin-inline: auto;"><img src="https://www.mariniconstrucoes.com.br/images/terrace/image-1.png" alt="Imagem" style="width: 100%; height: auto;"></div><button class="mobile-button" id="button-1735586640397" style="background: linear-gradient(45deg, rgb(181, 26, 0), rgb(131, 17, 0)); border-color: rgb(131, 17, 0); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#b51a00" data-delay="0"><span class="emoji"></span><span class="text" style="color: rgb(255, 255, 255); text-align: center;">Texto do Botão</span></button>
+                </div>
+            </section>
+            <section id="section-1" class="quiz-section " style="background-color: #ffffff">
+                <div class="content" style="color: #000000;">
+                    <div class="mobile-text" id="text-1735586688613-swaf9fun9" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(131, 17, 0);"><h2>Você já ouviu falar sobre investimento em imóveis na planta?
+</h2></div><button class="mobile-button" id="button-1735586688613-1goffd89d" style="background: linear-gradient(45deg, rgb(181, 26, 0), rgb(131, 17, 0)); border-color: rgb(131, 17, 0); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#b51a00" data-delay="0"><span class="emoji"></span><span class="text" style="color: rgb(255, 255, 255); text-align: center;">Sim</span></button><button class="mobile-button" id="button-1735586712670" style="background: linear-gradient(45deg, rgb(181, 26, 0), rgb(131, 17, 0)); border-color: rgb(131, 17, 0); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#b51a00" data-delay="0"><span class="emoji"></span><span class="text" style="color: rgb(255, 255, 255); text-align: center;">Não</span></button>
+                </div>
+            </section>
+            <section id="section-2" class="quiz-section " style="background-color: #ffffff">
+                <div class="content" style="color: #000000;">
+                    <div class="mobile-text" id="text-1735586732922-056zn7mf2" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(131, 17, 0); position: relative;"><h2>O que são imóveis na planta? 🤔
+</h2></div><div class="mobile-text" id="text-1735586754068" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(122, 122, 122);"><h3>Imóveis na planta são propriedades que ainda estão <u>em fase de projeto ou construção,</u> sendo comercializadas antes de sua conclusão.
+</h3></div><button class="mobile-button" id="button-1735586831474" style="background: linear-gradient(45deg, rgb(181, 26, 0), rgb(131, 17, 0)); border-color: rgb(131, 17, 0); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#b51a00" data-delay="0"><span class="emoji"></span><span class="text" style="color: rgb(255, 255, 255); text-align: center;">Continuar</span></button>
+                </div>
+            </section>
+            <section id="section-3" class="quiz-section " style="background-color: #ffffff">
+                <div class="content" style="color: #000000;">
+                    <div class="mobile-text" id="text-1735586882094-rgx3zxi7p" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(131, 17, 0);"><h1>Quais os benefícios de comprar um imóvel na planta?
+</h1></div><div class="mobile-text" id="text-1735586882094-xqjjtx50q" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(122, 122, 122); position: relative;"><p>Ao adquirir um imóvel na planta, você se beneficia de:
+</p></div><div class="mobile-text" id="text-1735587017470" style="font-weight: normal; font-style: normal; text-align: left; color: rgb(35, 35, 35);"><p></p><div style=" background-color:#E5E5E5; padding:15px; border-radius:1rem; margin-bottom:-20px;"><b>✅ Preços Mais Acessíveis:</b>Imóveis na planta geralmente são oferecidos a valores mais baixos em comparação aos já construídos, permitindo economia significativa para o comprador.<br></div><p></p></div><div class="mobile-text" id="text-1735587030619" style="font-weight: normal; font-style: normal; text-align: left; color: rgb(35, 35, 35);"><p></p><div style=" background-color:#E5E5E5; padding:15px; border-radius:1rem;margin-bottom:-20px;<br>">✅ <b>Condições de Pagamento Flexíveis:</b> Construtoras costumam oferecer facilidades de pagamento, como parcelamento da entrada e financiamento direto, adaptando-se ao orçamento do comprador. </div><p></p></div><div class="mobile-text" id="text-1735587061847" style="font-weight: normal; font-style: normal; text-align: left; color: rgb(35, 35, 35);"><p></p><div style=" background-color:#E5E5E5; padding:15px; border-radius:1rem; margin-bottom:-20px;<br>"><b>✅  Potencial de Valorização: </b>Durante a construção, o imóvel tende a valorizar, podendo alcançar até 50% de aumento no valor até a conclusão da obra.<br></div><p></p></div><div class="mobile-text" id="text-1735587081656" style="font-weight: normal; font-style: normal; text-align: left; color: rgb(35, 35, 35);"><p></p><div style=" background-color:#E5E5E5; padding:15px; border-radius:1rem;margin-bottom:-20px;<br>"><b>✅ Personalização do Imóvel:</b>Ao adquirir na planta, o comprador tem a oportunidade de escolher acabamentos, layouts e detalhes de design, adaptando o imóvel às suas preferências pessoais.</div><p></p></div><div class="mobile-text" id="text-1735587101524" style="font-weight: normal; font-style: normal; text-align: left; color: rgb(35, 35, 35);"><p></p><div style=" background-color:#E5E5E5; padding:15px; border-radius:1rem;<br>"><b>✅ Instalações Modernas e Novas:</b>  Imóveis novos seguem as tendências mais recentes em arquitetura, design e tecnologia, oferecendo plantas funcionais, áreas comuns equipadas e sistemas de segurança modernos. </div><p></p></div><button class="mobile-button" id="button-1735587139658" style="background: linear-gradient(45deg, rgb(181, 26, 0), rgb(131, 17, 0)); border-color: rgb(131, 17, 0); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#b51a00" data-delay="0"><span class="emoji"></span><span class="text" style="color: rgb(255, 255, 255); text-align: center;">Continuar</span></button>
+                </div>
+            </section>
+            <section id="section-4" class="quiz-section " style="background-color: #ffffff">
+                <div class="content" style="color: #000000;">
+                    <div class="mobile-text" id="text-1735587185907-t3ze3ssox" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(131, 17, 0);"><h1>Mais alguns benefícios interessantes...
+</h1></div><div class="mobile-text" id="text-1735587185907-heb43mhsc" style="font-weight: normal; font-style: normal; text-align: left; color: rgb(35, 35, 35);"><p></p><div style=" background-color:#E5E5E5; padding:15px; border-radius:1rem; margin-bottom:-20px;<br>"><b>✅ Menos Gastos com Manutenção: </b>Por serem novos, esses imóveis demandam menos gastos com reparos nos primeiros anos, resultando em economia para o proprietário. </div><p></p></div><div class="mobile-text" id="text-1735587185907-pn7gtt9xo" style="font-weight: normal; font-style: normal; text-align: left; color: rgb(35, 35, 35);"><p></p><div style=" background-color:#E5E5E5; padding:15px; border-radius:1rem; margin-bottom:-20px;<br>"><b>✅ Documentação Descomplicada: </b>A documentação de imóveis na planta tende a ser mais simples, com menor chance de erros, proporcionando segurança ao comprador. </div><p></p></div><div class="mobile-text" id="text-1735587185907-r6w6gdlgk" style="font-weight: normal; font-style: normal; text-align: left; color: rgb(35, 35, 35); position: relative;"><p></p><div style=" background-color:#E5E5E5; padding:15px; border-radius:1rem; margin-bottom:-20px;<br>"><b>✅ Garantia da Construtora:</b> Imóveis na planta geralmente possuem garantias da construtora, oferecendo mais tranquilidade em relação à qualidade da obra. </div><p></p></div><div class="mobile-text" id="text-1735587185907-8bshwpded" style="font-weight: normal; font-style: normal; text-align: left; color: rgb(35, 35, 35);"><p></p><div style=" background-color:#E5E5E5; padding:15px; border-radius:1rem; margin-bottom:-20px;<br>"><b>✅ Possibilidade de Escolher a Unidade: </b>Ao comprar na planta, o comprador tem mais opções para escolher a unidade que melhor atende às suas necessidades e preferências, como andar, posição e vista.  </div><p></p></div><div class="mobile-text" id="text-1735587185907-k2sgegabl" style="font-weight: normal; font-style: normal; text-align: left; color: rgb(35, 35, 35);"><p></p><div style=" background-color:#E5E5E5; padding:15px; border-radius:1rem;<br>"><b>✅ Prazo para Planejar a Mudança: </b>O período de construção oferece tempo para o comprador se organizar financeiramente e planejar a mudança com calma.</div><p></p></div><button class="mobile-button" id="button-1735587185907-gtz47xi8h" style="background: linear-gradient(45deg, rgb(181, 26, 0), rgb(131, 17, 0)); border-color: rgb(131, 17, 0); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#b51a00" data-delay="0"><span class="emoji"></span><span class="text" style="color: rgb(255, 255, 255); text-align: center;">Continuar</span></button>
+                </div>
+            </section>
+            <section id="section-5" class="quiz-section " style="background-color: #ffffff">
+                <div class="content" style="color: #000000;">
+                    <div class="mobile-text" id="text-1735587392810-y56juwve1" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(131, 17, 0);"><h2>Como investidores experientes minimizam esses riscos?
+</h2></div><div class="mobile-text" id="text-1735587392810-9mfqd87h4" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(122, 122, 122);"><p> as principais estratégias são...
+</p></div><div class="mobile-text" id="text-1735587462044" style="font-weight: normal; font-style: normal; text-align: left; color: rgb(35, 35, 35); position: relative;"><p></p><div style=" background-color:#E5E5E5; padding:15px; border-radius:1rem; margin-bottom:-20px;<br>"><b>✅ Escolhem construtoras renomadas </b> </div><p></p></div><div class="mobile-text" id="text-1735587922552" style="font-weight: normal; font-style: normal; text-align: left; color: rgb(35, 35, 35); position: relative;"><p></p><div style=" background-color:#E5E5E5; padding:15px; border-radius:1rem; margin-bottom:-20px;<br>"><b>✅ Analisam histórico de entregas </b> </div><p></p></div><div class="mobile-text" id="text-1735587985378" style="font-weight: normal; font-style: normal; text-align: left; color: rgb(35, 35, 35); position: relative;"><p></p><div style=" background-color:#E5E5E5; padding:15px; border-radius:1rem; margin-bottom:-20px;<br>"><b>✅ Verificam documentação completa </b> </div><p></p></div><div class="mobile-text" id="text-1735588016313" style="font-weight: normal; font-style: normal; text-align: left; color: rgb(35, 35, 35);"><p></p><div style=" background-color:#E5E5E5; padding:15px; border-radius:1rem; "><b>✅ Estudam potencial da região </b> </div><p></p></div><button class="mobile-button" id="button-1735588035197" style="background: linear-gradient(45deg, rgb(181, 26, 0), rgb(131, 17, 0)); border-color: rgb(131, 17, 0); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#b51a00" data-delay="0"><span class="emoji"></span><span class="text" style="color: rgb(255, 255, 255); text-align: center;">Descobrir mais</span></button>
+                </div>
+            </section>
+            <section id="section-6" class="quiz-section " style="background-color: #ffffff">
+                <div class="content" style="color: #000000;">
+                    <div class="mobile-text" id="text-1735588095332-789ehrk85" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(131, 17, 0);"><h2>Qual destas estratégias você considera mais interessante?
+</h2></div><div class="mobile-text" id="text-1735588095332-pghinkr2z" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(122, 122, 122);"><p>Escolha uma das opções ou varias...</p></div><div id="choice-1735599686658" class="mobile-multiple-choice" style="position: relative;">
+      <div class="options-grid">
+      <button class="option-button" style="background: #f4f4f4; border-color: #d6d6d6">
+        <div class="option-content">
+          <span class="emoji"></span>
+          <span class="option-text" style="color: #000000">Comprar em regiões com alto potencial de valorização</span>
+          <div class="checkbox" style="border-color: #b51a00"></div>
+        </div>
+      </button>
+    
+      <button class="option-button" style="background: #f4f4f4; border-color: #d6d6d6">
+        <div class="option-content">
+          <span class="emoji"></span>
+          <span class="option-text" style="color: #000000">Investir em construtoras renomadas</span>
+          <div class="checkbox" style="border-color: #b51a00"></div>
+        </div>
+      </button>
+    
+      <button class="option-button" style="background: #f4f4f4; border-color: #d6d6d6">
+        <div class="option-content">
+          <span class="emoji"></span>
+          <span class="option-text" style="color: #000000">Aproveitar preços mais baixos no lançamento</span>
+          <div class="checkbox" style="border-color: #b51a00"></div>
+        </div>
+      </button>
+    
+      <button class="option-button" style="background: #f4f4f4; border-color: #d6d6d6">
+        <div class="option-content">
+          <span class="emoji"></span>
+          <span class="option-text" style="color: #000000">Revender antes da entrega das chaves</span>
+          <div class="checkbox" style="border-color: rgb(181, 26, 0);"></div>
+        </div>
+      </button>
+    </div>
+      <button class="continue-button" style="color: rgb(255, 255, 255); border-width: 1px 1px 8px; border-style: solid; border-color: rgb(131, 17, 0); border-image: none; background: linear-gradient(45deg, rgb(181, 26, 0), rgb(131, 17, 0)); box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 0.5; cursor: not-allowed;">Continuar</button>
+    </div>
+                </div>
+            </section>
+            <section id="section-7" class="quiz-section " style="background-color: #ffffff">
+                <div class="content" style="color: #000000;">
+                    <div class="mobile-text" id="text-1735589992793-jiuxlkv9g" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(131, 17, 0);"><h2>O que mais te interessou até agora?
+</h2></div><div class="mobile-text" id="text-1735589992793-qyqqnv5ou" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(122, 122, 122);"><p>Clique em um dos botões!</p></div><button class="mobile-button" id="button-1735589992793-xnnojbotc" style="background: linear-gradient(45deg, rgb(181, 26, 0), rgb(131, 17, 0)); border-color: rgb(131, 17, 0); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#b51a00" data-delay="0"><span class="emoji">💰</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">O potencial de valorização</span></button><button class="mobile-button" id="button-1735590034216" style="background: linear-gradient(45deg, rgb(181, 26, 0), rgb(131, 17, 0)); border-color: rgb(131, 17, 0); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#b51a00" data-delay="0"><span class="emoji">🧾</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Condições de pagamento</span></button><button class="mobile-button" id="button-1735590034856" style="background: linear-gradient(45deg, rgb(181, 26, 0), rgb(131, 17, 0)); border-color: rgb(131, 17, 0); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#b51a00" data-delay="0"><span class="emoji">🔒</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Segurança do investimento</span></button><button class="mobile-button" id="button-1735590035733" style="background: linear-gradient(45deg, rgb(181, 26, 0), rgb(131, 17, 0)); border-color: rgb(131, 17, 0); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#b51a00" data-delay="0"><span class="emoji">😃</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Conhecer oportunidades</span></button>
+                </div>
+            </section>
+            <section id="section-8" class="quiz-section " style="background-color: #ffffff">
+                <div class="content" style="color: #000000;">
+                    <div class="mobile-text" id="text-1735590205429-lzijoud10" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(131, 17, 0);"><h1>Parabéns! 🤩
+</h1></div><div class="mobile-text" id="text-1735590205429-p3a2sxzcy" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(122, 122, 122); position: relative;"><h3>Você acaba de descobrir por que investir em imóveis na planta é uma das estratégias mais seguras para multiplicar seu patrimônio.
+</h3></div><div class="mobile-text" id="text-1735590661437" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(131, 17, 0);"><h2>Tenho uma oportunidade únicap ara te apresentar...
+</h2></div><button class="mobile-button" id="button-1735590700480" style="background: linear-gradient(45deg, rgb(181, 26, 0), rgb(131, 17, 0)); border-color: rgb(131, 17, 0); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#b51a00" data-delay=""><span class="emoji"></span><span class="text" style="color: rgb(255, 255, 255); text-align: center;">Conhecer oportunidade</span></button>
+                </div>
+            </section>
+            <section id="section-9" class="quiz-section " style="background-color: #ffffff">
+                <div class="content" style="color: #000000;">
+                    <div class="mobile-text" id="text-1735590722042-p11waygg7" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(131, 17, 0); position: relative;"><h2>Conheça o Terrace Residence: Localização Premium no Centro da Capital do Vinho</h2></div><div class="mobile-text" id="text-1735591583781" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(122, 122, 122); position: relative;"><h3>Investimento Exclusivo no Coração de Bento Gonçalves</h3></div><div id="video-1735600101685" class="mobile-video" style="position: relative;">
+      <div class="container">
+        <div class="video-container" style="padding-bottom: 124.8%;">
+          <iframe id="youtube-video-1735600101685" class="video-iframe" src="https://www.youtube-nocookie.com/embed/m6uhT_AC_oE?controls=0&enablejsapi=1&modestbranding=1&showinfo=0title=0&fs=0&rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" title="."></iframe>
+          <div id="blur-bg-1735600101685" class="blur-background" style="display: block;"></div>
+          <div id="start-overlay-1735600101685" class="overlay" style="display: flex; background-color: rgb(131, 17, 0); color: rgb(255, 255, 255);">
+            <h1 class="overlay-title">Ligue o som e...</h1>
+         <svg class="play-icon" viewBox="0 0 24 24" style="color: rgb(255, 255, 255);">
+            <circle cx="12" cy="12" r="10" stroke="#FF0000" stroke-width="1" fill="none" style="stroke: rgb(255, 255, 255) !important; fill: none !important;"></circle>
+            <path d="M9.5 7.5L16 12L9.5 16.5V7.5Z" fill="#FF0000" style="stroke: rgb(255, 255, 255) !important; fill: none !important;"></path>
+        </svg>
+
+            <p class="overlay-text">Clique para assistir</p>
+          </div>
+          <div id="pause-overlay-1735600101685" class="overlay hidden" style="background-color: rgb(131, 17, 0); color: rgb(255, 255, 255);">
+            <h1 class="overlay-title">Vídeo pausado</h1>
+            <svg class="play-icon" viewBox="0 0 24 24" fill="white" style="color: rgb(255, 255, 255);">
+              <circle cx="12" cy="12" r="10" stroke="white" stroke-width="1" fill="none" style="stroke: rgb(255, 255, 255) !important; fill: none !important;"></circle>
+              <path d="M9.5 7.5L16 12L9.5 16.5V7.5Z" fill="white" style="stroke: rgb(255, 255, 255) !important; fill: none !important;"></path>
+            </svg>
+            <p class="overlay-text">Continuar assistindo</p>
+          </div>
+          <div class="top-overlay"></div>
+          <div class="bottom-overlay"></div>
+        </div>
+      </div></div><button class="mobile-button" id="button-1735600131462" style="background: linear-gradient(45deg, rgb(181, 26, 0), rgb(131, 17, 0)); border-color: rgb(131, 17, 0); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#b51a00" data-delay="210" data-link="https://wa.me/5551980156915?text=Ol%C3%A1,%20quero%20saber%20mais%20sobre%20o%20Terrce."><span class="emoji"></span><span class="text" style="color: rgb(255, 255, 255); text-align: center;">Chamar no whatsapp</span></button>
+                </div>
+            </section>
+            <section id="section-10" class="quiz-section " style="background-color: #ffffff">
+                <div class="content" style="color: #000000;">
+                    <div class="mobile-text" id="text-1735600847272" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(131, 17, 0); position: relative;"><h2>Você sabia que é possível lucrar até 40% em 24-36 meses?
+</h2></div><div class="mobile-text" id="text-1735600864843" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(146, 146, 146);"><h3>Investir em imóveis na planta no Brasil pode resultar em uma valorização significativa durante o período de construção. Em geral, essa valorização varia entre 15% e 40% até a entrega do imóvel.</h3></div><div id="image-1735600901032" class="mobile-image" style="position: relative; max-width: 500px; width: 100%; margin-inline: auto;"><img src="https://i.ibb.co/0XHqS4P/Captura-de-Tela-2024-12-30-s-17-07-27.png" alt="Imagem" style="width: 100%; height: auto;"></div><div class="mobile-text" id="text-1735600927590" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(122, 122, 122);"><h3>Isso significa que, ao final da construção, o imóvel poderia valer entre R$ 230.000 e R$ 280.000</h3></div><button class="mobile-button" id="button-1735601667950" style="background: linear-gradient(45deg, rgb(181, 26, 0), rgb(131, 17, 0)); border-color: rgb(131, 17, 0); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#e32400" data-delay=""><span class="emoji"></span><span class="text" style="color: rgb(255, 255, 255); text-align: center;">Continuar</span></button>
+                </div>
+            </section>
+  </div>
+  <script>
+    const connectionsData = [{"startIndex":0,"endIndex":1,"elementId":"button-1735586640397"},{"startIndex":1,"endIndex":2,"elementId":"button-1735586712670"},{"startIndex":1,"endIndex":2,"elementId":"button-1735586688613-1goffd89d"},{"startIndex":2,"endIndex":3,"elementId":"button-1735586831474"},{"startIndex":3,"endIndex":4,"elementId":"button-1735587139658"},{"startIndex":4,"endIndex":5,"elementId":"button-1735587185907-gtz47xi8h"},{"startIndex":5,"endIndex":6,"elementId":"button-1735588035197"},{"startIndex":7,"endIndex":8,"elementId":"button-1735589992793-xnnojbotc"},{"startIndex":7,"endIndex":8,"elementId":"button-1735590034216"},{"startIndex":7,"endIndex":8,"elementId":"button-1735590034856"},{"startIndex":7,"endIndex":8,"elementId":"button-1735590035733"},{"startIndex":8,"endIndex":9,"elementId":"button-1735590700480"},{"startIndex":6,"endIndex":10,"elementId":"choice-1735599686658"},{"startIndex":10,"endIndex":7,"elementId":"button-1735601667950"}];
+
+ function setupDelayedButtons(section) {
+  const buttons = section.querySelectorAll('.mobile-button[data-delay]');
+  buttons.forEach(button => {
+    button.style.opacity = "0";
+    button.style.transition = "opacity 0.3s ease";
+    const delay = parseFloat(button.getAttribute('data-delay')) * 1000;
+    setTimeout(() => {
+      button.style.opacity = "1";
+    }, delay);
+  });
+}
+
+
+function showSection(sectionId) {
+  console.log('Showing section:', sectionId);
+  const sections = document.querySelectorAll('.quiz-section');
+  sections.forEach(section => {
+    section.classList.remove('active');
+    const buttons = section.querySelectorAll('.mobile-button');
+    buttons.forEach(button => {
+      button.style.opacity = "0";
+      button.style.transition = "none";
+    });
+  });
+  
+  const targetSection = document.getElementById(sectionId);
+  if (targetSection) {
+    targetSection.classList.add('active');
+    setupDelayedButtons(targetSection);
+    
+    // Mostrar botões sem delay imediatamente
+    const regularButtons = targetSection.querySelectorAll('.mobile-button:not([data-delay])');
+    regularButtons.forEach(button => {
+      button.style.opacity = "1";
+      button.style.transition = "opacity 0.3s ease";
+    });
+    
+    animateProgressBars(targetSection);
+    interpolateVariables(targetSection);
+    setupInputWidget(targetSection.querySelector('.input-widget'));
+  }
+}
+
+    function handleProgressCompletion(progressElement) {
+      const enableRedirect = progressElement.getAttribute('data-enable-redirect') === 'true';
+      if (enableRedirect) {
+        setTimeout(function() {
+          const redirectLink = progressElement.getAttribute('data-redirect-link');
+          if (redirectLink) {
+            window.location.href = redirectLink;
+          } else {
+            const connection = connectionsData.find(function(conn) { return conn.elementId === progressElement.id; });
+            if (connection) {
+              showSection('section-' + connection.endIndex);
+            }
+          }
+        }, 1000);
+      }
+    }
+
+    function animateProgressBars(section) {
+      const progressBars = section.querySelectorAll('.mobile-progress');
+      progressBars.forEach(function(progress) {
+        const progressBar = progress.querySelector('.progress-fill');
+        const progressValue = progress.querySelector('.progress-value');
+        const start = parseInt(progress.getAttribute('data-start')) || 0;
+        const end = parseInt(progress.getAttribute('data-end')) || 100;
+        const enableRedirect = progress.getAttribute('data-enable-redirect') === 'true';
+        const duration = parseInt(progress.getAttribute('data-duration')) || 1;
+        console.log('Animating progress bar:', progress.id, 'from', start, 'to', end, 'duration:', duration);
+        progressBar.style.width = start + '%';
+        progressValue.textContent = start + '%';
+        var current = start;
+        var increment = (end - start) / (duration * 50); // 50 fps
+        var interval = setInterval(function() {
+          current += increment;
+          if (current >= end) {
+            current = end;
+            clearInterval(interval);
+            console.log('Progress bar reached 100%');
+            if (enableRedirect) {
+              handleProgressCompletion(progress);
+            }
+          }
+          progressBar.style.width = current + '%';
+          progressValue.textContent = Math.round(current) + '%';
+        }, 20);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('DOM fully loaded');
+      const firstSection = document.querySelector('.quiz-section');
+      if (firstSection) {
+        console.log('Activating first section');
+        firstSection.classList.add('active');
+        animateProgressBars(firstSection);
+      }
+    });
+
+    document.addEventListener('click', function(e) {
+      const button = e.target.closest('.button');
+      if (button) {
+        const onclick = button.getAttribute('onclick');
+        if (onclick) {
+          console.log('Button clicked, executing:', onclick);
+          eval(onclick);
+        }
+      }
+    });
+
+    document.addEventListener('click', function(e) {
+      const button = e.target.closest('.mobile-button');
+      if (button) {
+        const buttonId = button.id;
+        const connection = connectionsData.find(conn => conn.elementId === buttonId);
+        if (connection) {
+          showSection('section-' + connection.endIndex);
+        }
+        const link = button.getAttribute('data-link');
+        if (link) {
+          window.location.href = link;
+        }
+      }
+    });
+
+    document.querySelectorAll('.mobile-button').forEach(function(button) {
+      const anchor = document.createElement('a');
+      anchor.href = 'javascript:void(0);';
+      anchor.style.display = 'flex';
+      anchor.style.alignItems = 'center';
+      anchor.style.width = '100%';
+      anchor.style.height = '100%';
+      while (button.firstChild) {
+        anchor.appendChild(button.firstChild);
+      }
+      button.appendChild(anchor);
+    });
+
+    document.querySelectorAll('.mobile-button').forEach(function(button) {
+      const hoverColor = button.getAttribute('data-hover-color');
+      if (hoverColor) {
+        button.style.setProperty('--hover-color', hoverColor);
+      }
+    });
+
+    document.addEventListener("DOMContentLoaded", function() {
+      const delayedButtons = document.querySelectorAll(".mobile-button[data-delay]");
+      delayedButtons.forEach(button => {
+        button.style.opacity = "0";
+        const delay = parseFloat(button.getAttribute("data-delay")) * 1000;
+        setTimeout(() => {
+          button.style.opacity = "1";
+          button.style.transition = "opacity 0.3s ease";
+        }, delay);
+      });
+    });
+
+         document.addEventListener('DOMContentLoaded', function() {
+        function resetMultipleChoice(widget) {
+          const options = widget.querySelectorAll('.option-button');
+          const continueButton = widget.querySelector('.continue-button');
+          const continueColor = continueButton.style.backgroundColor;
+          const checkboxColor = options[0]?.querySelector('.checkbox')?.style.borderColor || '#d6d6d6';
+
+          options.forEach(option => {
+            const clone = option.cloneNode(true);
+            option.parentNode.replaceChild(clone, option);
+          });
+
+          const clonedButton = continueButton.cloneNode(true);
+          continueButton.parentNode.replaceChild(clonedButton, continueButton);
+
+          widget.querySelectorAll('.option-button').forEach(option => {
+            option.classList.remove('active');
+            const checkbox = option.querySelector('.checkbox');
+            if (checkbox) {
+              checkbox.style.backgroundColor = '';
+              checkbox.style.borderColor = checkboxColor;
+            }
+          });
+
+          clonedButton.classList.remove('active');
+          clonedButton.style.opacity = '0.5';
+          clonedButton.style.cursor = 'not-allowed';
+
+          return { 
+            options: widget.querySelectorAll('.option-button'), 
+            continueButton: clonedButton,
+            continueColor,
+            checkboxColor
+          };
+        }
+
+        const setupMultipleChoice = () => {
+          document.querySelectorAll('.mobile-multiple-choice').forEach(widget => {
+            const { options, continueButton, continueColor, checkboxColor } = resetMultipleChoice(widget);
+
+            function updateContinueButton(widget, continueButton) {
+              const selectedCount = widget.querySelectorAll('.option-button.active').length;
+              const isActive = selectedCount > 0;
+              
+              continueButton.classList.toggle('active', isActive);
+              continueButton.style.opacity = isActive ? '1' : '0.5';
+              continueButton.style.cursor = isActive ? 'pointer' : 'not-allowed';
+              return selectedCount;
+            }
+
+            function handleOptionClick(e) {
+              e.preventDefault();
+              this.classList.toggle('active');
+              const checkbox = this.querySelector('.checkbox');
+              
+              if (this.classList.contains('active')) {
+                checkbox.style.backgroundColor = checkboxColor;
+                checkbox.style.borderColor = checkboxColor;
+              } else {
+                checkbox.style.backgroundColor = '';
+                checkbox.style.borderColor = checkboxColor;
+              }
+
+              updateContinueButton(widget, continueButton);
+            }
+
+            options.forEach(option => {
+              option.addEventListener('click', handleOptionClick);
+            });
+
+            continueButton.addEventListener('click', () => {
+              const selectedCount = widget.querySelectorAll('.option-button.active').length;
+              if (selectedCount > 0) {
+                const connection = connectionsData.find(conn => conn.elementId === widget.id);
+                if (connection) {
+                  showSection('section-' + connection.endIndex);
+                }
+              }
+            });
+          });
+        };
+
+        setupMultipleChoice();
+
+
+      // Mutation Observer para detectar mudanças de seção
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.target.classList.contains('active')) {
+            setupMultipleChoice();
+            setupInputWidget(mutation.target.querySelector('.input-widget'));
+          }
+        });
+      });
+
+      document.querySelectorAll('.quiz-section').forEach((section) => {
+        observer.observe(section, { attributes: true, attributeFilter: ['class'] });
+      });
+    });
+
+    // Sistema de variáveis
+// Sistema de variáveis
+let userVariables = JSON.parse(sessionStorage.getItem('userVariables') || '{}');
+
+function setupInputWidget(widget) {
+  if (!widget) return;
+  
+  const input = widget.querySelector('.input-field');
+  const button = widget.querySelector('.continue-button');
+  const variable = input.getAttribute('data-variable');
+
+  button.disabled = true;
+  button.style.opacity = '0.5';
+  button.style.cursor = 'not-allowed';
+  
+  if (userVariables[variable]) {
+    input.value = userVariables[variable];
+    button.disabled = false;
+    button.style.opacity = '1';
+    button.style.cursor = 'pointer';
+  }
+  
+  input.addEventListener('input', function() {
+    const hasValue = this.value.trim().length > 0;
+    button.disabled = !hasValue;
+    button.style.opacity = hasValue ? '1' : '0.5';
+    button.style.cursor = hasValue ? 'pointer' : 'not-allowed';
+
+    userVariables[variable] = this.value;
+    sessionStorage.setItem('userVariables', JSON.stringify(userVariables));
+  });
+
+  button.addEventListener('click', function() {
+    if (input.value.trim().length > 0) {
+      const connection = connectionsData.find(conn => conn.elementId === widget.id);
+      if (connection) {
+        showSection('section-' + connection.endIndex);
+      }
+    }
+  });
+}
+
+function interpolateVariables(section) {
+  const textNodes = Array.from(section.getElementsByTagName('*'))
+    .filter(el => !el.children.length && el.textContent.includes('{{'))
+    .map(el => ({element: el, original: el.textContent}));
+
+  textNodes.forEach(({element, original}) => {
+    let text = original;
+    const matches = text.match(/{{([^}]+)}}/g) || [];
+    
+    matches.forEach(match => {
+      const variable = match.slice(2, -2).trim();
+      const value = userVariables[variable] || '';
+      text = text.replace(match, value);
+    });
+
+    element.textContent = text;
+  });
+}
+
+function showSection(sectionId) {
+  const sections = document.querySelectorAll('.quiz-section');
+  sections.forEach(section => {
+    section.classList.remove('active');
+  });
+  
+  const targetSection = document.getElementById(sectionId);
+  if (targetSection) {
+    targetSection.classList.add('active');
+    interpolateVariables(targetSection);
+    setupDelayedButtons(targetSection);
+    animateProgressBars(targetSection);
+    setupInputWidget(targetSection.querySelector('.input-widget'));
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  const firstSection = document.querySelector('.quiz-section');
+  if (firstSection) {
+    firstSection.classList.add('active');
+    interpolateVariables(firstSection);
+    animateProgressBars(firstSection);
+    setupInputWidget(firstSection.querySelector('.input-widget'));
+  }
+});
+
+    document.querySelectorAll('.input-widget').forEach(setupInputWidget);
+
+  </script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script>
+      // Objeto para armazenar todos os players
+      const videoPlayers = new Map();
+
+      function initializeVideo(videoDiv) {
+        const uniqueId = videoDiv.id.split('-')[1];
+        const startOverlay = videoDiv.querySelector(`#start-overlay-${uniqueId}`);
+        const pauseOverlay = videoDiv.querySelector(`#pause-overlay-${uniqueId}`);
+        const blurBg = videoDiv.querySelector(`#blur-bg-${uniqueId}`);
+        const iframe = videoDiv.querySelector(`#youtube-video-${uniqueId}`);
+
+        if (!iframe) return;
+
+        const player = new YT.Player(`youtube-video-${uniqueId}`, {
+          events: {
+            onReady: function() {
+              startOverlay.style.display = "flex";
+              blurBg.style.display = "block";
+
+              startOverlay.onclick = () => {
+                player.playVideo();
+                startOverlay.style.display = "none";
+                blurBg.style.display = "none";
+              };
+
+              pauseOverlay.onclick = () => {
+                player.playVideo();
+                pauseOverlay.style.display = "none";
+                blurBg.style.display = "none";
+              };
+            },
+            onStateChange: function(event) {
+              if (event.data === YT.PlayerState.PAUSED) {
+                pauseOverlay.style.display = "flex";
+                blurBg.style.display = "block";
+              } else if (event.data === YT.PlayerState.ENDED) {
+                startOverlay.style.display = "flex";
+                pauseOverlay.style.display = "none";
+                blurBg.style.display = "block";
+              } else if (event.data === YT.PlayerState.PLAYING) {
+                startOverlay.style.display = "none";
+                pauseOverlay.style.display = "none";
+                blurBg.style.display = "none";
+              }
+            }
+          }
+        });
+
+        // Armazena o player para uso posterior
+        videoPlayers.set(uniqueId, player);
+      }
+
+      function onYouTubeIframeAPIReady() {
+        // Inicializa todos os vídeos presentes na página
+        document.querySelectorAll('.mobile-video').forEach(videoDiv => {
+          initializeVideo(videoDiv);
+        });
+      }
+
+      // Observa mudanças nas seções para inicializar novos vídeos
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.target.classList.contains('active')) {
+            mutation.target.querySelectorAll('.mobile-video').forEach(videoDiv => {
+              if (!videoPlayers.has(videoDiv.id.split('-')[1])) {
+                initializeVideo(videoDiv);
+              }
+            });
+          }
+        });
+      });
+
+      document.querySelectorAll('.quiz-section').forEach((section) => {
+        observer.observe(section, { 
+          attributes: true, 
+          attributeFilter: ['class'],
+          subtree: true
+        });
+      });   
+      
+            // Inicializa todas as galerias
+    class Gallery {
+      constructor(element) {
+        this.gallery = element;
+        this.track = element.querySelector(".gallery-track");
+        this.slides = [...element.querySelectorAll(".gallery-slide")];
+        this.dots = [...element.querySelectorAll(".gallery-dot")];
+        this.currentSlide = 0;
+        this.autoplayInterval = null;
+
+        // Obtém as cores definidas no estilo inline dos dots
+        const dots = element.querySelectorAll(".gallery-dot");
+        const firstDot = dots[0];
+        const secondDot = dots[1];
+        
+        // Usa as cores definidas nos atributos style ou cores padrão
+        this.dotActiveColor = firstDot?.style.backgroundColor || "#9333ea";
+        this.dotColor = secondDot?.style.backgroundColor || "#ccc";
+
+        // Configura dots com cores e escala corretas imediatamente
+        this.dots.forEach((dot, index) => {
+          dot.style.transition = "all 0.3s ease";
+          this.updateDotStyle(dot, index === 0);
+        });
+
+        // Setup de eventos
+        this.dots.forEach((dot, index) => {
+          dot.addEventListener("click", () => this.goToSlide(index));
+        });
+
+        this.touchStartX = 0;
+        this.touchEndX = 0;
+
+        this.track.addEventListener("touchstart", (e) => this.touchStart(e));
+        this.track.addEventListener("touchmove", (e) => this.touchMove(e));
+        this.track.addEventListener("touchend", (e) => this.touchEnd(e));
+
+        this.track.addEventListener("mouseenter", () => this.stopAutoplay());
+        this.track.addEventListener("mouseleave", () => this.startAutoplay());
+
+        // Força atualização imediata dos dots
+        this.updateDotColors();
+        this.startAutoplay();
+      }
+
+      updateDotStyle(dot, isActive) {
+        dot.style.backgroundColor = isActive ? this.dotActiveColor : this.dotColor;
+        dot.style.transform = isActive ? "scale(1.2)" : "scale(1)";
+      }
+
+      updateDotColors() {
+        this.dots.forEach((dot, index) => {
+          this.updateDotStyle(dot, index === this.currentSlide);
+        });
+      }
+
+      startAutoplay() {
+        this.stopAutoplay();
+        this.autoplayInterval = setInterval(() => this.next(), 3000);
+      }
+
+      stopAutoplay() {
+        if (this.autoplayInterval) {
+          clearInterval(this.autoplayInterval);
+          this.autoplayInterval = null;
+        }
+      }
+
+      updateSlide() {
+        this.track.style.transition = "transform 0.3s ease";
+        this.track.style.transform = `translateX(-${this.currentSlide * 100}%)`;
+        this.updateDotColors();
+      }
+
+      next() {
+        this.currentSlide = (this.currentSlide + 1) % this.slides.length;
+        this.updateSlide();
+      }
+
+      prev() {
+        this.currentSlide = (this.currentSlide - 1 + this.slides.length) % this.slides.length;
+        this.updateSlide();
+      }
+
+      goToSlide(index) {
+        this.currentSlide = index;
+        this.updateSlide();
+        this.stopAutoplay();
+        this.startAutoplay();
+      }
+
+      touchStart(e) {
+        this.touchStartX = e.touches[0].clientX;
+        this.stopAutoplay();
+        this.track.style.transition = "none";
+      }
+
+      touchMove(e) {
+        if (!this.touchStartX) return;
+        e.preventDefault();
+        const currentX = e.touches[0].clientX;
+        const diff = this.touchStartX - currentX;
+        const moveX = -(diff + this.currentSlide * this.gallery.offsetWidth);
+        this.track.style.transform = `translateX(${moveX}px)`;
+      }
+
+      touchEnd(e) {
+        const touchEndX = e.changedTouches[0].clientX;
+        const diff = this.touchStartX - touchEndX;
+
+        if (Math.abs(diff) > 50) {
+          if (diff > 0) this.next();
+          else this.prev();
+        } else {
+          this.updateSlide();
+        }
+
+        this.touchStartX = 0;
+        this.startAutoplay();
+      }
+    }
+
+    // Função para inicializar galerias em um container específico
+    function initializeGalleries(container = document) {
+      container.querySelectorAll('.mobile-gallery').forEach(gallery => {
+        const existingGallery = gallery.galleryInstance;
+        if (existingGallery) {
+          existingGallery.stopAutoplay();
+        }
+        gallery.galleryInstance = new Gallery(gallery);
+      });
+    }
+
+    // Atualiza a função showSection para incluir inicialização de galerias
+    function showSection(sectionId) {
+      const sections = document.querySelectorAll('.quiz-section');
+      sections.forEach(section => {
+        section.querySelectorAll('.mobile-gallery').forEach(gallery => {
+          if (gallery.galleryInstance) {
+            gallery.galleryInstance.stopAutoplay();
+          }
+        });
+        section.classList.remove('active');
+      });
+      
+      const targetSection = document.getElementById(sectionId);
+      if (targetSection) {
+        targetSection.classList.add('active');
+        interpolateVariables(targetSection);
+        setupDelayedButtons(targetSection);
+        animateProgressBars(targetSection);
+        setupInputWidget(targetSection.querySelector('.input-widget'));
+        initializeGalleries(targetSection);
+      }
+    }
+
+    // Inicializa tudo quando o DOM carregar
+    document.addEventListener('DOMContentLoaded', function() {
+      // Inicializa galerias na primeira seção
+      const firstSection = document.querySelector('.quiz-section');
+      if (firstSection) {
+        firstSection.classList.add('active');
+        initializeGalleries(firstSection);
+        interpolateVariables(firstSection);
+        animateProgressBars(firstSection);
+        setupInputWidget(firstSection.querySelector('.input-widget'));
+      }
+
+      // Observa mudanças nas seções
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.target.classList.contains('active')) {
+            initializeGalleries(mutation.target);
+          }
+        });
+      });
+
+      document.querySelectorAll('.quiz-section').forEach((section) => {
+        observer.observe(section, { 
+          attributes: true, 
+          attributeFilter: ['class']
+        });
+      });
+    });
+    </script>
+  </body>
+  </html>
