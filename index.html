@@ -785,7 +785,6 @@
     }, delay);
   });
 }
-
 function showSection(sectionId) {
   console.log('Showing section:', sectionId);
 
@@ -834,8 +833,6 @@ function showSection(sectionId) {
     initializeGalleries(targetSection);
   }
 }
-
-
 
     function handleProgressCompletion(progressElement) {
       const enableRedirect = progressElement.getAttribute('data-enable-redirect') === 'true';
@@ -1115,47 +1112,50 @@ function interpolateVariables(section) {
 
 function showSection(sectionId) {
   console.log('Showing section:', sectionId);
+
+  // Remove 'active' de todas as seções e para o autoplay de galerias
   const sections = document.querySelectorAll('.quiz-section');
   sections.forEach(section => {
+    section.classList.remove('active');
     section.querySelectorAll('.mobile-gallery').forEach(gallery => {
       if (gallery.galleryInstance) {
         gallery.galleryInstance.stopAutoplay();
       }
     });
-    section.classList.remove('active');
+    // Ocultar botões
     const buttons = section.querySelectorAll('.mobile-button');
     buttons.forEach(button => {
-      button.style.opacity = "0";
-      button.style.transition = "none";
+      button.style.opacity = '0';
+      button.style.transition = 'none';
     });
   });
-  
+
+  // Acha a seção alvo
   const targetSection = document.getElementById(sectionId);
   if (targetSection) {
+    // Torna a seção ativa
     targetSection.classList.add('active');
+
+    // -------------------------------------------------------------
+    //  FORÇAR A ROLAGEM PARA O TOPO  (3 tentativas)
+    // -------------------------------------------------------------
+    window.scrollTo({ top: 0, behavior: 'auto' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+
+    // Exibir botões (com ou sem delay)
     setupDelayedButtons(targetSection);
-    
-    // Mostrar botões sem delay imediatamente
     const regularButtons = targetSection.querySelectorAll('.mobile-button:not([data-delay])');
     regularButtons.forEach(button => {
-      button.style.opacity = "1";
-      button.style.transition = "opacity 0.3s ease";
+      button.style.opacity = '1';
+      button.style.transition = 'opacity 0.3s ease';
     });
-    
+
+    // Chamadas extras: progress bars, inputs, etc.
     animateProgressBars(targetSection);
     interpolateVariables(targetSection);
     setupInputWidget(targetSection.querySelector('.input-widget'));
     initializeGalleries(targetSection);
-
-    // Adiciona um evento de transição para rolar para o topo quando a seção for exibida
-    targetSection.addEventListener('transitionend', function(event) {
-      if (event.target === targetSection && event.propertyName === 'opacity') {
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth'
-        });
-      }
-    });
   }
 }
 
@@ -1389,47 +1389,50 @@ document.addEventListener('DOMContentLoaded', function() {
     // Atualiza a função showSection para incluir inicialização de galerias
 function showSection(sectionId) {
   console.log('Showing section:', sectionId);
+
+  // Remove 'active' de todas as seções e para o autoplay de galerias
   const sections = document.querySelectorAll('.quiz-section');
   sections.forEach(section => {
+    section.classList.remove('active');
     section.querySelectorAll('.mobile-gallery').forEach(gallery => {
       if (gallery.galleryInstance) {
         gallery.galleryInstance.stopAutoplay();
       }
     });
-    section.classList.remove('active');
+    // Ocultar botões
     const buttons = section.querySelectorAll('.mobile-button');
     buttons.forEach(button => {
-      button.style.opacity = "0";
-      button.style.transition = "none";
+      button.style.opacity = '0';
+      button.style.transition = 'none';
     });
   });
-  
+
+  // Acha a seção alvo
   const targetSection = document.getElementById(sectionId);
   if (targetSection) {
+    // Torna a seção ativa
     targetSection.classList.add('active');
+
+    // -------------------------------------------------------------
+    //  FORÇAR A ROLAGEM PARA O TOPO  (3 tentativas)
+    // -------------------------------------------------------------
+    window.scrollTo({ top: 0, behavior: 'auto' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+
+    // Exibir botões (com ou sem delay)
     setupDelayedButtons(targetSection);
-    
-    // Mostrar botões sem delay imediatamente
     const regularButtons = targetSection.querySelectorAll('.mobile-button:not([data-delay])');
     regularButtons.forEach(button => {
-      button.style.opacity = "1";
-      button.style.transition = "opacity 0.3s ease";
+      button.style.opacity = '1';
+      button.style.transition = 'opacity 0.3s ease';
     });
-    
+
+    // Chamadas extras: progress bars, inputs, etc.
     animateProgressBars(targetSection);
     interpolateVariables(targetSection);
     setupInputWidget(targetSection.querySelector('.input-widget'));
     initializeGalleries(targetSection);
-
-    // Adiciona um evento de transição para rolar para o topo quando a seção for exibida
-    targetSection.addEventListener('transitionend', function(event) {
-      if (event.target === targetSection && event.propertyName === 'opacity') {
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth'
-        });
-      }
-    });
   }
 }
 
