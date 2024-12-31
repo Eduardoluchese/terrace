@@ -1114,18 +1114,48 @@ function interpolateVariables(section) {
 }
 
 function showSection(sectionId) {
+  console.log('Showing section:', sectionId);
   const sections = document.querySelectorAll('.quiz-section');
   sections.forEach(section => {
+    section.querySelectorAll('.mobile-gallery').forEach(gallery => {
+      if (gallery.galleryInstance) {
+        gallery.galleryInstance.stopAutoplay();
+      }
+    });
     section.classList.remove('active');
+    const buttons = section.querySelectorAll('.mobile-button');
+    buttons.forEach(button => {
+      button.style.opacity = "0";
+      button.style.transition = "none";
+    });
   });
   
   const targetSection = document.getElementById(sectionId);
   if (targetSection) {
     targetSection.classList.add('active');
-    interpolateVariables(targetSection);
     setupDelayedButtons(targetSection);
+    
+    // Mostrar botões sem delay imediatamente
+    const regularButtons = targetSection.querySelectorAll('.mobile-button:not([data-delay])');
+    regularButtons.forEach(button => {
+      button.style.opacity = "1";
+      button.style.transition = "opacity 0.3s ease";
+    });
+    
     animateProgressBars(targetSection);
+    interpolateVariables(targetSection);
     setupInputWidget(targetSection.querySelector('.input-widget'));
+    initializeGalleries(targetSection);
+
+    // Adiciona um evento de transição para rolar para o topo quando a seção for exibida
+    targetSection.addEventListener('transitionend', function(event) {
+      if (event.target === targetSection && event.propertyName === 'opacity') {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      }
+    });
   }
 }
 
@@ -1357,27 +1387,51 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Atualiza a função showSection para incluir inicialização de galerias
-    function showSection(sectionId) {
-      const sections = document.querySelectorAll('.quiz-section');
-      sections.forEach(section => {
-        section.querySelectorAll('.mobile-gallery').forEach(gallery => {
-          if (gallery.galleryInstance) {
-            gallery.galleryInstance.stopAutoplay();
-          }
-        });
-        section.classList.remove('active');
-      });
-      
-      const targetSection = document.getElementById(sectionId);
-      if (targetSection) {
-        targetSection.classList.add('active');
-        interpolateVariables(targetSection);
-        setupDelayedButtons(targetSection);
-        animateProgressBars(targetSection);
-        setupInputWidget(targetSection.querySelector('.input-widget'));
-        initializeGalleries(targetSection);
+function showSection(sectionId) {
+  console.log('Showing section:', sectionId);
+  const sections = document.querySelectorAll('.quiz-section');
+  sections.forEach(section => {
+    section.querySelectorAll('.mobile-gallery').forEach(gallery => {
+      if (gallery.galleryInstance) {
+        gallery.galleryInstance.stopAutoplay();
       }
-    }
+    });
+    section.classList.remove('active');
+    const buttons = section.querySelectorAll('.mobile-button');
+    buttons.forEach(button => {
+      button.style.opacity = "0";
+      button.style.transition = "none";
+    });
+  });
+  
+  const targetSection = document.getElementById(sectionId);
+  if (targetSection) {
+    targetSection.classList.add('active');
+    setupDelayedButtons(targetSection);
+    
+    // Mostrar botões sem delay imediatamente
+    const regularButtons = targetSection.querySelectorAll('.mobile-button:not([data-delay])');
+    regularButtons.forEach(button => {
+      button.style.opacity = "1";
+      button.style.transition = "opacity 0.3s ease";
+    });
+    
+    animateProgressBars(targetSection);
+    interpolateVariables(targetSection);
+    setupInputWidget(targetSection.querySelector('.input-widget'));
+    initializeGalleries(targetSection);
+
+    // Adiciona um evento de transição para rolar para o topo quando a seção for exibida
+    targetSection.addEventListener('transitionend', function(event) {
+      if (event.target === targetSection && event.propertyName === 'opacity') {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      }
+    });
+  }
+}
 
     // Inicializa tudo quando o DOM carregar
     document.addEventListener('DOMContentLoaded', function() {
