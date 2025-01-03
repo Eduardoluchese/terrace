@@ -1,304 +1,2775 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Terrace</title>
-  <style>
-    #quiz-container,body{display:flex;min-height:100vh}.mobile-button,.mobile-progress{position:relative}.notes,body{font-family:Poppins,sans-serif}.mobile-button,.option-button{cursor:pointer;min-height:65px}body{margin:0;padding:0;justify-content:center;align-items:flex-start}#quiz-container{width:100%;flex-direction:column;align-items:center}.quiz-section{display:none;width:100%;min-height:100vh;padding:20px 0;box-sizing:border-box}.quiz-section.active{display:flex;flex-direction:column;align-items:center}.content{width:100%;max-width:600px;margin:0 auto;padding:0 20px;box-sizing:border-box}.mobile-button{display:flex;align-items:center;border-radius:.75rem;border:1px solid;font-size:20px;transition:background .3s}.mobile-button:hover{background:linear-gradient(45deg,var(--hover-color),var(--hover-color))!important}.mobile-button .emoji{margin-left:-10px;font-size:40px;margin-right:20px;flex-shrink:0}.mobile-button .text{flex:1;text-align:left}.mobile-button a{text-decoration:none;color:inherit;display:flex;align-items:center;width:100%;height:100%}button{padding:8px 16px;border:none;border-radius:5px;background-color:#89b4fa;color:#1e1e2e;cursor:pointer;transition:background-color .3s}button:hover{background-color:#b4befe}.progress-bar{width:100%;height:20px;background-color:#313244;border-radius:10px;overflow:hidden}.progress-fill{height:100%;background-color:#89b4fa;transition:width .3s ease-out;width:0}.progress-value{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:#fff;font-size:12px;font-weight:700;text-shadow:0 0 2px rgba(0,0,0,.5)}.mobile-phone-widget .elements,.notes{position:relative;box-shadow:0 2px 5px rgba(0,0,0,.1);background-color:#f9fafb}.mobile-feedback{border-radius:10px;box-shadow:0 2px 5px rgba(0,0,0,.1)}.feedback-container{padding:15px;display:flex;align-items:flex-start;margin-bottom:30px}.feedback-image{width:50px;height:50px;border-radius:50%;margin-right:15px}.feedback-content{flex:1}.feedback-name{font-weight:700;margin-bottom:2px}.feedback-location{font-size:.9em;margin-bottom:5px}.feedback-stars{color:gold;margin-bottom:5px}.feedback-text{font-style:italic;line-height:1.4}.mobile-gallery,.mobile-phone-widget,.mobile-text{max-width:600px}.mobile-phone-widget .elements{height:250px;display:flex;align-items:center;border-radius:40px 20px 20px 40px;width:100%;max-width:600px;margin:0 auto 30px;border:1px solid #e5e7eb}.mobile-phone-widget .phone-frame{position:absolute;left:0;width:120px;height:96%;border:6px solid #000;border-radius:1.5rem;overflow:hidden;margin-left:-1px}.mobile-phone-widget .phone-frame img{width:100%;height:100%;object-fit:cover}.mobile-phone-widget .iphone-detalhe{position:absolute;height:10px;background-color:#000;width:60px;margin:0 auto;border-radius:0 0 40px 40px;left:50%;transform:translateX(-50%);top:0}.mobile-phone-widget .text{margin-left:140px;padding-right:10px}.mobile-phone-widget .text h2{margin-top:0}.mobile-phone-widget[data-position=right] .elements{border-radius:20px 40px 40px 20px}.mobile-phone-widget[data-position=right] .phone-frame{left:auto;right:0;margin-right:-1px}.mobile-phone-widget[data-position=right] .text{margin-left:20px;margin-right:140px;padding-right:0}.mobile-phone-widget .phone-content{padding:0;box-sizing:border-box;height:100%;width:100%;object-fit:cover}.mobile-image{display:block}.mobile-image img{width:100%;height:auto;display:block;border-radius:1rem;object-fit:contain}.notes{border-radius:.75rem;display:flex;padding:15px;border:1px solid #e5e7eb}.texts-notes{padding-left:42px;flex:1}.icon{flex-shrink:0;position:absolute;top:0;left:0;margin:10px 0 0 10px}.icon svg{width:32px;height:32px;fill:#f59e0b}.title-notes{font-size:1.25rem;font-weight:700;padding-bottom:10px}.options-grid{display:flex;flex-direction:column;gap:10px}.option-button{position:relative;width:100%;display:flex;align-items:center;justify-content:space-between;border-radius:.75rem;border:1px solid #d6d6d6;background:linear-gradient(45deg,#f4f4f4,#fff);font-size:20px;margin-bottom:10px;padding:0;transition:.3s}.option-content{display:flex;align-items:center;width:100%;padding:15px 20px}.emoji{font-size:40px;margin-right:20px;margin-left:-10px;flex-shrink:0}.option-text{text-align:left;font-size:1rem;flex:1;line-height:1.3}.checkbox{width:24px;height:24px;border:2px solid #d6d6d6;border-radius:4px;background:#fff;position:relative;flex-shrink:0}.option-button.active .checkbox{background:#9333ea;border-color:#9333ea}.option-button.active .checkbox::after{content:"";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(1);width:16px;height:16px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3Cpath fill='white' d='M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center}.continue-button{width:100%;min-height:65px;border-radius:.75rem;border:none;background:#9333ea;color:#fff;font-size:20px;margin-top:20px;cursor:not-allowed;opacity:.5;transition:.3s}.continue-button.active,.gallery-dot{cursor:pointer;opacity:1}.continue-button:hover{opacity:.9}.input-container{width:100%;max-width:600px;margin:0 auto;position:relative;box-sizing:border-box}.input-widget input.input-field{width:100%;padding:24px 60px;border:1px solid #e5e7eb;border-radius:.75rem;font-size:17px;background-color:#f9fafb;box-shadow:0 1px 3px rgba(0,0,0,.05),0 2px 8px rgba(0,0,0,.02);transition:.3s;box-sizing:border-box;color:#000;margin:0!important}.input-field::placeholder{font-size:17px}.mobile-video .overlay-text,.mobile-video .overlay-title{font-family:Arial,sans-serif;font-size:5cqw;margin:0}.input-field:focus{outline:0;box-shadow:inset 0 0 0 2px currentColor}.user-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);display:flex;align-items:center;justify-content:center;width:30px;height:40px;pointer-events:none}.mobile-video .overlay,.video-iframe{transform:translate(-50%,-50%);position:absolute}.user-icon svg{height:40px;fill:currentColor;stroke:none}.user-icon svg path{fill:currentColor;stroke:none;stroke-width:0}.input-widget input.input-field::placeholder{color:var(--placeholder-color,currentColor);opacity:.5;font-size:17px}.mobile-video .container{container-type:inline-size;max-width:600px}.mobile-video .video-container{position:relative;width:100%;height:0;padding-bottom:133.33%;background-color:transparent;overflow:hidden;border-radius:1rem}.video-iframe{top:50%;left:50%;width:101%;height:101%;border:none;background:#000}.mobile-video .blur-background{position:absolute;top:-1px;left:-1px;width:calc(100% + 2px);height:calc(100% + 2px);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:199;display:block}.mobile-video .overlay{color:#fff;padding:2cqw;width:50%;height:40%;background-color:#5d3f92;z-index:200;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:2cqw;text-align:center;border-radius:8px;left:50%;top:50%}.mobile-video .overlay-title{font-weight:700;text-transform:uppercase}.mobile-video .play-icon{position:relative;height:50%}.mobile-video .bottom-overlay,.mobile-video .top-overlay{position:absolute;left:0;width:100%;background-color:transparent;z-index:300;pointer-events:auto}.mobile-video .top-overlay{top:0;height:20%}.mobile-video .bottom-overlay{bottom:0;height:20%}.mobile-video .hidden{display:none}.mobile-video .play-icon circle,.mobile-video .play-icon path{transition:.3s}.gallery-container{border-radius:.75rem;overflow:hidden;position:relative}.gallery-track{display:flex;transition:transform .3s;width:100%}.gallery-slide{flex:0 0 100%;width:100%}.gallery-slide img{width:100%;height:auto;display:block}.gallery-nav{display:flex;gap:8px;justify-content:center;margin-top:12px}.gallery-dot{width:8px;height:8px;border-radius:50%;transition:.25s}.gallery-dot.active{transform:scale(1.2)}.input-widget,.mobile-button,.mobile-feedback,.mobile-gallery,.mobile-image,.mobile-multiple-choice,.mobile-note,.mobile-phone-widget,.mobile-progress,.mobile-text,.mobile-video .container{width:100%;margin:0 auto 40px}
-  </style>
-</head>
-<body>
-   <div id="quiz-container">
-        <section id="section-0" class="quiz-section active" style="background-color: #ffffff">
-            <div class="content" style="color: #000000;">
-                <div class="mobile-text" id="text-1735586446482" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(131, 17, 0); position: relative;"><h2>Eu duvido que você não queira comprar um apartamento de 1 milhão após terminar esta apresentação…
-</h2></div><div class="mobile-text" id="text-1735586600313" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(122, 122, 122);"><p>Clique em no botão para começar!</p></div><div id="image-1735586638926" class="mobile-image" style="position: relative; max-width: 393px; width: 100%; margin-inline: auto;"><img src="https://www.mariniconstrucoes.com.br/images/terrace/image-1.png" alt="Imagem" style="width: 100%; height: auto;"></div><button class="mobile-button" id="button-1735586640397" style="background: linear-gradient(45deg, rgb(181, 26, 0), rgb(131, 17, 0)); border-color: rgb(131, 17, 0); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#b51a00" data-delay="0"><span class="emoji"></span><span class="text" style="color: rgb(255, 255, 255); text-align: center;">Começar</span></button>
-            </div>
-        </section>
-        <section id="section-1" class="quiz-section " style="background-color: #ffffff">
-            <div class="content" style="color: #000000;">
-                <div class="mobile-text" id="text-1735586688613-swaf9fun9" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(131, 17, 0);"><h2>Você já ouviu falar sobre investimento em imóveis na planta?
-</h2></div><button class="mobile-button" id="button-1735586688613-1goffd89d" style="background: linear-gradient(45deg, rgb(181, 26, 0), rgb(131, 17, 0)); border-color: rgb(131, 17, 0); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#b51a00" data-delay="0"><span class="emoji"></span><span class="text" style="color: rgb(255, 255, 255); text-align: center;">Sim</span></button><button class="mobile-button" id="button-1735586712670" style="background: linear-gradient(45deg, rgb(181, 26, 0), rgb(131, 17, 0)); border-color: rgb(131, 17, 0); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#b51a00" data-delay="0"><span class="emoji"></span><span class="text" style="color: rgb(255, 255, 255); text-align: center;">Não</span></button>
-            </div>
-        </section>
-        <section id="section-2" class="quiz-section " style="background-color: #ffffff">
-            <div class="content" style="color: #000000;">
-                <div class="mobile-text" id="text-1735586732922-056zn7mf2" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(131, 17, 0); position: relative;"><h2>O que são imóveis na planta? 🤔
-</h2></div><div class="mobile-text" id="text-1735586754068" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(122, 122, 122);"><h3>Imóveis na planta são propriedades que ainda estão <u>em fase de projeto ou construção,</u> sendo comercializadas antes de sua conclusão.
-</h3></div><button class="mobile-button" id="button-1735586831474" style="background: linear-gradient(45deg, rgb(181, 26, 0), rgb(131, 17, 0)); border-color: rgb(131, 17, 0); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#b51a00" data-delay="0"><span class="emoji"></span><span class="text" style="color: rgb(255, 255, 255); text-align: center;">Continuar</span></button>
-            </div>
-        </section>
-        <section id="section-3" class="quiz-section " style="background-color: #ffffff">
-            <div class="content" style="color: #000000;">
-                <div class="mobile-text" id="text-1735586882094-rgx3zxi7p" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(131, 17, 0);"><h1>Quais os benefícios de comprar um imóvel na planta?
-</h1></div><div class="mobile-text" id="text-1735586882094-xqjjtx50q" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(122, 122, 122); position: relative;"><p>Ao adquirir um imóvel na planta, você se beneficia de:
-</p></div><div class="mobile-text" id="text-1735587017470" style="font-weight: normal; font-style: normal; text-align: left; color: rgb(35, 35, 35);"><p></p><div style=" background-color:#E5E5E5; padding:15px; border-radius:1rem; margin-bottom:-20px;"><b>✅ Preços Mais Acessíveis:</b>Imóveis na planta geralmente são oferecidos a valores mais baixos em comparação aos já construídos, permitindo economia significativa para o comprador.<br></div><p></p></div><div class="mobile-text" id="text-1735587030619" style="font-weight: normal; font-style: normal; text-align: left; color: rgb(35, 35, 35);"><p></p><div style=" background-color:#E5E5E5; padding:15px; border-radius:1rem;margin-bottom:-20px;<br>">✅ <b>Condições de Pagamento Flexíveis:</b> Construtoras costumam oferecer facilidades de pagamento, como parcelamento da entrada e financiamento direto, adaptando-se ao orçamento do comprador. </div><p></p></div><div class="mobile-text" id="text-1735587061847" style="font-weight: normal; font-style: normal; text-align: left; color: rgb(35, 35, 35);"><p></p><div style=" background-color:#E5E5E5; padding:15px; border-radius:1rem; margin-bottom:-20px;<br>"><b>✅  Potencial de Valorização: </b>Durante a construção, o imóvel tende a valorizar, podendo alcançar até 50% de aumento no valor até a conclusão da obra.<br></div><p></p></div><div class="mobile-text" id="text-1735587081656" style="font-weight: normal; font-style: normal; text-align: left; color: rgb(35, 35, 35);"><p></p><div style=" background-color:#E5E5E5; padding:15px; border-radius:1rem;margin-bottom:-20px;<br>"><b>✅ Personalização do Imóvel:</b>Ao adquirir na planta, o comprador tem a oportunidade de escolher acabamentos, layouts e detalhes de design, adaptando o imóvel às suas preferências pessoais.</div><p></p></div><div class="mobile-text" id="text-1735587101524" style="font-weight: normal; font-style: normal; text-align: left; color: rgb(35, 35, 35);"><p></p><div style=" background-color:#E5E5E5; padding:15px; border-radius:1rem;<br>"><b>✅ Instalações Modernas e Novas:</b>  Imóveis novos seguem as tendências mais recentes em arquitetura, design e tecnologia, oferecendo plantas funcionais, áreas comuns equipadas e sistemas de segurança modernos. </div><p></p></div><button class="mobile-button" id="button-1735587139658" style="background: linear-gradient(45deg, rgb(181, 26, 0), rgb(131, 17, 0)); border-color: rgb(131, 17, 0); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#b51a00" data-delay="0"><span class="emoji"></span><span class="text" style="color: rgb(255, 255, 255); text-align: center;">Continuar</span></button>
-            </div>
-        </section>
-        <section id="section-4" class="quiz-section " style="background-color: #ffffff">
-            <div class="content" style="color: #000000;">
-                <div class="mobile-text" id="text-1735587185907-t3ze3ssox" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(131, 17, 0);"><h1>Mais alguns benefícios interessantes...
-</h1></div><div class="mobile-text" id="text-1735587185907-heb43mhsc" style="font-weight: normal; font-style: normal; text-align: left; color: rgb(35, 35, 35);"><p></p><div style=" background-color:#E5E5E5; padding:15px; border-radius:1rem; margin-bottom:-20px;<br>"><b>✅ Menos Gastos com Manutenção: </b>Por serem novos, esses imóveis demandam menos gastos com reparos nos primeiros anos, resultando em economia para o proprietário. </div><p></p></div><div class="mobile-text" id="text-1735587185907-pn7gtt9xo" style="font-weight: normal; font-style: normal; text-align: left; color: rgb(35, 35, 35);"><p></p><div style=" background-color:#E5E5E5; padding:15px; border-radius:1rem; margin-bottom:-20px;<br>"><b>✅ Documentação Descomplicada: </b>A documentação de imóveis na planta tende a ser mais simples, com menor chance de erros, proporcionando segurança ao comprador. </div><p></p></div><div class="mobile-text" id="text-1735587185907-r6w6gdlgk" style="font-weight: normal; font-style: normal; text-align: left; color: rgb(35, 35, 35); position: relative;"><p></p><div style=" background-color:#E5E5E5; padding:15px; border-radius:1rem; margin-bottom:-20px;<br>"><b>✅ Garantia da Construtora:</b> Imóveis na planta geralmente possuem garantias da construtora, oferecendo mais tranquilidade em relação à qualidade da obra. </div><p></p></div><div class="mobile-text" id="text-1735587185907-8bshwpded" style="font-weight: normal; font-style: normal; text-align: left; color: rgb(35, 35, 35);"><p></p><div style=" background-color:#E5E5E5; padding:15px; border-radius:1rem; margin-bottom:-20px;<br>"><b>✅ Possibilidade de Escolher a Unidade: </b>Ao comprar na planta, o comprador tem mais opções para escolher a unidade que melhor atende às suas necessidades e preferências, como andar, posição e vista.  </div><p></p></div><div class="mobile-text" id="text-1735587185907-k2sgegabl" style="font-weight: normal; font-style: normal; text-align: left; color: rgb(35, 35, 35);"><p></p><div style=" background-color:#E5E5E5; padding:15px; border-radius:1rem;<br>"><b>✅ Prazo para Planejar a Mudança: </b>O período de construção oferece tempo para o comprador se organizar financeiramente e planejar a mudança com calma.</div><p></p></div><button class="mobile-button" id="button-1735587185907-gtz47xi8h" style="background: linear-gradient(45deg, rgb(181, 26, 0), rgb(131, 17, 0)); border-color: rgb(131, 17, 0); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#b51a00" data-delay="0"><span class="emoji"></span><span class="text" style="color: rgb(255, 255, 255); text-align: center;">Continuar</span></button>
-            </div>
-        </section>
-        <section id="section-5" class="quiz-section " style="background-color: #ffffff">
-            <div class="content" style="color: #000000;">
-                <div class="mobile-text" id="text-1735587392810-y56juwve1" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(131, 17, 0);"><h2>Como investidores experientes minimizam esses riscos?
-</h2></div><div class="mobile-text" id="text-1735587392810-9mfqd87h4" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(122, 122, 122);"><p> as principais estratégias são...
-</p></div><div class="mobile-text" id="text-1735587462044" style="font-weight: normal; font-style: normal; text-align: left; color: rgb(35, 35, 35); position: relative;"><p></p><div style=" background-color:#E5E5E5; padding:15px; border-radius:1rem; margin-bottom:-20px;<br>"><b>✅ Escolhem construtoras renomadas </b> </div><p></p></div><div class="mobile-text" id="text-1735587922552" style="font-weight: normal; font-style: normal; text-align: left; color: rgb(35, 35, 35); position: relative;"><p></p><div style=" background-color:#E5E5E5; padding:15px; border-radius:1rem; margin-bottom:-20px;<br>"><b>✅ Analisam histórico de entregas </b> </div><p></p></div><div class="mobile-text" id="text-1735587985378" style="font-weight: normal; font-style: normal; text-align: left; color: rgb(35, 35, 35); position: relative;"><p></p><div style=" background-color:#E5E5E5; padding:15px; border-radius:1rem; margin-bottom:-20px;<br>"><b>✅ Verificam documentação completa </b> </div><p></p></div><div class="mobile-text" id="text-1735588016313" style="font-weight: normal; font-style: normal; text-align: left; color: rgb(35, 35, 35);"><p></p><div style=" background-color:#E5E5E5; padding:15px; border-radius:1rem; "><b>✅ Estudam potencial da região </b> </div><p></p></div><button class="mobile-button" id="button-1735588035197" style="background: linear-gradient(45deg, rgb(181, 26, 0), rgb(131, 17, 0)); border-color: rgb(131, 17, 0); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#b51a00" data-delay="0"><span class="emoji"></span><span class="text" style="color: rgb(255, 255, 255); text-align: center;">Descobrir mais</span></button>
-            </div>
-        </section>
-        <section id="section-6" class="quiz-section " style="background-color: #ffffff">
-            <div class="content" style="color: #000000;">
-                <div class="mobile-text" id="text-1735588095332-789ehrk85" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(131, 17, 0);"><h2>Qual destas estratégias você considera mais interessante?
-</h2></div><div class="mobile-text" id="text-1735588095332-pghinkr2z" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(122, 122, 122);"><p>Escolha uma das opções ou varias...</p></div><div id="choice-1735599686658" class="mobile-multiple-choice" style="position: relative;">
-  <div class="options-grid">
-  <button class="option-button" style="background: #f4f4f4; border-color: #d6d6d6">
-    <div class="option-content">
-      <span class="emoji"></span>
-      <span class="option-text" style="color: #000000">Comprar em regiões com alto potencial de valorização</span>
-      <div class="checkbox" style="border-color: #b51a00"></div>
-    </div>
-  </button>
-
-  <button class="option-button" style="background: #f4f4f4; border-color: #d6d6d6">
-    <div class="option-content">
-      <span class="emoji"></span>
-      <span class="option-text" style="color: #000000">Investir em construtoras renomadas</span>
-      <div class="checkbox" style="border-color: #b51a00"></div>
-    </div>
-  </button>
-
-  <button class="option-button" style="background: #f4f4f4; border-color: #d6d6d6">
-    <div class="option-content">
-      <span class="emoji"></span>
-      <span class="option-text" style="color: #000000">Aproveitar preços mais baixos no lançamento</span>
-      <div class="checkbox" style="border-color: #b51a00"></div>
-    </div>
-  </button>
-
-  <button class="option-button" style="background: #f4f4f4; border-color: #d6d6d6">
-    <div class="option-content">
-      <span class="emoji"></span>
-      <span class="option-text" style="color: #000000">Revender antes da entrega das chaves</span>
-      <div class="checkbox" style="border-color: rgb(181, 26, 0);"></div>
-    </div>
-  </button>
-</div>
-  <button class="continue-button" style="color: rgb(255, 255, 255); border-width: 1px 1px 8px; border-style: solid; border-color: rgb(131, 17, 0); border-image: none; background: linear-gradient(45deg, rgb(181, 26, 0), rgb(131, 17, 0)); box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 0.5; cursor: not-allowed;">Continuar</button>
-</div>
-            </div>
-        </section>
-        <section id="section-7" class="quiz-section " style="background-color: #ffffff">
-            <div class="content" style="color: #000000;">
-                <div class="mobile-text" id="text-1735589992793-jiuxlkv9g" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(131, 17, 0);"><h2>O que mais te interessou até agora?
-</h2></div><div class="mobile-text" id="text-1735589992793-qyqqnv5ou" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(122, 122, 122);"><p>Clique em um dos botões!</p></div><button class="mobile-button" id="button-1735589992793-xnnojbotc" style="background: linear-gradient(45deg, rgb(181, 26, 0), rgb(131, 17, 0)); border-color: rgb(131, 17, 0); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#b51a00" data-delay="0"><span class="emoji">💰</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">O potencial de valorização</span></button><button class="mobile-button" id="button-1735590034216" style="background: linear-gradient(45deg, rgb(181, 26, 0), rgb(131, 17, 0)); border-color: rgb(131, 17, 0); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#b51a00" data-delay="0"><span class="emoji">🧾</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Condições de pagamento</span></button><button class="mobile-button" id="button-1735590034856" style="background: linear-gradient(45deg, rgb(181, 26, 0), rgb(131, 17, 0)); border-color: rgb(131, 17, 0); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#b51a00" data-delay="0"><span class="emoji">🔒</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Segurança do investimento</span></button><button class="mobile-button" id="button-1735590035733" style="background: linear-gradient(45deg, rgb(181, 26, 0), rgb(131, 17, 0)); border-color: rgb(131, 17, 0); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#b51a00" data-delay="0"><span class="emoji">😃</span><span class="text" style="color: rgb(255, 255, 255); text-align: left;">Conhecer oportunidades</span></button>
-            </div>
-        </section>
-        <section id="section-8" class="quiz-section " style="background-color: #ffffff">
-            <div class="content" style="color: #000000;">
-                <div class="mobile-text" id="text-1735590205429-lzijoud10" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(131, 17, 0);"><h1>Parabéns! 🤩
-</h1></div><div class="mobile-text" id="text-1735590205429-p3a2sxzcy" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(122, 122, 122); position: relative;"><h3>Você acaba de descobrir por que investir em imóveis na planta é uma das estratégias mais seguras para multiplicar seu patrimônio.
-</h3></div><div class="mobile-text" id="text-1735590661437" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(131, 17, 0);"><h2>Tenho uma oportunidade única para te apresentar...
-</h2></div><button class="mobile-button" id="button-1735590700480" style="background: linear-gradient(45deg, rgb(181, 26, 0), rgb(131, 17, 0)); border-color: rgb(131, 17, 0); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#b51a00" data-delay=""><span class="emoji"></span><span class="text" style="color: rgb(255, 255, 255); text-align: center;">Conhecer oportunidade</span></button>
-            </div>
-        </section>
-        <section id="section-9" class="quiz-section " style="background-color: #ffffff">
-            <div class="content" style="color: #000000;">
-                <div class="mobile-text" id="text-1735590722042-p11waygg7" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(131, 17, 0); position: relative;"><h2>Conheça o Terrace Residence: Localização Premium no Centro da Capital do Vinho</h2></div><div class="mobile-text" id="text-1735591583781" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(122, 122, 122); position: relative;"><h3>Investimento Exclusivo no Coração de Bento Gonçalves</h3></div><div id="video-1735600101685" class="mobile-video" style="position: relative;">
-  <div class="container">
-    <div class="video-container" style="padding-bottom: 124.8%;">
-      <iframe id="youtube-video-1735600101685" class="video-iframe" src="https://www.youtube-nocookie.com/embed/xgqJ4hkRh0I?controls=0&enablejsapi=1&modestbranding=1&showinfo=0title=0&fs=0&rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" title="YouTube video player"></iframe>
-      <div id="blur-bg-1735600101685" class="blur-background" style="display: none;"></div>
-      <div id="start-overlay-1735600101685" class="overlay" style="display: none; background-color: rgb(131, 17, 0); color: rgb(255, 255, 255);">
-        <h1 class="overlay-title">Ligue o som e...</h1>
-     <svg class="play-icon" viewBox="0 0 24 24" style="color: rgb(255, 255, 255);">
-        <circle cx="12" cy="12" r="10" stroke="#FF0000" stroke-width="1" fill="none" style="stroke: rgb(255, 255, 255) !important; fill: none !important;"></circle>
-        <path d="M9.5 7.5L16 12L9.5 16.5V7.5Z" fill="#FF0000" style="stroke: rgb(255, 255, 255) !important; fill: none !important;"></path>
-    </svg>
-
-        <p class="overlay-text">Clique para assistir</p>
-      </div>
-      <div id="pause-overlay-1735600101685" class="overlay hidden" style="background-color: rgb(131, 17, 0); color: rgb(255, 255, 255);">
-        <h1 class="overlay-title">Vídeo pausado</h1>
-        <svg class="play-icon" viewBox="0 0 24 24" fill="white" style="color: rgb(255, 255, 255);">
-          <circle cx="12" cy="12" r="10" stroke="white" stroke-width="1" fill="none" style="stroke: rgb(255, 255, 255) !important; fill: none !important;"></circle>
-          <path d="M9.5 7.5L16 12L9.5 16.5V7.5Z" fill="white" style="stroke: rgb(255, 255, 255) !important; fill: none !important;"></path>
-        </svg>
-        <p class="overlay-text">Continuar assistindo</p>
-      </div>
-      <div class="top-overlay"></div>
-      <div class="bottom-overlay"></div>
-    </div>
-  </div></div><button class="mobile-button" id="button-1735600131462" style="background: linear-gradient(45deg, rgb(181, 26, 0), rgb(131, 17, 0)); border-color: rgb(131, 17, 0); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#b51a00" data-delay="210" data-link="https://wa.me/5551980156915?text=Ol%C3%A1,%20quero%20saber%20mais%20sobre%20o%20Terrce."><span class="emoji"></span><span class="text" style="color: rgb(255, 255, 255); text-align: center;">Chamar no whatsapp</span></button>
-            </div>
-        </section>
-        <section id="section-10" class="quiz-section " style="background-color: #ffffff">
-            <div class="content" style="color: #000000;">
-                <div class="mobile-text" id="text-1735600847272" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(131, 17, 0); position: relative;"><h2>Você sabia que é possível lucrar até 40% em 24-36 meses?
-</h2></div><div class="mobile-text" id="text-1735600864843" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(146, 146, 146);"><h3>Investir em imóveis na planta no Brasil pode resultar em uma valorização significativa durante o período de construção. Em geral, essa valorização varia entre 15% e 40% até a entrega do imóvel.</h3></div><div id="image-1735600901032" class="mobile-image" style="position: relative; max-width: 500px; width: 100%; margin-inline: auto;"><img src="https://i.ibb.co/0XHqS4P/Captura-de-Tela-2024-12-30-s-17-07-27.png" alt="Imagem" style="width: 100%; height: auto;"></div><div class="mobile-text" id="text-1735600927590" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(122, 122, 122);"><h3>Isso significa que, ao final da construção, o imóvel poderia valer entre R$ 230.000 e R$ 280.000</h3></div><button class="mobile-button" id="button-1735601667950" style="background: linear-gradient(45deg, rgb(181, 26, 0), rgb(131, 17, 0)); border-color: rgb(131, 17, 0); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#e32400" data-delay=""><span class="emoji"></span><span class="text" style="color: rgb(255, 255, 255); text-align: center;">Continuar</span></button>
-            </div>
-        </section>
-</div>
-<script>
-// Dados de conexões fornecidos no formato JSON
-const connectionsData = [{"startIndex":0,"endIndex":1,"elementId":"button-1735586640397"},{"startIndex":1,"endIndex":2,"elementId":"button-1735586712670"},{"startIndex":1,"endIndex":2,"elementId":"button-1735586688613-1goffd89d"},{"startIndex":2,"endIndex":3,"elementId":"button-1735586831474"},{"startIndex":3,"endIndex":4,"elementId":"button-1735587139658"},{"startIndex":4,"endIndex":5,"elementId":"button-1735587185907-gtz47xi8h"},{"startIndex":5,"endIndex":6,"elementId":"button-1735588035197"},{"startIndex":7,"endIndex":8,"elementId":"button-1735589992793-xnnojbotc"},{"startIndex":7,"endIndex":8,"elementId":"button-1735590034216"},{"startIndex":7,"endIndex":8,"elementId":"button-1735590034856"},{"startIndex":7,"endIndex":8,"elementId":"button-1735590035733"},{"startIndex":8,"endIndex":9,"elementId":"button-1735590700480"},{"startIndex":6,"endIndex":10,"elementId":"choice-1735599686658"},{"startIndex":10,"endIndex":7,"elementId":"button-1735601667950"}];
-
-const ANALYTICS_CONFIG={webhookUrl:"https://script.google.com/macros/s/AKfycbz8C1Sp8GQJdGrHNH8sgNHLDkiT3KDQodhQbC2qhdc_4_wo6VWInUnpZXPkl-TEbMqz/exec",quizId:"quiz_"+Date.now(),quizName:"Terrace",quizCategory:"Teste"},quizAnalytics={quizName:ANALYTICS_CONFIG.quizName,startTime:Date.now(),endTime:null,furthestSection:"section-0",responses:{},city:"",nome:"",email:"",whatsapp:""};async function sendAnalytics(){try{quizAnalytics.nome=userVariables.nome||"",quizAnalytics.email=userVariables.email||"",quizAnalytics.whatsapp=userVariables.whatsapp||"",quizAnalytics.city=quizAnalytics.city||"Desconhecida";let e=[quizAnalytics];await fetch(ANALYTICS_CONFIG.webhookUrl,{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:new URLSearchParams({data:JSON.stringify(e)})}),console.log("Analytics enviado com sucesso.")}catch(t){console.error("Erro ao enviar analytics:",t)}}function handlePageHide(){quizAnalytics.endTime=Date.now(),quizAnalytics.nome=userVariables.nome||"",quizAnalytics.email=userVariables.email||"",quizAnalytics.whatsapp=userVariables.whatsapp||"";let e=[quizAnalytics],t=new Blob([new URLSearchParams({data:JSON.stringify(e)})],{type:"application/x-www-form-urlencoded"});navigator.sendBeacon(ANALYTICS_CONFIG.webhookUrl,t)}function handleVisibilityChange(){"hidden"===document.visibilityState&&handlePageHide()}function sendAnalyticsAndRedirect(e){quizAnalytics.nome=userVariables.nome||"",quizAnalytics.email=userVariables.email||"",quizAnalytics.whatsapp=userVariables.whatsapp||"",quizAnalytics.city=quizAnalytics.city||"Desconhecida";let t=[quizAnalytics],i=new Blob([new URLSearchParams({data:JSON.stringify(t)})],{type:"application/x-www-form-urlencoded"}),n=navigator.sendBeacon(ANALYTICS_CONFIG.webhookUrl,i);n?window.location.href=e:fetch(ANALYTICS_CONFIG.webhookUrl,{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},body:new URLSearchParams({data:JSON.stringify(t)})}).then(()=>{window.location.href=e}).catch(t=>{console.error("Erro ao enviar analytics:",t),window.location.href=e})}window.addEventListener("pagehide",handlePageHide),window.addEventListener("beforeunload",handlePageHide),document.addEventListener("visibilitychange",handleVisibilityChange),document.addEventListener("click",function(e){let t=e.target.closest(".mobile-button");if(t){let i=t.id,n=connectionsData.find(e=>e.elementId===i);if(n){let a=n.startIndex,o=t.querySelector(".text").textContent;quizAnalytics.responses["section_"+a]=o,showSection("section-"+n.endIndex)}let l=t.getAttribute("data-link");l&&(quizAnalytics.endTime=Date.now(),sendAnalyticsAndRedirect(l))}});let cityFetched=!1;async function fetchUserCity(){if(!cityFetched){cityFetched=!0,console.log("Iniciando fetchUserCity...");try{let e=await fetch("https://geolocation-db.com/json/");console.log("Resposta da API:",e);let t=await e.json();console.log("Dados da API:",t),t&&t.city?(quizAnalytics.city=t.city,console.log("Cidade do usu\xe1rio:",t.city)):(console.error("Falha ao obter a cidade."),quizAnalytics.city="Desconhecida")}catch(i){console.error("Erro ao buscar a cidade:",i),quizAnalytics.city="Desconhecida"}}}function setupDelayedButtons(e){let t=e.querySelectorAll(".mobile-button[data-delay]");t.forEach(e=>{e.style.opacity="0",e.style.transition="opacity 0.3s ease",e.style.pointerEvents="none";let t=1e3*parseFloat(e.getAttribute("data-delay"));setTimeout(()=>{e.style.opacity="1",e.style.pointerEvents="auto"},t)})}function showSection(e){console.log("Showing section:",e);let t=document.querySelectorAll(".quiz-section");t.forEach(e=>{e.classList.remove("active"),e.querySelectorAll(".mobile-gallery").forEach(e=>{e.galleryInstance&&e.galleryInstance.stopAutoplay()});let t=e.querySelectorAll(".mobile-button");t.forEach(e=>{e.style.opacity="0",e.style.transition="none",fetchUserCity()})});let i=document.getElementById(e);if(i){i.classList.add("active"),window.scrollTo({top:0,behavior:"auto"}),document.documentElement.scrollTop=0,document.body.scrollTop=0,setupDelayedButtons(i);let n=i.querySelectorAll(".mobile-button:not([data-delay])");n.forEach(e=>{e.style.opacity="1",e.style.transition="opacity 0.3s ease"}),animateProgressBars(i),interpolateVariables(i),setupInputWidget(i.querySelector(".input-widget")),initializeGalleries(i),fetchUserCity();let a=parseInt(e.split("-")[1])||0,o=parseInt(quizAnalytics.furthestSection.split("-")[1])||0;a>o&&(quizAnalytics.furthestSection=e)}}function handleProgressCompletion(e){let t="true"===e.getAttribute("data-enable-redirect");t&&setTimeout(function(){let t=e.getAttribute("data-redirect-link");if(t)window.location.href=t;else{let i=connectionsData.find(function(t){return t.elementId===e.id});i&&showSection("section-"+i.endIndex)}},1e3)}function animateProgressBars(e){let t=e.querySelectorAll(".mobile-progress");t.forEach(function(e){let t=e.querySelector(".progress-fill"),i=e.querySelector(".progress-value"),n=parseInt(e.getAttribute("data-start"))||0,a=parseInt(e.getAttribute("data-end"))||100,o="true"===e.getAttribute("data-enable-redirect"),l=parseInt(e.getAttribute("data-duration"))||1;console.log("Animating progress bar:",e.id,"from",n,"to",a,"duration:",l),t.style.width=n+"%",i.textContent=n+"%";let s=n,c=(a-n)/(50*l),r=setInterval(function(){(s+=c)>=a&&(s=a,clearInterval(r),console.log("Progress bar reached 100%"),o&&handleProgressCompletion(e)),t.style.width=s+"%",i.textContent=Math.round(s)+"%"},20)})}document.addEventListener("DOMContentLoaded",function(){console.log("DOM fully loaded");let e=document.querySelector(".quiz-section");e&&(console.log("Activating first section"),e.classList.add("active"),animateProgressBars(e))});document.addEventListener("click",function(e){let button=e.target.closest(".button");if(button){let onclick=button.getAttribute("onclick");onclick&&(console.log("Button clicked, executing:",onclick),eval(onclick))}}),document.querySelectorAll(".mobile-button").forEach(function(t){let e=document.createElement("a");for(e.href="javascript:void(0);",e.style.display="flex",e.style.alignItems="center",e.style.width="100%",e.style.height="100%";t.firstChild;)e.appendChild(t.firstChild);t.appendChild(e)}),document.querySelectorAll(".mobile-button").forEach(function(t){let e=t.getAttribute("data-hover-color");e&&t.style.setProperty("--hover-color",e)}),document.addEventListener("DOMContentLoaded",function(){let t=document.querySelectorAll(".mobile-button[data-delay]");t.forEach(t=>{t.style.opacity="0";let e=1e3*parseFloat(t.getAttribute("data-delay"));setTimeout(()=>{t.style.opacity="1",t.style.transition="opacity 0.3s ease"},e)})}),document.addEventListener("DOMContentLoaded",function(){function t(t){let e=t.querySelectorAll(".option-button"),l=t.querySelector(".continue-button"),o=l.style.backgroundColor,r=e[0]?.querySelector(".checkbox")?.style.borderColor||"#d6d6d6";e.forEach(t=>{let e=t.cloneNode(!0);t.parentNode.replaceChild(e,t)});let i=l.cloneNode(!0);return l.parentNode.replaceChild(i,l),t.querySelectorAll(".option-button").forEach(t=>{t.classList.remove("active");let e=t.querySelector(".checkbox");e&&(e.style.backgroundColor="",e.style.borderColor=r)}),i.classList.remove("active"),i.style.opacity="0.5",i.style.cursor="not-allowed",{options:t.querySelectorAll(".option-button"),continueButton:i,continueColor:o,checkboxColor:r}}let e=()=>{document.querySelectorAll(".mobile-multiple-choice").forEach(e=>{let{options:l,continueButton:o,continueColor:r,checkboxColor:i}=t(e);function s(t,e){let l=t.querySelectorAll(".option-button.active").length,o=l>0;return e.classList.toggle("active",o),e.style.opacity=o?"1":"0.5",e.style.cursor=o?"pointer":"not-allowed",l}function a(t){t.preventDefault(),this.classList.toggle("active");let l=this.querySelector(".checkbox");this.classList.contains("active")?(l.style.backgroundColor=i,l.style.borderColor=i):(l.style.backgroundColor="",l.style.borderColor=i),s(e,o)}l.forEach(t=>{t.addEventListener("click",a)}),o.addEventListener("click",()=>{let t=e.querySelectorAll(".option-button.active").length;if(t>0){let l=connectionsData.find(t=>t.elementId===e.id);l&&showSection("section-"+l.endIndex)}})})};e();let l=new MutationObserver(t=>{t.forEach(t=>{t.target.classList.contains("active")&&(e(),setupInputWidget(t.target.querySelector(".input-widget")))})});document.querySelectorAll(".quiz-section").forEach(t=>{l.observe(t,{attributes:!0,attributeFilter:["class"]})})});let userVariables=JSON.parse(sessionStorage.getItem("userVariables")||"{}");function setupInputWidget(t){if(!t)return;let e=t.querySelector(".input-field"),l=t.querySelector(".continue-button"),o=e.getAttribute("data-variable");l.disabled=!0,l.style.opacity="0.5",l.style.cursor="not-allowed",userVariables[o]&&(e.value=userVariables[o],l.disabled=!1,l.style.opacity="1",l.style.cursor="pointer"),e.addEventListener("input",function(){let t=this.value.trim().length>0;l.disabled=!t,l.style.opacity=t?"1":"0.5",l.style.cursor=t?"pointer":"not-allowed",userVariables[o]=this.value,sessionStorage.setItem("userVariables",JSON.stringify(userVariables))}),l.addEventListener("click",function(){if(e.value.trim().length>0){let l=connectionsData.find(e=>e.elementId===t.id);l&&showSection("section-"+l.endIndex)}})}function interpolateVariables(t){let e=Array.from(t.getElementsByTagName("*")).filter(t=>!t.children.length&&t.textContent.includes("{{")).map(t=>({element:t,original:t.textContent}));e.forEach(({element:t,original:e})=>{let l=e,o=l.match(/{{([^}]+)}}/g)||[];o.forEach(t=>{let e=t.slice(2,-2).trim(),o=userVariables[e]||quizAnalytics[e]||"";l=l.replace(t,o)}),t.textContent=l})}function initializeGalleries(t=document){t.querySelectorAll(".mobile-gallery").forEach(t=>{let e=t.galleryInstance;e&&e.stopAutoplay(),t.galleryInstance=new Gallery(t)})}class Gallery{constructor(t){this.gallery=t,this.track=t.querySelector(".gallery-track"),this.slides=[...t.querySelectorAll(".gallery-slide")],this.dots=[...t.querySelectorAll(".gallery-dot")],this.currentSlide=0,this.autoplayInterval=null;let e=t.querySelectorAll(".gallery-dot"),l=e[0],o=e[1];this.dotActiveColor=l?.style.backgroundColor||"#9333ea",this.dotColor=o?.style.backgroundColor||"#ccc",this.dots.forEach((t,e)=>{t.style.transition="all 0.3s ease",this.updateDotStyle(t,0===e)}),this.dots.forEach((t,e)=>{t.addEventListener("click",()=>this.goToSlide(e))}),this.touchStartX=0,this.touchEndX=0,this.track.addEventListener("touchstart",t=>this.touchStart(t)),this.track.addEventListener("touchmove",t=>this.touchMove(t)),this.track.addEventListener("touchend",t=>this.touchEnd(t)),this.track.addEventListener("mouseenter",()=>this.stopAutoplay()),this.track.addEventListener("mouseleave",()=>this.startAutoplay()),this.updateDotColors(),this.startAutoplay()}updateDotStyle(t,e){t.style.backgroundColor=e?this.dotActiveColor:this.dotColor,t.style.transform=e?"scale(1.2)":"scale(1)"}updateDotColors(){this.dots.forEach((t,e)=>{this.updateDotStyle(t,e===this.currentSlide)})}startAutoplay(){this.stopAutoplay(),this.autoplayInterval=setInterval(()=>this.next(),3e3)}stopAutoplay(){this.autoplayInterval&&(clearInterval(this.autoplayInterval),this.autoplayInterval=null)}updateSlide(){this.track.style.transition="transform 0.3s ease",this.track.style.transform=`translateX(-${100*this.currentSlide}%)`,this.updateDotColors()}next(){this.currentSlide=(this.currentSlide+1)%this.slides.length,this.updateSlide()}prev(){this.currentSlide=(this.currentSlide-1+this.slides.length)%this.slides.length,this.updateSlide()}goToSlide(t){this.currentSlide=t,this.updateSlide(),this.stopAutoplay(),this.startAutoplay()}touchStart(t){this.touchStartX=t.touches[0].clientX,this.stopAutoplay(),this.track.style.transition="none"}touchMove(t){if(!this.touchStartX)return;t.preventDefault();let e=t.touches[0].clientX,l=this.touchStartX-e,o=-(l+this.currentSlide*this.gallery.offsetWidth);this.track.style.transform=`translateX(${o}px)`}touchEnd(t){let e=t.changedTouches[0].clientX,l=this.touchStartX-e;Math.abs(l)>50?l>0?this.next():this.prev():this.updateSlide(),this.touchStartX=0,this.startAutoplay()}}
-
-
-/*************************************************************
-* 20) FUNÇÃO PARA INICIALIZAR VIDEOS DO YOUTUBE
-*************************************************************/
-// Objeto para armazenar todos os players
-const videoPlayers = new Map();
-
-/**
-* Inicializa um player de vídeo do YouTube
-* @param {HTMLElement} videoDiv - O div que contém o vídeo
-*/
-function initializeVideo(videoDiv) {
-  const uniqueId = videoDiv.id.split('-')[1];
-  const startOverlay = videoDiv.querySelector(`#start-overlay-${uniqueId}`);
-  const pauseOverlay = videoDiv.querySelector(`#pause-overlay-${uniqueId}`);
-  const blurBg = videoDiv.querySelector(`#blur-bg-${uniqueId}`);
-  const iframe = videoDiv.querySelector(`#youtube-video-${uniqueId}`);
-
-  if (!iframe) return; // Se não houver iframe, sair
-
-  const player = new YT.Player(`youtube-video-${uniqueId}`, {
-    events: {
-      onReady: function() {
-        startOverlay.style.display = "flex"; // Mostrar overlay de início
-        blurBg.style.display = "block"; // Mostrar fundo borrado
-
-        // Definir a qualidade do vídeo para HD (1080p)
-        player.setPlaybackQuality('hd1080');
-
-        // Evento de clique no overlay de início para reproduzir vídeo
-        startOverlay.onclick = () => {
-          player.playVideo();
-          startOverlay.style.display = "none";
-          blurBg.style.display = "none";
-        };
-
-        // Evento de clique no overlay de pausa para retomar vídeo
-        pauseOverlay.onclick = () => {
-          player.playVideo();
-          pauseOverlay.style.display = "none";
-          blurBg.style.display = "none";
-        };
-      },
- onStateChange: function(event) {
-  if (event.data === YT.PlayerState.PAUSED) {
-    pauseOverlay.style.display = "flex"; // Mostrar overlay de pausa
-    blurBg.style.display = "block";
-  } else if (event.data === YT.PlayerState.ENDED) {
-    startOverlay.style.display = "flex"; // Mostrar overlay de fim
-    pauseOverlay.style.display = "none";
-    blurBg.style.display = "block";
-  } else if (event.data === YT.PlayerState.PLAYING) {
-    startOverlay.style.display = "none"; // Esconder overlays quando reproduzindo
-    pauseOverlay.style.display = "none";
-    blurBg.style.display = "none";
-
-    // Assegurar que a qualidade esteja em HD
-    player.setPlaybackQuality('hd1080');
-  }
-}
-
-    }
-  });
-
-  // Armazena o player para uso posterior
-  videoPlayers.set(uniqueId, player);
-}
-
-
-/**
-* Função callback chamada quando a API do YouTube está pronta
-*/
-function onYouTubeIframeAPIReady() {
-// Inicializa todos os vídeos presentes na página
-document.querySelectorAll('.mobile-video').forEach(videoDiv => {
-  initializeVideo(videoDiv);
-});
-}
-
-/**
-* Observador de mutações para detectar quando uma seção se torna ativa e inicializar vídeos
-*/
-const videoObserver = new MutationObserver((mutations) => {
-mutations.forEach((mutation) => {
-  if (mutation.target.classList.contains('active')) {
-    mutation.target.querySelectorAll('.mobile-video').forEach(videoDiv => {
-      if (!videoPlayers.has(videoDiv.id.split('-')[1])) {
-        initializeVideo(videoDiv); // Inicializar vídeo se ainda não estiver inicializado
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Terrace</title>
+    <style>
+      #quiz-container,
+      body {
+        display: flex;
+        min-height: 100vh;
       }
-    });
-  }
-});
-});
+      .mobile-button,
+      .mobile-progress {
+        position: relative;
+      }
+      .notes,
+      body {
+        font-family: Poppins, sans-serif;
+      }
+      .mobile-button,
+      .option-button {
+        cursor: pointer;
+        min-height: 65px;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        justify-content: center;
+        align-items: flex-start;
+      }
+      #quiz-container {
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+      }
+      .quiz-section {
+        display: none;
+        width: 100%;
+        min-height: 100vh;
+        padding: 20px 0;
+        box-sizing: border-box;
+      }
+      .quiz-section.active {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .content {
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 0 20px;
+        box-sizing: border-box;
+      }
+      .mobile-button {
+        display: flex;
+        align-items: center;
+        border-radius: 0.75rem;
+        border: 1px solid;
+        font-size: 20px;
+        transition: background 0.3s;
+      }
+      .mobile-button:hover {
+        background: linear-gradient(
+          45deg,
+          var(--hover-color),
+          var(--hover-color)
+        ) !important;
+      }
+      .mobile-button .emoji {
+        margin-left: -10px;
+        font-size: 40px;
+        margin-right: 20px;
+        flex-shrink: 0;
+      }
+      .mobile-button .text {
+        flex: 1;
+        text-align: left;
+      }
+      .mobile-button a {
+        text-decoration: none;
+        color: inherit;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+      }
+      button {
+        padding: 8px 16px;
+        border: none;
+        border-radius: 5px;
+        background-color: #89b4fa;
+        color: #1e1e2e;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      button:hover {
+        background-color: #b4befe;
+      }
+      .progress-bar {
+        width: 100%;
+        height: 20px;
+        background-color: #313244;
+        border-radius: 10px;
+        overflow: hidden;
+      }
+      .progress-fill {
+        height: 100%;
+        background-color: #89b4fa;
+        transition: width 0.3s ease-out;
+        width: 0;
+      }
+      .progress-value {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #fff;
+        font-size: 12px;
+        font-weight: 700;
+        text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+      }
+      .mobile-phone-widget .elements,
+      .notes {
+        position: relative;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        background-color: #f9fafb;
+      }
+      .mobile-feedback {
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+      .feedback-container {
+        padding: 15px;
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 30px;
+      }
+      .feedback-image {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-right: 15px;
+      }
+      .feedback-content {
+        flex: 1;
+      }
+      .feedback-name {
+        font-weight: 700;
+        margin-bottom: 2px;
+      }
+      .feedback-location {
+        font-size: 0.9em;
+        margin-bottom: 5px;
+      }
+      .feedback-stars {
+        color: gold;
+        margin-bottom: 5px;
+      }
+      .feedback-text {
+        font-style: italic;
+        line-height: 1.4;
+      }
+      .mobile-gallery,
+      .mobile-phone-widget,
+      .mobile-text {
+        max-width: 600px;
+      }
+      .mobile-phone-widget .elements {
+        height: 250px;
+        display: flex;
+        align-items: center;
+        border-radius: 40px 20px 20px 40px;
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto 30px;
+        border: 1px solid #e5e7eb;
+      }
+      .mobile-phone-widget .phone-frame {
+        position: absolute;
+        left: 0;
+        width: 120px;
+        height: 96%;
+        border: 6px solid #000;
+        border-radius: 1.5rem;
+        overflow: hidden;
+        margin-left: -1px;
+      }
+      .mobile-phone-widget .phone-frame img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .mobile-phone-widget .iphone-detalhe {
+        position: absolute;
+        height: 10px;
+        background-color: #000;
+        width: 60px;
+        margin: 0 auto;
+        border-radius: 0 0 40px 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 0;
+      }
+      .mobile-phone-widget .text {
+        margin-left: 140px;
+        padding-right: 10px;
+      }
+      .mobile-phone-widget .text h2 {
+        margin-top: 0;
+      }
+      .mobile-phone-widget[data-position="right"] .elements {
+        border-radius: 20px 40px 40px 20px;
+      }
+      .mobile-phone-widget[data-position="right"] .phone-frame {
+        left: auto;
+        right: 0;
+        margin-right: -1px;
+      }
+      .mobile-phone-widget[data-position="right"] .text {
+        margin-left: 20px;
+        margin-right: 140px;
+        padding-right: 0;
+      }
+      .mobile-phone-widget .phone-content {
+        padding: 0;
+        box-sizing: border-box;
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+      }
+      .mobile-image {
+        display: block;
+      }
+      .mobile-image img {
+        width: 100%;
+        height: auto;
+        display: block;
+        border-radius: 1rem;
+        object-fit: contain;
+      }
+      .notes {
+        border-radius: 0.75rem;
+        display: flex;
+        padding: 15px;
+        border: 1px solid #e5e7eb;
+      }
+      .texts-notes {
+        padding-left: 42px;
+        flex: 1;
+      }
+      .icon {
+        flex-shrink: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin: 10px 0 0 10px;
+      }
+      .icon svg {
+        width: 32px;
+        height: 32px;
+        fill: #f59e0b;
+      }
+      .title-notes {
+        font-size: 1.25rem;
+        font-weight: 700;
+        padding-bottom: 10px;
+      }
+      .options-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .option-button {
+        position: relative;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-radius: 0.75rem;
+        border: 1px solid #d6d6d6;
+        background: linear-gradient(45deg, #f4f4f4, #fff);
+        font-size: 20px;
+        margin-bottom: 10px;
+        padding: 0;
+        transition: 0.3s;
+      }
+      .option-content {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        padding: 15px 20px;
+      }
+      .emoji {
+        font-size: 40px;
+        margin-right: 20px;
+        margin-left: -10px;
+        flex-shrink: 0;
+      }
+      .option-text {
+        text-align: left;
+        font-size: 1rem;
+        flex: 1;
+        line-height: 1.3;
+      }
+      .checkbox {
+        width: 24px;
+        height: 24px;
+        border: 2px solid #d6d6d6;
+        border-radius: 4px;
+        background: #fff;
+        position: relative;
+        flex-shrink: 0;
+      }
+      .option-button.active .checkbox {
+        background: #9333ea;
+        border-color: #9333ea;
+      }
+      .option-button.active .checkbox::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(1);
+        width: 16px;
+        height: 16px;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3Cpath fill='white' d='M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+      .continue-button {
+        width: 100%;
+        min-height: 65px;
+        border-radius: 0.75rem;
+        border: none;
+        background: #9333ea;
+        color: #fff;
+        font-size: 20px;
+        margin-top: 20px;
+        cursor: not-allowed;
+        opacity: 0.5;
+        transition: 0.3s;
+      }
+      .continue-button.active,
+      .gallery-dot {
+        cursor: pointer;
+        opacity: 1;
+      }
+      .continue-button:hover {
+        opacity: 0.9;
+      }
+      .input-container {
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+        position: relative;
+        box-sizing: border-box;
+      }
+      .input-widget input.input-field {
+        width: 100%;
+        padding: 24px 60px;
+        border: 1px solid #e5e7eb;
+        border-radius: 0.75rem;
+        font-size: 17px;
+        background-color: #f9fafb;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 2px 8px rgba(0, 0, 0, 0.02);
+        transition: 0.3s;
+        box-sizing: border-box;
+        color: #000;
+        margin: 0 !important;
+      }
+      .input-field::placeholder {
+        font-size: 17px;
+      }
+      .mobile-video .overlay-text,
+      .mobile-video .overlay-title {
+        font-family: Arial, sans-serif;
+        font-size: 5cqw;
+        margin: 0;
+      }
+      .input-field:focus {
+        outline: 0;
+        box-shadow: inset 0 0 0 2px currentColor;
+      }
+      .user-icon {
+        position: absolute;
+        left: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 40px;
+        pointer-events: none;
+      }
+      .mobile-video .overlay,
+      .video-iframe {
+        transform: translate(-50%, -50%);
+        position: absolute;
+      }
+      .user-icon svg {
+        height: 40px;
+        fill: currentColor;
+        stroke: none;
+      }
+      .user-icon svg path {
+        fill: currentColor;
+        stroke: none;
+        stroke-width: 0;
+      }
+      .input-widget input.input-field::placeholder {
+        color: var(--placeholder-color, currentColor);
+        opacity: 0.5;
+        font-size: 17px;
+      }
+      .mobile-video .container {
+        container-type: inline-size;
+        max-width: 600px;
+      }
+      .mobile-video .video-container {
+        position: relative;
+        width: 100%;
+        height: 0;
+        padding-bottom: 133.33%;
+        background-color: transparent;
+        overflow: hidden;
+        border-radius: 1rem;
+      }
+      .video-iframe {
+        top: 50%;
+        left: 50%;
+        width: 101%;
+        height: 101%;
+        border: none;
+        background: #000;
+      }
+      .mobile-video .blur-background {
+        position: absolute;
+        top: -1px;
+        left: -1px;
+        width: calc(100% + 2px);
+        height: calc(100% + 2px);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        z-index: 199;
+        display: block;
+      }
+      .mobile-video .overlay {
+        color: #fff;
+        padding: 2cqw;
+        width: 50%;
+        height: 40%;
+        background-color: #5d3f92;
+        z-index: 200;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2cqw;
+        text-align: center;
+        border-radius: 8px;
+        left: 50%;
+        top: 50%;
+      }
+      .mobile-video .overlay-title {
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+      .mobile-video .play-icon {
+        position: relative;
+        height: 50%;
+      }
+      .mobile-video .bottom-overlay,
+      .mobile-video .top-overlay {
+        position: absolute;
+        left: 0;
+        width: 100%;
+        background-color: transparent;
+        z-index: 300;
+        pointer-events: auto;
+      }
+      .mobile-video .top-overlay {
+        top: 0;
+        height: 20%;
+      }
+      .mobile-video .bottom-overlay {
+        bottom: 0;
+        height: 20%;
+      }
+      .mobile-video .hidden {
+        display: none;
+      }
+      .mobile-video .play-icon circle,
+      .mobile-video .play-icon path {
+        transition: 0.3s;
+      }
+      .gallery-container {
+        border-radius: 0.75rem;
+        overflow: hidden;
+        position: relative;
+      }
+      .gallery-track {
+        display: flex;
+        transition: transform 0.3s;
+        width: 100%;
+      }
+      .gallery-slide {
+        flex: 0 0 100%;
+        width: 100%;
+      }
+      .gallery-slide img {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+      .gallery-nav {
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+        margin-top: 12px;
+      }
+      .gallery-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        transition: 0.25s;
+      }
+      .gallery-dot.active {
+        transform: scale(1.2);
+      }
+      .input-widget,
+      .mobile-button,
+      .mobile-feedback,
+      .mobile-gallery,
+      .mobile-image,
+      .mobile-multiple-choice,
+      .mobile-note,
+      .mobile-phone-widget,
+      .mobile-progress,
+      .mobile-text,
+      .mobile-video .container {
+        width: 100%;
+        margin: 0 auto 40px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="quiz-container">
+      <section
+        id="section-0"
+        class="quiz-section active"
+        style="background-color: #ffffff"
+      >
+        <div class="content" style="color: #000000">
+          <div
+            class="mobile-text"
+            id="text-1735586446482"
+            style="
+              font-weight: bold;
+              font-style: normal;
+              text-align: center;
+              color: rgb(131, 17, 0);
+              position: relative;
+            "
+          >
+            <h2>
+              Eu duvido que você não queira comprar um apartamento de 1 milhão
+              após terminar esta apresentação…
+            </h2>
+          </div>
+          <div
+            class="mobile-text"
+            id="text-1735586600313"
+            style="
+              font-weight: bold;
+              font-style: normal;
+              text-align: center;
+              color: rgb(122, 122, 122);
+            "
+          >
+            <p>Clique em no botão para começar!</p>
+          </div>
+          <div
+            id="image-1735586638926"
+            class="mobile-image"
+            style="
+              position: relative;
+              max-width: 393px;
+              width: 100%;
+              margin-inline: auto;
+            "
+          >
+            <img
+              src="https://www.mariniconstrucoes.com.br/images/terrace/image-1.png"
+              alt="Imagem"
+              style="width: 100%; height: auto"
+            />
+          </div>
+          <button
+            class="mobile-button"
+            id="button-1735586640397"
+            style="
+              background: linear-gradient(
+                45deg,
+                rgb(181, 26, 0),
+                rgb(131, 17, 0)
+              );
+              border-color: rgb(131, 17, 0);
+              position: relative;
+              border-bottom-width: 8px;
+              box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px,
+                rgba(0, 0, 0, 0.12) 0px 2px 4px -1px;
+              transform: translateY(-2px);
+              opacity: 1;
+            "
+            data-hover-color="#b51a00"
+            data-delay="0"
+          >
+            <span class="emoji"></span
+            ><span
+              class="text"
+              style="color: rgb(255, 255, 255); text-align: center"
+              >Começar</span
+            >
+          </button>
+        </div>
+      </section>
+      <section
+        id="section-1"
+        class="quiz-section"
+        style="background-color: #ffffff"
+      >
+        <div class="content" style="color: #000000">
+          <div
+            class="mobile-text"
+            id="text-1735586688613-swaf9fun9"
+            style="
+              font-weight: bold;
+              font-style: normal;
+              text-align: center;
+              color: rgb(131, 17, 0);
+            "
+          >
+            <h2>
+              Você já ouviu falar sobre investimento em imóveis na planta?
+            </h2>
+          </div>
+          <button
+            class="mobile-button"
+            id="button-1735586688613-1goffd89d"
+            style="
+              background: linear-gradient(
+                45deg,
+                rgb(181, 26, 0),
+                rgb(131, 17, 0)
+              );
+              border-color: rgb(131, 17, 0);
+              position: relative;
+              border-bottom-width: 8px;
+              box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px,
+                rgba(0, 0, 0, 0.12) 0px 2px 4px -1px;
+              transform: translateY(-2px);
+              opacity: 1;
+            "
+            data-hover-color="#b51a00"
+            data-delay="0"
+          >
+            <span class="emoji"></span
+            ><span
+              class="text"
+              style="color: rgb(255, 255, 255); text-align: center"
+              >Sim</span
+            ></button
+          ><button
+            class="mobile-button"
+            id="button-1735586712670"
+            style="
+              background: linear-gradient(
+                45deg,
+                rgb(181, 26, 0),
+                rgb(131, 17, 0)
+              );
+              border-color: rgb(131, 17, 0);
+              position: relative;
+              border-bottom-width: 8px;
+              box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px,
+                rgba(0, 0, 0, 0.12) 0px 2px 4px -1px;
+              transform: translateY(-2px);
+              opacity: 1;
+            "
+            data-hover-color="#b51a00"
+            data-delay="0"
+          >
+            <span class="emoji"></span
+            ><span
+              class="text"
+              style="color: rgb(255, 255, 255); text-align: center"
+              >Não</span
+            >
+          </button>
+        </div>
+      </section>
+      <section
+        id="section-2"
+        class="quiz-section"
+        style="background-color: #ffffff"
+      >
+        <div class="content" style="color: #000000">
+          <div
+            class="mobile-text"
+            id="text-1735586732922-056zn7mf2"
+            style="
+              font-weight: bold;
+              font-style: normal;
+              text-align: center;
+              color: rgb(131, 17, 0);
+              position: relative;
+            "
+          >
+            <h2>O que são imóveis na planta? 🤔</h2>
+          </div>
+          <div
+            class="mobile-text"
+            id="text-1735586754068"
+            style="
+              font-weight: bold;
+              font-style: normal;
+              text-align: center;
+              color: rgb(122, 122, 122);
+            "
+          >
+            <h3>
+              Imóveis na planta são propriedades que ainda estão
+              <u>em fase de projeto ou construção,</u> sendo comercializadas
+              antes de sua conclusão.
+            </h3>
+          </div>
+          <button
+            class="mobile-button"
+            id="button-1735586831474"
+            style="
+              background: linear-gradient(
+                45deg,
+                rgb(181, 26, 0),
+                rgb(131, 17, 0)
+              );
+              border-color: rgb(131, 17, 0);
+              position: relative;
+              border-bottom-width: 8px;
+              box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px,
+                rgba(0, 0, 0, 0.12) 0px 2px 4px -1px;
+              transform: translateY(-2px);
+              opacity: 1;
+            "
+            data-hover-color="#b51a00"
+            data-delay="0"
+          >
+            <span class="emoji"></span
+            ><span
+              class="text"
+              style="color: rgb(255, 255, 255); text-align: center"
+              >Continuar</span
+            >
+          </button>
+        </div>
+      </section>
+      <section
+        id="section-3"
+        class="quiz-section"
+        style="background-color: #ffffff"
+      >
+        <div class="content" style="color: #000000">
+          <div
+            class="mobile-text"
+            id="text-1735586882094-rgx3zxi7p"
+            style="
+              font-weight: bold;
+              font-style: normal;
+              text-align: center;
+              color: rgb(131, 17, 0);
+            "
+          >
+            <h1>Quais os benefícios de comprar um imóvel na planta?</h1>
+          </div>
+          <div
+            class="mobile-text"
+            id="text-1735586882094-xqjjtx50q"
+            style="
+              font-weight: bold;
+              font-style: normal;
+              text-align: center;
+              color: rgb(122, 122, 122);
+              position: relative;
+            "
+          >
+            <p>Ao adquirir um imóvel na planta, você se beneficia de:</p>
+          </div>
+          <div
+            class="mobile-text"
+            id="text-1735587017470"
+            style="
+              font-weight: normal;
+              font-style: normal;
+              text-align: left;
+              color: rgb(35, 35, 35);
+            "
+          >
+            <p></p>
+            <div
+              style="
+                background-color: #e5e5e5;
+                padding: 15px;
+                border-radius: 1rem;
+                margin-bottom: -20px;
+              "
+            >
+              <b>✅ Preços Mais Acessíveis:</b>Imóveis na planta geralmente são
+              oferecidos a valores mais baixos em comparação aos já construídos,
+              permitindo economia significativa para o comprador.<br />
+            </div>
+            <p></p>
+          </div>
+          <div
+            class="mobile-text"
+            id="text-1735587030619"
+            style="
+              font-weight: normal;
+              font-style: normal;
+              text-align: left;
+              color: rgb(35, 35, 35);
+            "
+          >
+            <p></p>
+            <div
+              style=" background-color:#E5E5E5; padding:15px; border-radius:1rem;margin-bottom:-20px;<br>"
+            >
+              ✅ <b>Condições de Pagamento Flexíveis:</b> Construtoras costumam
+              oferecer facilidades de pagamento, como parcelamento da entrada e
+              financiamento direto, adaptando-se ao orçamento do comprador.
+            </div>
+            <p></p>
+          </div>
+          <div
+            class="mobile-text"
+            id="text-1735587061847"
+            style="
+              font-weight: normal;
+              font-style: normal;
+              text-align: left;
+              color: rgb(35, 35, 35);
+            "
+          >
+            <p></p>
+            <div
+              style=" background-color:#E5E5E5; padding:15px; border-radius:1rem; margin-bottom:-20px;<br>"
+            >
+              <b>✅ Potencial de Valorização: </b>Durante a construção, o imóvel
+              tende a valorizar, podendo alcançar até 50% de aumento no valor
+              até a conclusão da obra.<br />
+            </div>
+            <p></p>
+          </div>
+          <div
+            class="mobile-text"
+            id="text-1735587081656"
+            style="
+              font-weight: normal;
+              font-style: normal;
+              text-align: left;
+              color: rgb(35, 35, 35);
+            "
+          >
+            <p></p>
+            <div
+              style=" background-color:#E5E5E5; padding:15px; border-radius:1rem;margin-bottom:-20px;<br>"
+            >
+              <b>✅ Personalização do Imóvel:</b>Ao adquirir na planta, o
+              comprador tem a oportunidade de escolher acabamentos, layouts e
+              detalhes de design, adaptando o imóvel às suas preferências
+              pessoais.
+            </div>
+            <p></p>
+          </div>
+          <div
+            class="mobile-text"
+            id="text-1735587101524"
+            style="
+              font-weight: normal;
+              font-style: normal;
+              text-align: left;
+              color: rgb(35, 35, 35);
+            "
+          >
+            <p></p>
+            <div
+              style=" background-color:#E5E5E5; padding:15px; border-radius:1rem;<br>"
+            >
+              <b>✅ Instalações Modernas e Novas:</b> Imóveis novos seguem as
+              tendências mais recentes em arquitetura, design e tecnologia,
+              oferecendo plantas funcionais, áreas comuns equipadas e sistemas
+              de segurança modernos.
+            </div>
+            <p></p>
+          </div>
+          <button
+            class="mobile-button"
+            id="button-1735587139658"
+            style="
+              background: linear-gradient(
+                45deg,
+                rgb(181, 26, 0),
+                rgb(131, 17, 0)
+              );
+              border-color: rgb(131, 17, 0);
+              position: relative;
+              border-bottom-width: 8px;
+              box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px,
+                rgba(0, 0, 0, 0.12) 0px 2px 4px -1px;
+              transform: translateY(-2px);
+              opacity: 1;
+            "
+            data-hover-color="#b51a00"
+            data-delay="0"
+          >
+            <span class="emoji"></span
+            ><span
+              class="text"
+              style="color: rgb(255, 255, 255); text-align: center"
+              >Continuar</span
+            >
+          </button>
+        </div>
+      </section>
+      <section
+        id="section-4"
+        class="quiz-section"
+        style="background-color: #ffffff"
+      >
+        <div class="content" style="color: #000000">
+          <div
+            class="mobile-text"
+            id="text-1735587185907-t3ze3ssox"
+            style="
+              font-weight: bold;
+              font-style: normal;
+              text-align: center;
+              color: rgb(131, 17, 0);
+            "
+          >
+            <h1>Mais alguns benefícios interessantes...</h1>
+          </div>
+          <div
+            class="mobile-text"
+            id="text-1735587185907-heb43mhsc"
+            style="
+              font-weight: normal;
+              font-style: normal;
+              text-align: left;
+              color: rgb(35, 35, 35);
+            "
+          >
+            <p></p>
+            <div
+              style=" background-color:#E5E5E5; padding:15px; border-radius:1rem; margin-bottom:-20px;<br>"
+            >
+              <b>✅ Menos Gastos com Manutenção: </b>Por serem novos, esses
+              imóveis demandam menos gastos com reparos nos primeiros anos,
+              resultando em economia para o proprietário.
+            </div>
+            <p></p>
+          </div>
+          <div
+            class="mobile-text"
+            id="text-1735587185907-pn7gtt9xo"
+            style="
+              font-weight: normal;
+              font-style: normal;
+              text-align: left;
+              color: rgb(35, 35, 35);
+            "
+          >
+            <p></p>
+            <div
+              style=" background-color:#E5E5E5; padding:15px; border-radius:1rem; margin-bottom:-20px;<br>"
+            >
+              <b>✅ Documentação Descomplicada: </b>A documentação de imóveis na
+              planta tende a ser mais simples, com menor chance de erros,
+              proporcionando segurança ao comprador.
+            </div>
+            <p></p>
+          </div>
+          <div
+            class="mobile-text"
+            id="text-1735587185907-r6w6gdlgk"
+            style="
+              font-weight: normal;
+              font-style: normal;
+              text-align: left;
+              color: rgb(35, 35, 35);
+              position: relative;
+            "
+          >
+            <p></p>
+            <div
+              style=" background-color:#E5E5E5; padding:15px; border-radius:1rem; margin-bottom:-20px;<br>"
+            >
+              <b>✅ Garantia da Construtora:</b> Imóveis na planta geralmente
+              possuem garantias da construtora, oferecendo mais tranquilidade em
+              relação à qualidade da obra.
+            </div>
+            <p></p>
+          </div>
+          <div
+            class="mobile-text"
+            id="text-1735587185907-8bshwpded"
+            style="
+              font-weight: normal;
+              font-style: normal;
+              text-align: left;
+              color: rgb(35, 35, 35);
+            "
+          >
+            <p></p>
+            <div
+              style=" background-color:#E5E5E5; padding:15px; border-radius:1rem; margin-bottom:-20px;<br>"
+            >
+              <b>✅ Possibilidade de Escolher a Unidade: </b>Ao comprar na
+              planta, o comprador tem mais opções para escolher a unidade que
+              melhor atende às suas necessidades e preferências, como andar,
+              posição e vista.
+            </div>
+            <p></p>
+          </div>
+          <div
+            class="mobile-text"
+            id="text-1735587185907-k2sgegabl"
+            style="
+              font-weight: normal;
+              font-style: normal;
+              text-align: left;
+              color: rgb(35, 35, 35);
+            "
+          >
+            <p></p>
+            <div
+              style=" background-color:#E5E5E5; padding:15px; border-radius:1rem;<br>"
+            >
+              <b>✅ Prazo para Planejar a Mudança: </b>O período de construção
+              oferece tempo para o comprador se organizar financeiramente e
+              planejar a mudança com calma.
+            </div>
+            <p></p>
+          </div>
+          <button
+            class="mobile-button"
+            id="button-1735587185907-gtz47xi8h"
+            style="
+              background: linear-gradient(
+                45deg,
+                rgb(181, 26, 0),
+                rgb(131, 17, 0)
+              );
+              border-color: rgb(131, 17, 0);
+              position: relative;
+              border-bottom-width: 8px;
+              box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px,
+                rgba(0, 0, 0, 0.12) 0px 2px 4px -1px;
+              transform: translateY(-2px);
+              opacity: 1;
+            "
+            data-hover-color="#b51a00"
+            data-delay="0"
+          >
+            <span class="emoji"></span
+            ><span
+              class="text"
+              style="color: rgb(255, 255, 255); text-align: center"
+              >Continuar</span
+            >
+          </button>
+        </div>
+      </section>
+      <section
+        id="section-5"
+        class="quiz-section"
+        style="background-color: #ffffff"
+      >
+        <div class="content" style="color: #000000">
+          <div
+            class="mobile-text"
+            id="text-1735587392810-y56juwve1"
+            style="
+              font-weight: bold;
+              font-style: normal;
+              text-align: center;
+              color: rgb(131, 17, 0);
+            "
+          >
+            <h2>Como investidores experientes minimizam esses riscos?</h2>
+          </div>
+          <div
+            class="mobile-text"
+            id="text-1735587392810-9mfqd87h4"
+            style="
+              font-weight: bold;
+              font-style: normal;
+              text-align: center;
+              color: rgb(122, 122, 122);
+            "
+          >
+            <p>as principais estratégias são...</p>
+          </div>
+          <div
+            class="mobile-text"
+            id="text-1735587462044"
+            style="
+              font-weight: normal;
+              font-style: normal;
+              text-align: left;
+              color: rgb(35, 35, 35);
+              position: relative;
+            "
+          >
+            <p></p>
+            <div
+              style=" background-color:#E5E5E5; padding:15px; border-radius:1rem; margin-bottom:-20px;<br>"
+            >
+              <b>✅ Escolhem construtoras renomadas </b>
+            </div>
+            <p></p>
+          </div>
+          <div
+            class="mobile-text"
+            id="text-1735587922552"
+            style="
+              font-weight: normal;
+              font-style: normal;
+              text-align: left;
+              color: rgb(35, 35, 35);
+              position: relative;
+            "
+          >
+            <p></p>
+            <div
+              style=" background-color:#E5E5E5; padding:15px; border-radius:1rem; margin-bottom:-20px;<br>"
+            >
+              <b>✅ Analisam histórico de entregas </b>
+            </div>
+            <p></p>
+          </div>
+          <div
+            class="mobile-text"
+            id="text-1735587985378"
+            style="
+              font-weight: normal;
+              font-style: normal;
+              text-align: left;
+              color: rgb(35, 35, 35);
+              position: relative;
+            "
+          >
+            <p></p>
+            <div
+              style=" background-color:#E5E5E5; padding:15px; border-radius:1rem; margin-bottom:-20px;<br>"
+            >
+              <b>✅ Verificam documentação completa </b>
+            </div>
+            <p></p>
+          </div>
+          <div
+            class="mobile-text"
+            id="text-1735588016313"
+            style="
+              font-weight: normal;
+              font-style: normal;
+              text-align: left;
+              color: rgb(35, 35, 35);
+            "
+          >
+            <p></p>
+            <div
+              style="
+                background-color: #e5e5e5;
+                padding: 15px;
+                border-radius: 1rem;
+              "
+            >
+              <b>✅ Estudam potencial da região </b>
+            </div>
+            <p></p>
+          </div>
+          <button
+            class="mobile-button"
+            id="button-1735588035197"
+            style="
+              background: linear-gradient(
+                45deg,
+                rgb(181, 26, 0),
+                rgb(131, 17, 0)
+              );
+              border-color: rgb(131, 17, 0);
+              position: relative;
+              border-bottom-width: 8px;
+              box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px,
+                rgba(0, 0, 0, 0.12) 0px 2px 4px -1px;
+              transform: translateY(-2px);
+              opacity: 1;
+            "
+            data-hover-color="#b51a00"
+            data-delay="0"
+          >
+            <span class="emoji"></span
+            ><span
+              class="text"
+              style="color: rgb(255, 255, 255); text-align: center"
+              >Descobrir mais</span
+            >
+          </button>
+        </div>
+      </section>
+      <section
+        id="section-6"
+        class="quiz-section"
+        style="background-color: #ffffff"
+      >
+        <div class="content" style="color: #000000">
+          <div
+            class="mobile-text"
+            id="text-1735588095332-789ehrk85"
+            style="
+              font-weight: bold;
+              font-style: normal;
+              text-align: center;
+              color: rgb(131, 17, 0);
+            "
+          >
+            <h2>Qual destas estratégias você considera mais interessante?</h2>
+          </div>
+          <div
+            class="mobile-text"
+            id="text-1735588095332-pghinkr2z"
+            style="
+              font-weight: bold;
+              font-style: normal;
+              text-align: center;
+              color: rgb(122, 122, 122);
+            "
+          >
+            <p>Escolha uma das opções ou varias...</p>
+          </div>
+          <div
+            id="choice-1735599686658"
+            class="mobile-multiple-choice"
+            style="position: relative"
+          >
+            <div class="options-grid">
+              <button
+                class="option-button"
+                style="background: #f4f4f4; border-color: #d6d6d6"
+              >
+                <div class="option-content">
+                  <span class="emoji"></span>
+                  <span class="option-text" style="color: #000000"
+                    >Comprar em regiões com alto potencial de valorização</span
+                  >
+                  <div class="checkbox" style="border-color: #b51a00"></div>
+                </div>
+              </button>
 
-// Observar todas as seções do quiz para inicializar vídeos quando se tornam ativas
-document.querySelectorAll('.quiz-section').forEach((section) => {
-videoObserver.observe(section, { 
-  attributes: true, 
-  attributeFilter: ['class'],
-  subtree: true
-});
-});
+              <button
+                class="option-button"
+                style="background: #f4f4f4; border-color: #d6d6d6"
+              >
+                <div class="option-content">
+                  <span class="emoji"></span>
+                  <span class="option-text" style="color: #000000"
+                    >Investir em construtoras renomadas</span
+                  >
+                  <div class="checkbox" style="border-color: #b51a00"></div>
+                </div>
+              </button>
 
-/*************************************************************
-* 21) FUNÇÃO PARA INICIALIZAR TODAS AS GALERIAS
-*************************************************************/
-// Já definida anteriormente como initializeGalleries
+              <button
+                class="option-button"
+                style="background: #f4f4f4; border-color: #d6d6d6"
+              >
+                <div class="option-content">
+                  <span class="emoji"></span>
+                  <span class="option-text" style="color: #000000"
+                    >Aproveitar preços mais baixos no lançamento</span
+                  >
+                  <div class="checkbox" style="border-color: #b51a00"></div>
+                </div>
+              </button>
 
-/*************************************************************
-* 22) CLASSE PARA GERENCIAR GALERIAS DE IMAGENS
-*************************************************************/
-// Já definida anteriormente como Gallery
+              <button
+                class="option-button"
+                style="background: #f4f4f4; border-color: #d6d6d6"
+              >
+                <div class="option-content">
+                  <span class="emoji"></span>
+                  <span class="option-text" style="color: #000000"
+                    >Revender antes da entrega das chaves</span
+                  >
+                  <div
+                    class="checkbox"
+                    style="border-color: rgb(181, 26, 0)"
+                  ></div>
+                </div>
+              </button>
+            </div>
+            <button
+              class="continue-button"
+              style="
+                color: rgb(255, 255, 255);
+                border-width: 1px 1px 8px;
+                border-style: solid;
+                border-color: rgb(131, 17, 0);
+                border-image: none;
+                background: linear-gradient(
+                  45deg,
+                  rgb(181, 26, 0),
+                  rgb(131, 17, 0)
+                );
+                box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px,
+                  rgba(0, 0, 0, 0.12) 0px 2px 4px -1px;
+                transform: translateY(-2px);
+                opacity: 0.5;
+                cursor: not-allowed;
+              "
+            >
+              Continuar
+            </button>
+          </div>
+        </div>
+      </section>
+      <section
+        id="section-7"
+        class="quiz-section"
+        style="background-color: #ffffff"
+      >
+        <div class="content" style="color: #000000">
+          <div
+            class="mobile-text"
+            id="text-1735589992793-jiuxlkv9g"
+            style="
+              font-weight: bold;
+              font-style: normal;
+              text-align: center;
+              color: rgb(131, 17, 0);
+            "
+          >
+            <h2>O que mais te interessou até agora?</h2>
+          </div>
+          <div
+            class="mobile-text"
+            id="text-1735589992793-qyqqnv5ou"
+            style="
+              font-weight: bold;
+              font-style: normal;
+              text-align: center;
+              color: rgb(122, 122, 122);
+            "
+          >
+            <p>Clique em um dos botões!</p>
+          </div>
+          <button
+            class="mobile-button"
+            id="button-1735589992793-xnnojbotc"
+            style="
+              background: linear-gradient(
+                45deg,
+                rgb(181, 26, 0),
+                rgb(131, 17, 0)
+              );
+              border-color: rgb(131, 17, 0);
+              position: relative;
+              border-bottom-width: 8px;
+              box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px,
+                rgba(0, 0, 0, 0.12) 0px 2px 4px -1px;
+              transform: translateY(-2px);
+              opacity: 1;
+            "
+            data-hover-color="#b51a00"
+            data-delay="0"
+          >
+            <span class="emoji">💰</span
+            ><span
+              class="text"
+              style="color: rgb(255, 255, 255); text-align: left"
+              >O potencial de valorização</span
+            ></button
+          ><button
+            class="mobile-button"
+            id="button-1735590034216"
+            style="
+              background: linear-gradient(
+                45deg,
+                rgb(181, 26, 0),
+                rgb(131, 17, 0)
+              );
+              border-color: rgb(131, 17, 0);
+              position: relative;
+              border-bottom-width: 8px;
+              box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px,
+                rgba(0, 0, 0, 0.12) 0px 2px 4px -1px;
+              transform: translateY(-2px);
+              opacity: 1;
+            "
+            data-hover-color="#b51a00"
+            data-delay="0"
+          >
+            <span class="emoji">🧾</span
+            ><span
+              class="text"
+              style="color: rgb(255, 255, 255); text-align: left"
+              >Condições de pagamento</span
+            ></button
+          ><button
+            class="mobile-button"
+            id="button-1735590034856"
+            style="
+              background: linear-gradient(
+                45deg,
+                rgb(181, 26, 0),
+                rgb(131, 17, 0)
+              );
+              border-color: rgb(131, 17, 0);
+              position: relative;
+              border-bottom-width: 8px;
+              box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px,
+                rgba(0, 0, 0, 0.12) 0px 2px 4px -1px;
+              transform: translateY(-2px);
+              opacity: 1;
+            "
+            data-hover-color="#b51a00"
+            data-delay="0"
+          >
+            <span class="emoji">🔒</span
+            ><span
+              class="text"
+              style="color: rgb(255, 255, 255); text-align: left"
+              >Segurança do investimento</span
+            ></button
+          ><button
+            class="mobile-button"
+            id="button-1735590035733"
+            style="
+              background: linear-gradient(
+                45deg,
+                rgb(181, 26, 0),
+                rgb(131, 17, 0)
+              );
+              border-color: rgb(131, 17, 0);
+              position: relative;
+              border-bottom-width: 8px;
+              box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px,
+                rgba(0, 0, 0, 0.12) 0px 2px 4px -1px;
+              transform: translateY(-2px);
+              opacity: 1;
+            "
+            data-hover-color="#b51a00"
+            data-delay="0"
+          >
+            <span class="emoji">😃</span
+            ><span
+              class="text"
+              style="color: rgb(255, 255, 255); text-align: left"
+              >Conhecer oportunidades</span
+            >
+          </button>
+        </div>
+      </section>
+      <section
+        id="section-8"
+        class="quiz-section"
+        style="background-color: #ffffff"
+      >
+        <div class="content" style="color: #000000">
+          <div
+            class="mobile-text"
+            id="text-1735590205429-lzijoud10"
+            style="
+              font-weight: bold;
+              font-style: normal;
+              text-align: center;
+              color: rgb(131, 17, 0);
+            "
+          >
+            <h1>Parabéns! 🤩</h1>
+          </div>
+          <div
+            class="mobile-text"
+            id="text-1735590205429-p3a2sxzcy"
+            style="
+              font-weight: bold;
+              font-style: normal;
+              text-align: center;
+              color: rgb(122, 122, 122);
+              position: relative;
+            "
+          >
+            <h3>
+              Você acaba de descobrir por que investir em imóveis na planta é
+              uma das estratégias mais seguras para multiplicar seu patrimônio.
+            </h3>
+          </div>
+          <div
+            class="mobile-text"
+            id="text-1735590661437"
+            style="
+              font-weight: bold;
+              font-style: normal;
+              text-align: center;
+              color: rgb(131, 17, 0);
+            "
+          >
+            <h2>Tenho uma oportunidade única para te apresentar...</h2>
+          </div>
+          <button
+            class="mobile-button"
+            id="button-1735590700480"
+            style="
+              background: linear-gradient(
+                45deg,
+                rgb(181, 26, 0),
+                rgb(131, 17, 0)
+              );
+              border-color: rgb(131, 17, 0);
+              position: relative;
+              border-bottom-width: 8px;
+              box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px,
+                rgba(0, 0, 0, 0.12) 0px 2px 4px -1px;
+              transform: translateY(-2px);
+              opacity: 1;
+            "
+            data-hover-color="#b51a00"
+            data-delay=""
+          >
+            <span class="emoji"></span
+            ><span
+              class="text"
+              style="color: rgb(255, 255, 255); text-align: center"
+              >Conhecer oportunidade</span
+            >
+          </button>
+        </div>
+      </section>
+      <section
+        id="section-9"
+        class="quiz-section"
+        style="background-color: #ffffff"
+      >
+        <div class="content" style="color: #000000">
+          <div
+            class="mobile-text"
+            id="text-1735590722042-p11waygg7"
+            style="
+              font-weight: bold;
+              font-style: normal;
+              text-align: center;
+              color: rgb(131, 17, 0);
+              position: relative;
+            "
+          >
+            <h2>
+              Conheça o Terrace Residence: Localização Premium no Centro da
+              Capital do Vinho
+            </h2>
+          </div>
+          <div
+            class="mobile-text"
+            id="text-1735591583781"
+            style="
+              font-weight: bold;
+              font-style: normal;
+              text-align: center;
+              color: rgb(122, 122, 122);
+              position: relative;
+            "
+          >
+            <h3>Investimento Exclusivo no Coração de Bento Gonçalves</h3>
+          </div>
+          <div
+            id="video-1735600101685"
+            class="mobile-video"
+            style="position: relative"
+          >
+            <div class="container">
+              <div class="video-container" style="padding-bottom: 124.8%">
+                <iframe
+                  id="youtube-video-1735600101685"
+                  class="video-iframe"
+                  src="https://www.youtube-nocookie.com/embed/xgqJ4hkRh0I?controls=0&enablejsapi=1&modestbranding=1&showinfo=0title=0&fs=0&rel=0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen=""
+                  title="YouTube video player"
+                ></iframe>
+                <div
+                  id="blur-bg-1735600101685"
+                  class="blur-background"
+                  style="display: none"
+                ></div>
+                <div
+                  id="start-overlay-1735600101685"
+                  class="overlay"
+                  style="
+                    display: none;
+                    background-color: rgb(131, 17, 0);
+                    color: rgb(255, 255, 255);
+                  "
+                >
+                  <h1 class="overlay-title">Ligue o som e...</h1>
+                  <svg
+                    class="play-icon"
+                    viewBox="0 0 24 24"
+                    style="color: rgb(255, 255, 255)"
+                  >
+                    <circle
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="#FF0000"
+                      stroke-width="1"
+                      fill="none"
+                      style="
+                        stroke: rgb(255, 255, 255) !important;
+                        fill: none !important;
+                      "
+                    ></circle>
+                    <path
+                      d="M9.5 7.5L16 12L9.5 16.5V7.5Z"
+                      fill="#FF0000"
+                      style="
+                        stroke: rgb(255, 255, 255) !important;
+                        fill: none !important;
+                      "
+                    ></path>
+                  </svg>
 
-/*************************************************************
-* 23) FUNÇÃO PARA ATUALIZAR A FUNÇÃO showSection COM INICIALIZAÇÃO DE GALERIAS
-*************************************************************/
-// A função showSection já foi definida e atualizada anteriormente para incluir a inicialização de galerias
-
-/*************************************************************
-* 24) FINALIZAÇÃO DA INICIALIZAÇÃO DE GALERIAS E EVENTOS DOMContentLoaded
-*************************************************************/
-// Já tratado anteriormente no evento DOMContentLoaded
-
-/*************************************************************
-* 25) INICIALIZAÇÃO DE TODOS OS WIDGETS DE INPUT
-*************************************************************/
-document.querySelectorAll('.input-widget').forEach(setupInputWidget);
-
-</script>
-<script src="https://www.youtube.com/iframe_api"></script>
-<script>
-/*************************************************************
-* 26) CLASSE PARA GERENCIAR GALERIAS DE IMAGENS
-*************************************************************/
-// Já definida anteriormente como Gallery
-
-/*************************************************************
-* 27) FUNÇÃO PARA INICIALIZAR GALERIAS EM UM CONTÊINER ESPECÍFICO
-*************************************************************/
-// Já definida anteriormente como initializeGalleries
-
-/*************************************************************
-* 28) FUNÇÃO PARA ATUALIZAR A FUNÇÃO showSection COM INICIALIZAÇÃO DE GALERIAS
-*************************************************************/
-// Já definida anteriormente, não é necessário duplicar
-
-/*************************************************************
-* 29) FINALIZAÇÃO DA INICIALIZAÇÃO DE GALERIAS E EVENTOS DOMContentLoaded
-*************************************************************/
-// Já tratado anteriormente no evento DOMContentLoaded
-
+                  <p class="overlay-text">Clique para assistir</p>
+                </div>
+                <div
+                  id="pause-overlay-1735600101685"
+                  class="overlay hidden"
+                  style="
+                    background-color: rgb(131, 17, 0);
+                    color: rgb(255, 255, 255);
+                  "
+                >
+                  <h1 class="overlay-title">Vídeo pausado</h1>
+                  <svg
+                    class="play-icon"
+                    viewBox="0 0 24 24"
+                    fill="white"
+                    style="color: rgb(255, 255, 255)"
+                  >
+                    <circle
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="white"
+                      stroke-width="1"
+                      fill="none"
+                      style="
+                        stroke: rgb(255, 255, 255) !important;
+                        fill: none !important;
+                      "
+                    ></circle>
+                    <path
+                      d="M9.5 7.5L16 12L9.5 16.5V7.5Z"
+                      fill="white"
+                      style="
+                        stroke: rgb(255, 255, 255) !important;
+                        fill: none !important;
+                      "
+                    ></path>
+                  </svg>
+                  <p class="overlay-text">Continuar assistindo</p>
+                </div>
+                <div class="top-overlay"></div>
+                <div class="bottom-overlay"></div>
+              </div>
+            </div>
+          </div>
+          <button
+            class="mobile-button"
+            id="button-1735600131462"
+            style="
+              background: linear-gradient(
+                45deg,
+                rgb(181, 26, 0),
+                rgb(131, 17, 0)
+              );
+              border-color: rgb(131, 17, 0);
+              position: relative;
+              border-bottom-width: 8px;
+              box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px,
+                rgba(0, 0, 0, 0.12) 0px 2px 4px -1px;
+              transform: translateY(-2px);
+              opacity: 1;
+            "
+            data-hover-color="#b51a00"
+            data-delay="210"
+            data-link="https://wa.me/5551980156915?text=Ol%C3%A1,%20quero%20saber%20mais%20sobre%20o%20Terrce."
+          >
+            <span class="emoji"></span
+            ><span
+              class="text"
+              style="color: rgb(255, 255, 255); text-align: center"
+              >Chamar no whatsapp</span
+            >
+          </button>
+        </div>
+      </section>
+      <section
+        id="section-10"
+        class="quiz-section"
+        style="background-color: #ffffff"
+      >
+        <div class="content" style="color: #000000">
+          <div
+            class="mobile-text"
+            id="text-1735600847272"
+            style="
+              font-weight: bold;
+              font-style: normal;
+              text-align: center;
+              color: rgb(131, 17, 0);
+              position: relative;
+            "
+          >
+            <h2>Você sabia que é possível lucrar até 40% em 24-36 meses?</h2>
+          </div>
+          <div
+            class="mobile-text"
+            id="text-1735600864843"
+            style="
+              font-weight: bold;
+              font-style: normal;
+              text-align: center;
+              color: rgb(146, 146, 146);
+            "
+          >
+            <h3>
+              Investir em imóveis na planta no Brasil pode resultar em uma
+              valorização significativa durante o período de construção. Em
+              geral, essa valorização varia entre 15% e 40% até a entrega do
+              imóvel.
+            </h3>
+          </div>
+          <div
+            id="image-1735600901032"
+            class="mobile-image"
+            style="
+              position: relative;
+              max-width: 500px;
+              width: 100%;
+              margin-inline: auto;
+            "
+          >
+            <img
+              src="https://i.ibb.co/0XHqS4P/Captura-de-Tela-2024-12-30-s-17-07-27.png"
+              alt="Imagem"
+              style="width: 100%; height: auto"
+            />
+          </div>
+          <div
+            class="mobile-text"
+            id="text-1735600927590"
+            style="
+              font-weight: bold;
+              font-style: normal;
+              text-align: center;
+              color: rgb(122, 122, 122);
+            "
+          >
+            <h3>
+              Isso significa que, ao final da construção, o imóvel poderia valer
+              entre R$ 230.000 e R$ 280.000
+            </h3>
+          </div>
+          <button
+            class="mobile-button"
+            id="button-1735601667950"
+            style="
+              background: linear-gradient(
+                45deg,
+                rgb(181, 26, 0),
+                rgb(131, 17, 0)
+              );
+              border-color: rgb(131, 17, 0);
+              position: relative;
+              border-bottom-width: 8px;
+              box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px,
+                rgba(0, 0, 0, 0.12) 0px 2px 4px -1px;
+              transform: translateY(-2px);
+              opacity: 1;
+            "
+            data-hover-color="#e32400"
+            data-delay=""
+          >
+            <span class="emoji"></span
+            ><span
+              class="text"
+              style="color: rgb(255, 255, 255); text-align: center"
+              >Continuar</span
+            >
+          </button>
+        </div>
+      </section>
+    </div>
+    <script>
+      // Dados de conexões fornecidos no formato JSON
+      const connectionsData = [
+        { startIndex: 0, endIndex: 1, elementId: "button-1735586640397" },
+        { startIndex: 1, endIndex: 2, elementId: "button-1735586712670" },
+        {
+          startIndex: 1,
+          endIndex: 2,
+          elementId: "button-1735586688613-1goffd89d",
+        },
+        { startIndex: 2, endIndex: 3, elementId: "button-1735586831474" },
+        { startIndex: 3, endIndex: 4, elementId: "button-1735587139658" },
+        {
+          startIndex: 4,
+          endIndex: 5,
+          elementId: "button-1735587185907-gtz47xi8h",
+        },
+        { startIndex: 5, endIndex: 6, elementId: "button-1735588035197" },
+        {
+          startIndex: 7,
+          endIndex: 8,
+          elementId: "button-1735589992793-xnnojbotc",
+        },
+        { startIndex: 7, endIndex: 8, elementId: "button-1735590034216" },
+        { startIndex: 7, endIndex: 8, elementId: "button-1735590034856" },
+        { startIndex: 7, endIndex: 8, elementId: "button-1735590035733" },
+        { startIndex: 8, endIndex: 9, elementId: "button-1735590700480" },
+        { startIndex: 6, endIndex: 10, elementId: "choice-1735599686658" },
+        { startIndex: 10, endIndex: 7, elementId: "button-1735601667950" },
+      ];
+  /*************************************************************
+   * 1) CONFIGURAÇÃO DO WEBHOOK E INFORMAÇÕES DO QUIZ
+   *************************************************************/
+   const ANALYTICS_CONFIG = {
+   webhookUrl: "https://script.google.com/macros/s/AKfycbz8C1Sp8GQJdGrHNH8sgNHLDkiT3KDQodhQbC2qhdc_4_wo6VWInUnpZXPkl-TEbMqz/exec", // Substitua pela URL do seu Google Apps Script
+   quizId: "quiz_" + Date.now(), // ID único do quiz baseado no timestamp atual
+   quizName: "Terrace", // Nome do quiz
+   quizCategory: "Teste" // Categoria do quiz
+   };
+   
+   /*************************************************************
+   * 2) OBJETO PRINCIPAL DE ANALYTICS
+   *************************************************************/
+   const quizAnalytics = {
+   // Alguns campos comentados porque não são necessários no momento
+   // quizId: ANALYTICS_CONFIG.quizId,
+   quizName: ANALYTICS_CONFIG.quizName,
+   // quizCategory: ANALYTICS_CONFIG.quizCategory,
+   // userId: "user_" + Date.now() + "_" + Math.random().toString(36).substr(2, 9),
+   // sessionId: "session_" + Date.now(),
+   startTime: Date.now(), // Tempo de início do quiz
+   endTime: null, // Tempo de término do quiz
+   furthestSection: "section-0", // Seção mais avançada atingida
+   responses: {}, // Respostas do usuário
+   city: "", // Cidade do usuário
+   // Campos opcionais para inputs (nome, email, whatsapp)
+   nome: "",
+   email: "",
+   whatsapp: ""
+   };
+   
+   /*************************************************************
+   * 3) FUNÇÃO PARA ENVIAR OS DADOS PARA O WEBHOOK
+   *************************************************************/
+   async function sendAnalytics() {
+   try {
+     // Sincronizar userVariables com quizAnalytics
+     quizAnalytics.nome = userVariables.nome || "";
+     quizAnalytics.email = userVariables.email || "";
+     quizAnalytics.whatsapp = userVariables.whatsapp || "";
+     quizAnalytics.city = quizAnalytics.city || "Desconhecida"; // Garantir que a cidade esteja definida
+   
+     const dataToSend = [quizAnalytics];
+   
+     await fetch(ANALYTICS_CONFIG.webhookUrl, {
+       method: 'POST',
+       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+       body: new URLSearchParams({
+         'data': JSON.stringify(dataToSend)
+       })
+     });
+     console.log("Analytics enviado com sucesso.");
+   } catch (error) {
+     console.error("Erro ao enviar analytics:", error);
+   }
+   }
+   
+   /*************************************************************
+       * 4) QUANDO SAIR DA PÁGINA (pagehide, beforeunload e visibilitychange), ENVIA DADOS
+       *************************************************************/
+       function handlePageHide() {
+         quizAnalytics.endTime = Date.now(); // Registrar o tempo de término
+   
+         // Sincronizar userVariables com quizAnalytics
+         quizAnalytics.nome = userVariables.nome || "";
+         quizAnalytics.email = userVariables.email || "";
+         quizAnalytics.whatsapp = userVariables.whatsapp || "";
+   
+         const dataToSend = [quizAnalytics];
+         const blob = new Blob(
+           [new URLSearchParams({ data: JSON.stringify(dataToSend) })],
+           { type: "application/x-www-form-urlencoded" }
+         );
+         navigator.sendBeacon(ANALYTICS_CONFIG.webhookUrl, blob); // Enviar dados usando sendBeacon
+       }
+   
+       function handleVisibilityChange() {
+         if (document.visibilityState === 'hidden') {
+           handlePageHide();
+         }
+       }
+   
+       // Adicionar listeners para pagehide, beforeunload e visibilitychange
+       window.addEventListener("pagehide", handlePageHide);
+       window.addEventListener("beforeunload", handlePageHide);
+       document.addEventListener("visibilitychange", handleVisibilityChange);
+   
+   
+   
+   /*************************************************************
+   * 5) EVENTO DE CLIQUE PARA GRAVAR RESPOSTAS E NAVEGAR ENTRE SEÇÕES
+   *************************************************************/
+   document.addEventListener("click", function (e) {
+     const button = e.target.closest(".mobile-button"); // Identificar o botão clicado
+     if (button) {
+       const buttonId = button.id;
+       const connection = connectionsData.find(
+         (conn) => conn.elementId === buttonId
+       );
+       if (connection) {
+         // Registrar a resposta correspondente à seção
+         const sectionId = connection.startIndex;
+         const resposta = button.querySelector(".text").textContent;
+         quizAnalytics.responses["section_" + sectionId] = resposta;
+   
+         showSection("section-" + connection.endIndex); // Mostrar a próxima seção
+       }
+       const link = button.getAttribute("data-link");
+       if (link) {
+         // Enviar analytics antes de redirecionar
+         quizAnalytics.endTime = Date.now(); // Registrar o tempo de término
+         sendAnalyticsAndRedirect(link);
+       }
+     }
+   });
+    
+   /*************************************************************
+   função que envia os dados de analytics antes de redirecionar
+   *************************************************************/
+     function sendAnalyticsAndRedirect(url) {
+     // Sincronizar userVariables com quizAnalytics
+     quizAnalytics.nome = userVariables.nome || "";
+     quizAnalytics.email = userVariables.email || "";
+     quizAnalytics.whatsapp = userVariables.whatsapp || "";
+     quizAnalytics.city = quizAnalytics.city || "Desconhecida"; // Garantir que a cidade esteja definida
+   
+     const dataToSend = [quizAnalytics];
+     const blob = new Blob(
+       [new URLSearchParams({ data: JSON.stringify(dataToSend) })],
+       { type: "application/x-www-form-urlencoded" }
+     );
+   
+     // Enviar dados usando sendBeacon
+     const beaconSent = navigator.sendBeacon(ANALYTICS_CONFIG.webhookUrl, blob);
+   
+     if (beaconSent) {
+       // Se sendBeacon retornou true, podemos redirecionar imediatamente
+       window.location.href = url;
+     } else {
+       // Se sendBeacon falhou, enviar via fetch com atraso
+       fetch(ANALYTICS_CONFIG.webhookUrl, {
+         method: 'POST',
+         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+         body: new URLSearchParams({
+           'data': JSON.stringify(dataToSend)
+         })
+       }).then(() => {
+         window.location.href = url;
+       }).catch((error) => {
+         console.error("Erro ao enviar analytics:", error);
+         // Mesmo em caso de erro, redirecionar
+         window.location.href = url;
+       });
+     }
+   
+     // Alternativamente, adicionar um atraso para garantir o envio
+     /*
+     sendAnalytics().then(() => {
+       window.location.href = url;
+     }).catch((error) => {
+       console.error("Erro ao enviar analytics:", error);
+       window.location.href = url;
+     });
+     */
+   }
+   
+   
+   /*************************************************************
+   * 6) FUNÇÃO PARA BUSCAR A CIDADE DO USUÁRIO
+   *************************************************************/
+   let cityFetched = false; // Flag para evitar múltiplas chamadas
+   
+   async function fetchUserCity() {
+   if (cityFetched) return; // Evita múltiplas chamadas
+   cityFetched = true; // Marca que a cidade já foi buscada
+   
+   console.log('Iniciando fetchUserCity...');
+   try {
+     const response = await fetch('https://geolocation-db.com/json/');
+     console.log('Resposta da API:', response);
+   
+     const data = await response.json();
+     console.log('Dados da API:', data);
+   
+     if (data && data.city) {
+       quizAnalytics.city = data.city;
+       console.log('Cidade do usuário:', data.city);
+     } else {
+       console.error('Falha ao obter a cidade.');
+       quizAnalytics.city = 'Desconhecida';
+     }
+   } catch (error) {
+     console.error('Erro ao buscar a cidade:', error);
+     quizAnalytics.city = 'Desconhecida';
+   }
+   }
+   
+   /*************************************************************
+   * 7) FUNÇÃO PARA CONFIGURAR BOTÕES COM DELAY
+   *************************************************************/
+   function setupDelayedButtons(section) {
+     const buttons = section.querySelectorAll('.mobile-button[data-delay]');
+     buttons.forEach(button => {
+       // Inicialmente, esconder o botão e desabilitar interações
+       button.style.opacity = "0";
+       button.style.transition = "opacity 0.3s ease";
+       button.style.pointerEvents = "none"; // Desabilitar cliques e interações
+   
+       const delay = parseFloat(button.getAttribute('data-delay')) * 1000;
+       setTimeout(() => {
+         // Tornar o botão visível e habilitar interações
+         button.style.opacity = "1";
+         button.style.pointerEvents = "auto"; // Habilitar cliques e interações
+       }, delay);
+     });
+   }
+   
+   
+   /*************************************************************
+   * 8) FUNÇÃO PRINCIPAL PARA MOSTRAR UMA SEÇÃO
+   *************************************************************/
+   function showSection(sectionId) {
+   console.log('Showing section:', sectionId);
+   
+   // Remover 'active' de todas as seções e parar autoplay de galerias
+   const sections = document.querySelectorAll('.quiz-section');
+   sections.forEach(section => {
+     section.classList.remove('active');
+     section.querySelectorAll('.mobile-gallery').forEach(gallery => {
+       if (gallery.galleryInstance) {
+         gallery.galleryInstance.stopAutoplay();
+       }
+     });
+     // Ocultar botões e buscar cidade
+     const buttons = section.querySelectorAll('.mobile-button');
+     buttons.forEach(button => {
+       button.style.opacity = '0';
+       button.style.transition = 'none';
+       fetchUserCity();
+     });
+   });
+   
+   // Encontrar e ativar a seção alvo
+   const targetSection = document.getElementById(sectionId);
+   if (targetSection) {
+     targetSection.classList.add('active'); // Tornar a seção ativa
+   
+     // Forçar a rolagem para o topo
+     window.scrollTo({ top: 0, behavior: 'auto' });
+     document.documentElement.scrollTop = 0;
+     document.body.scrollTop = 0;
+   
+     // Exibir botões (com ou sem delay)
+     setupDelayedButtons(targetSection);
+     const regularButtons = targetSection.querySelectorAll('.mobile-button:not([data-delay])');
+     regularButtons.forEach(button => {
+       button.style.opacity = '1';
+       button.style.transition = 'opacity 0.3s ease';
+     });
+   
+     // Chamadas extras: barras de progresso, inputs, etc.
+     animateProgressBars(targetSection);
+     interpolateVariables(targetSection);
+     setupInputWidget(targetSection.querySelector('.input-widget'));
+     initializeGalleries(targetSection); // Inicializar galerias na seção
+   
+     // Buscar a cidade do usuário
+     fetchUserCity();
+   
+     // Atualizar furthestSection se necessário
+     const indexNow = parseInt(sectionId.split('-')[1]) || 0;
+     const indexFurthest = parseInt(quizAnalytics.furthestSection.split('-')[1]) || 0;
+     if (indexNow > indexFurthest) {
+       quizAnalytics.furthestSection = sectionId;
+     }
+   }
+   }
+   
+   /*************************************************************
+   * 9) FUNÇÃO PARA TRATAR CONCLUSÃO DE PROGRESSO
+   *************************************************************/
+   function handleProgressCompletion(progressElement) {
+   const enableRedirect = progressElement.getAttribute('data-enable-redirect') === 'true';
+   if (enableRedirect) {
+     setTimeout(function() {
+       const redirectLink = progressElement.getAttribute('data-redirect-link');
+       if (redirectLink) {
+         window.location.href = redirectLink;
+       } else {
+         const connection = connectionsData.find(function(conn) { return conn.elementId === progressElement.id; });
+         if (connection) {
+           showSection('section-' + connection.endIndex);
+         }
+       }
+     }, 1000);
+   }
+   }
+   
+   /*************************************************************
+   * 10) FUNÇÃO PARA ANIMAR BARRAS DE PROGRESSO
+   *************************************************************/
+   function animateProgressBars(section) {
+   const progressBars = section.querySelectorAll('.mobile-progress');
+   progressBars.forEach(function(progress) {
+     const progressBar = progress.querySelector('.progress-fill');
+     const progressValue = progress.querySelector('.progress-value');
+     const start = parseInt(progress.getAttribute('data-start')) || 0;
+     const end = parseInt(progress.getAttribute('data-end')) || 100;
+     const enableRedirect = progress.getAttribute('data-enable-redirect') === 'true';
+     const duration = parseInt(progress.getAttribute('data-duration')) || 1;
+     console.log('Animating progress bar:', progress.id, 'from', start, 'to', end, 'duration:', duration);
+     progressBar.style.width = start + '%';
+     progressValue.textContent = start + '%';
+     let current = start;
+     const increment = (end - start) / (duration * 50); // 50 fps
+     const interval = setInterval(function() {
+       current += increment;
+       if (current >= end) {
+         current = end;
+         clearInterval(interval);
+         console.log('Progress bar reached 100%');
+         if (enableRedirect) {
+           handleProgressCompletion(progress);
+         }
+       }
+       progressBar.style.width = current + '%';
+       progressValue.textContent = Math.round(current) + '%';
+     }, 20);
+   });
+   }
+   
+   /*************************************************************
+   * 11) EVENTO DOMContentLoaded PARA INICIALIZAR PRIMEIRA SEÇÃO
+   *************************************************************/
+   document.addEventListener('DOMContentLoaded', function() {
+   console.log('DOM fully loaded');
+   const firstSection = document.querySelector('.quiz-section');
+   if (firstSection) {
+     console.log('Activating first section');
+     firstSection.classList.add('active');
+     animateProgressBars(firstSection);
+   }
+   });
+   
+   /*************************************************************
+   * 12) EVENTO DE CLIQUE PARA EXECUTAR FUNÇÕES ONCLICK DOS BOTÕES
+   *************************************************************/
+   document.addEventListener('click', function(e) {
+   const button = e.target.closest('.button');
+   if (button) {
+     const onclick = button.getAttribute('onclick');
+     if (onclick) {
+       console.log('Button clicked, executing:', onclick);
+       eval(onclick); // Executar função onclick
+     }
+   }
+   });
+   
+   /*************************************************************
+   * 13) CONFIGURAÇÃO DE ANCORAS PARA BOTÕES MOBILE
+   *************************************************************/
+   document.querySelectorAll('.mobile-button').forEach(function(button) {
+   const anchor = document.createElement('a');
+   anchor.href = 'javascript:void(0);';
+   anchor.style.display = 'flex';
+   anchor.style.alignItems = 'center';
+   anchor.style.width = '100%';
+   anchor.style.height = '100%';
+   while (button.firstChild) {
+     anchor.appendChild(button.firstChild); // Mover filhos para o anchor
+   }
+   button.appendChild(anchor); // Adicionar anchor ao botão
+   });
+   
+   /*************************************************************
+   * 14) CONFIGURAÇÃO DE CORES DE HOVER PARA BOTÕES MOBILE
+   *************************************************************/
+   document.querySelectorAll('.mobile-button').forEach(function(button) {
+   const hoverColor = button.getAttribute('data-hover-color');
+   if (hoverColor) {
+     button.style.setProperty('--hover-color', hoverColor); // Definir cor de hover via CSS variável
+   }
+   });
+   
+   /*************************************************************
+   * 15) EVENTO DOMContentLoaded PARA CONFIGURAR BOTÕES COM DELAY
+   *************************************************************/
+   document.addEventListener("DOMContentLoaded", function() {
+   const delayedButtons = document.querySelectorAll(".mobile-button[data-delay]");
+   delayedButtons.forEach(button => {
+     button.style.opacity = "0";
+     const delay = parseFloat(button.getAttribute("data-delay")) * 1000;
+     setTimeout(() => {
+       button.style.opacity = "1";
+       button.style.transition = "opacity 0.3s ease";
+     }, delay);
+   });
+   });
+   
+   /*************************************************************
+   * 16) EVENTO DOMContentLoaded PARA CONFIGURAR MULTIPLE CHOICE E OBSERVER
+   *************************************************************/
+   document.addEventListener('DOMContentLoaded', function() {
+   /**
+    * Reseta múltiplas escolhas clonando botões para remover event listeners anteriores
+    * @param {HTMLElement} widget - O widget de múltipla escolha
+    * @returns {Object} - Contém opções clonadas, botão de continuar e cores
+    */
+   function resetMultipleChoice(widget) {
+     const options = widget.querySelectorAll('.option-button');
+     const continueButton = widget.querySelector('.continue-button');
+     const continueColor = continueButton.style.backgroundColor;
+     const checkboxColor = options[0]?.querySelector('.checkbox')?.style.borderColor || '#d6d6d6';
+   
+     // Clonar opções para remover event listeners
+     options.forEach(option => {
+       const clone = option.cloneNode(true);
+       option.parentNode.replaceChild(clone, option);
+     });
+   
+     // Clonar botão de continuar
+     const clonedButton = continueButton.cloneNode(true);
+     continueButton.parentNode.replaceChild(clonedButton, continueButton);
+   
+     // Resetar estilos das opções
+     widget.querySelectorAll('.option-button').forEach(option => {
+       option.classList.remove('active');
+       const checkbox = option.querySelector('.checkbox');
+       if (checkbox) {
+         checkbox.style.backgroundColor = '';
+         checkbox.style.borderColor = checkboxColor;
+       }
+     });
+   
+     // Resetar estilo do botão de continuar
+     clonedButton.classList.remove('active');
+     clonedButton.style.opacity = '0.5';
+     clonedButton.style.cursor = 'not-allowed';
+   
+     return { 
+       options: widget.querySelectorAll('.option-button'), 
+       continueButton: clonedButton,
+       continueColor,
+       checkboxColor
+     };
+   }
+   
+   /**
+    * Configura múltiplas escolhas adicionando event listeners
+    */
+   const setupMultipleChoice = () => {
+     document.querySelectorAll('.mobile-multiple-choice').forEach(widget => {
+       const { options, continueButton, continueColor, checkboxColor } = resetMultipleChoice(widget);
+   
+       /**
+        * Atualiza o botão de continuar com base na seleção
+        * @param {HTMLElement} widget - O widget de múltipla escolha
+        * @param {HTMLElement} continueButton - O botão de continuar
+        * @returns {number} - Número de opções selecionadas
+        */
+       function updateContinueButton(widget, continueButton) {
+         const selectedCount = widget.querySelectorAll('.option-button.active').length;
+         const isActive = selectedCount > 0;
+         
+         continueButton.classList.toggle('active', isActive);
+         continueButton.style.opacity = isActive ? '1' : '0.5';
+         continueButton.style.cursor = isActive ? 'pointer' : 'not-allowed';
+         return selectedCount;
+       }
+   
+       /**
+        * Manipulador de clique nas opções
+        * @param {Event} e - Evento de clique
+        */
+       function handleOptionClick(e) {
+         e.preventDefault();
+         this.classList.toggle('active'); // Toggle active class
+         const checkbox = this.querySelector('.checkbox');
+         
+         if (this.classList.contains('active')) {
+           checkbox.style.backgroundColor = checkboxColor;
+           checkbox.style.borderColor = checkboxColor;
+         } else {
+           checkbox.style.backgroundColor = '';
+           checkbox.style.borderColor = checkboxColor;
+         }
+   
+         updateContinueButton(widget, continueButton); // Atualizar botão de continuar
+       }
+   
+       // Adicionar event listeners às opções
+       options.forEach(option => {
+         option.addEventListener('click', handleOptionClick);
+       });
+   
+       // Adicionar event listener ao botão de continuar
+       continueButton.addEventListener('click', () => {
+         const selectedCount = widget.querySelectorAll('.option-button.active').length;
+         if (selectedCount > 0) {
+           const connection = connectionsData.find(conn => conn.elementId === widget.id);
+           if (connection) {
+             showSection('section-' + connection.endIndex); // Navegar para a próxima seção
+           }
+         }
+       });
+     });
+   };
+   
+   setupMultipleChoice(); // Inicializar múltiplas escolhas
+   
+   /**
+    * Observador de mutações para detectar mudanças de seção
+    */
+   const observer = new MutationObserver((mutations) => {
+     mutations.forEach((mutation) => {
+       if (mutation.target.classList.contains('active')) {
+         setupMultipleChoice(); // Reconfigurar múltiplas escolhas na nova seção
+         setupInputWidget(mutation.target.querySelector('.input-widget')); // Configurar widgets de input
+       }
+     });
+   });
+   
+   // Observar todas as seções do quiz
+   document.querySelectorAll('.quiz-section').forEach((section) => {
+     observer.observe(section, { attributes: true, attributeFilter: ['class'] });
+   });
+   });
+   
+   /*************************************************************
+   * 17) SISTEMA DE VARIÁVEIS USUÁRIO
+   *************************************************************/
+   let userVariables = JSON.parse(sessionStorage.getItem('userVariables') || '{}'); // Recuperar variáveis do usuário
+   
+   /**
+   * Configura um widget de input para armazenar variáveis do usuário
+   * @param {HTMLElement} widget - O widget de input
+   */
+   function setupInputWidget(widget) {
+   if (!widget) return;
+   
+   const input = widget.querySelector('.input-field');
+   const button = widget.querySelector('.continue-button');
+   const variable = input.getAttribute('data-variable');
+   
+   button.disabled = true;
+   button.style.opacity = '0.5';
+   button.style.cursor = 'not-allowed';
+   
+   // Preencher input se já existir valor
+   if (userVariables[variable]) {
+     input.value = userVariables[variable];
+     button.disabled = false;
+     button.style.opacity = '1';
+     button.style.cursor = 'pointer';
+   }
+   
+   // Evento de input para atualizar variáveis e estado do botão
+   input.addEventListener('input', function() {
+     const hasValue = this.value.trim().length > 0;
+     button.disabled = !hasValue;
+     button.style.opacity = hasValue ? '1' : '0.5';
+     button.style.cursor = hasValue ? 'pointer' : 'not-allowed';
+   
+     userVariables[variable] = this.value;
+     sessionStorage.setItem('userVariables', JSON.stringify(userVariables)); // Salvar no sessionStorage
+   });
+   
+   // Evento de clique no botão de continuar
+   button.addEventListener('click', function() {
+     if (input.value.trim().length > 0) {
+       const connection = connectionsData.find(conn => conn.elementId === widget.id);
+       if (connection) {
+         showSection('section-' + connection.endIndex); // Navegar para a próxima seção
+       }
+     }
+   });
+   }
+   
+   /**
+   * Interpola variáveis nos textos das seções
+   * @param {HTMLElement} section - A seção onde interpolar
+   */
+   function interpolateVariables(section) {
+   const textNodes = Array.from(section.getElementsByTagName('*'))
+     .filter(el => !el.children.length && el.textContent.includes('{{'))
+     .map(el => ({element: el, original: el.textContent}));
+   
+   textNodes.forEach(({element, original}) => {
+     let text = original;
+     const matches = text.match(/{{([^}]+)}}/g) || [];
+     
+     matches.forEach(match => {
+       const variable = match.slice(2, -2).trim();
+       const value = userVariables[variable] || quizAnalytics[variable] || '';
+       text = text.replace(match, value);
+     });
+   
+     element.textContent = text; // Atualizar o texto com as variáveis interpoladas
+   });
+   }
+   
+   /*************************************************************
+   * 18) FUNÇÃO PARA INICIALIZAR TODAS AS GALERIAS
+   *************************************************************/
+   function initializeGalleries(container = document) {
+   container.querySelectorAll('.mobile-gallery').forEach(gallery => {
+     const existingGallery = gallery.galleryInstance;
+     if (existingGallery) {
+       existingGallery.stopAutoplay(); // Parar autoplay se já existir
+     }
+     gallery.galleryInstance = new Gallery(gallery); // Inicializar nova galeria
+   });
+   }
+   
+   /*************************************************************
+   * 19) CLASSE PARA GERENCIAR GALERIAS DE IMAGENS
+   *************************************************************/
+   class Gallery {
+   constructor(element) {
+     this.gallery = element;
+     this.track = element.querySelector(".gallery-track");
+     this.slides = [...element.querySelectorAll(".gallery-slide")];
+     this.dots = [...element.querySelectorAll(".gallery-dot")];
+     this.currentSlide = 0;
+     this.autoplayInterval = null;
+   
+     // Obter cores definidas nos dots ou usar padrão
+     const dots = element.querySelectorAll(".gallery-dot");
+     const firstDot = dots[0];
+     const secondDot = dots[1];
+     
+     this.dotActiveColor = firstDot?.style.backgroundColor || "#9333ea";
+     this.dotColor = secondDot?.style.backgroundColor || "#ccc";
+   
+     // Configurar estilos dos dots
+     this.dots.forEach((dot, index) => {
+       dot.style.transition = "all 0.3s ease";
+       this.updateDotStyle(dot, index === 0);
+     });
+   
+     // Adicionar event listeners aos dots
+     this.dots.forEach((dot, index) => {
+       dot.addEventListener("click", () => this.goToSlide(index));
+     });
+   
+     // Eventos de toque para dispositivos móveis
+     this.touchStartX = 0;
+     this.touchEndX = 0;
+   
+     this.track.addEventListener("touchstart", (e) => this.touchStart(e));
+     this.track.addEventListener("touchmove", (e) => this.touchMove(e));
+     this.track.addEventListener("touchend", (e) => this.touchEnd(e));
+   
+     // Eventos para pausar e retomar autoplay
+     this.track.addEventListener("mouseenter", () => this.stopAutoplay());
+     this.track.addEventListener("mouseleave", () => this.startAutoplay());
+   
+     // Atualizar cores dos dots e iniciar autoplay
+     this.updateDotColors();
+     this.startAutoplay();
+   }
+   
+   /**
+    * Atualiza o estilo de um dot com base no estado ativo
+    * @param {HTMLElement} dot - O dot a ser atualizado
+    * @param {boolean} isActive - Se o dot está ativo
+    */
+   updateDotStyle(dot, isActive) {
+     dot.style.backgroundColor = isActive ? this.dotActiveColor : this.dotColor;
+     dot.style.transform = isActive ? "scale(1.2)" : "scale(1)";
+   }
+   
+   /**
+    * Atualiza as cores de todos os dots com base no slide atual
+    */
+   updateDotColors() {
+     this.dots.forEach((dot, index) => {
+       this.updateDotStyle(dot, index === this.currentSlide);
+     });
+   }
+   
+   /**
+    * Inicia o autoplay da galeria
+    */
+   startAutoplay() {
+     this.stopAutoplay(); // Garantir que não haja múltiplos intervalos
+     this.autoplayInterval = setInterval(() => this.next(), 3000); // Avançar a cada 3 segundos
+   }
+   
+   /**
+    * Para o autoplay da galeria
+    */
+   stopAutoplay() {
+     if (this.autoplayInterval) {
+       clearInterval(this.autoplayInterval);
+       this.autoplayInterval = null;
+     }
+   }
+   
+   /**
+    * Atualiza a posição do slide atual
+    */
+   updateSlide() {
+     this.track.style.transition = "transform 0.3s ease";
+     this.track.style.transform = \`translateX(-\${this.currentSlide * 100}%)\`;
+     this.updateDotColors(); // Atualizar cores dos dots
+   }
+   
+   /**
+    * Avança para o próximo slide
+    */
+   next() {
+     this.currentSlide = (this.currentSlide + 1) % this.slides.length;
+     this.updateSlide();
+   }
+   
+   /**
+    * Retrocede para o slide anterior
+    */
+   prev() {
+     this.currentSlide = (this.currentSlide - 1 + this.slides.length) % this.slides.length;
+     this.updateSlide();
+   }
+   
+   /**
+    * Vai para um slide específico
+    * @param {number} index - Índice do slide
+    */
+   goToSlide(index) {
+     this.currentSlide = index;
+     this.updateSlide();
+     this.stopAutoplay(); // Parar autoplay temporariamente
+     this.startAutoplay(); // Reiniciar autoplay
+   }
+   
+   /**
+    * Evento de início de toque
+    * @param {Event} e - Evento de toque
+    */
+   touchStart(e) {
+     this.touchStartX = e.touches[0].clientX;
+     this.stopAutoplay(); // Parar autoplay durante o toque
+     this.track.style.transition = "none";
+   }
+   
+   /**
+    * Evento de movimento de toque
+    * @param {Event} e - Evento de toque
+    */
+   touchMove(e) {
+     if (!this.touchStartX) return;
+     e.preventDefault();
+     const currentX = e.touches[0].clientX;
+     const diff = this.touchStartX - currentX;
+     const moveX = -(diff + this.currentSlide * this.gallery.offsetWidth);
+     this.track.style.transform = \`translateX(\${moveX}px)\`;
+   }
+   
+   /**
+    * Evento de fim de toque
+    * @param {Event} e - Evento de toque
+    */
+   touchEnd(e) {
+     const touchEndX = e.changedTouches[0].clientX;
+     const diff = this.touchStartX - touchEndX;
+   
+     if (Math.abs(diff) > 50) { // Se o swipe for significativo
+       if (diff > 0) this.next();
+       else this.prev();
+     } else {
+       this.updateSlide(); // Reposicionar se o swipe não for significativo
+     }
+   
+     this.touchStartX = 0;
+     this.startAutoplay(); // Reiniciar autoplay
+   }
+   }
+   
+   /*************************************************************
+   * 20) FUNÇÃO PARA INICIALIZAR VIDEOS DO YOUTUBE
+   *************************************************************/
+   // Objeto para armazenar todos os players
+   const videoPlayers = new Map();
+   
+   /**
+   * Inicializa um player de vídeo do YouTube
+   * @param {HTMLElement} videoDiv - O div que contém o vídeo
+   */
+   function initializeVideo(videoDiv) {
+     const uniqueId = videoDiv.id.split('-')[1];
+     const startOverlay = videoDiv.querySelector(\`#start-overlay-\${uniqueId}\`);
+     const pauseOverlay = videoDiv.querySelector(\`#pause-overlay-\${uniqueId}\`);
+     const blurBg = videoDiv.querySelector(\`#blur-bg-\${uniqueId}\`);
+     const iframe = videoDiv.querySelector(\`#youtube-video-\${uniqueId}\`);
+   
+     if (!iframe) return; // Se não houver iframe, sair
+   
+     const player = new YT.Player(\`youtube-video-\${uniqueId}\`, {
+       events: {
+         onReady: function() {
+           startOverlay.style.display = "flex"; // Mostrar overlay de início
+           blurBg.style.display = "block"; // Mostrar fundo borrado
+   
+           // Definir a qualidade do vídeo para HD (1080p)
+           player.setPlaybackQuality('hd1080');
+   
+           // Evento de clique no overlay de início para reproduzir vídeo
+           startOverlay.onclick = () => {
+             player.playVideo();
+             startOverlay.style.display = "none";
+             blurBg.style.display = "none";
+           };
+   
+           // Evento de clique no overlay de pausa para retomar vídeo
+           pauseOverlay.onclick = () => {
+             player.playVideo();
+             pauseOverlay.style.display = "none";
+             blurBg.style.display = "none";
+           };
+         },
+    onStateChange: function(event) {
+     if (event.data === YT.PlayerState.PAUSED) {
+       pauseOverlay.style.display = "flex"; // Mostrar overlay de pausa
+       blurBg.style.display = "block";
+     } else if (event.data === YT.PlayerState.ENDED) {
+       startOverlay.style.display = "flex"; // Mostrar overlay de fim
+       pauseOverlay.style.display = "none";
+       blurBg.style.display = "block";
+     } else if (event.data === YT.PlayerState.PLAYING) {
+       startOverlay.style.display = "none"; // Esconder overlays quando reproduzindo
+       pauseOverlay.style.display = "none";
+       blurBg.style.display = "none";
+   
+       // Assegurar que a qualidade esteja em HD
+       player.setPlaybackQuality('hd1080');
+     }
+   }
+   
+       }
+     });
+   
+     // Armazena o player para uso posterior
+     videoPlayers.set(uniqueId, player);
+   }
+   
+   
+   /**
+   * Função callback chamada quando a API do YouTube está pronta
+   */
+   function onYouTubeIframeAPIReady() {
+   // Inicializa todos os vídeos presentes na página
+   document.querySelectorAll('.mobile-video').forEach(videoDiv => {
+     initializeVideo(videoDiv);
+   });
+   }
+   
+   /**
+   * Observador de mutações para detectar quando uma seção se torna ativa e inicializar vídeos
+   */
+   const videoObserver = new MutationObserver((mutations) => {
+   mutations.forEach((mutation) => {
+     if (mutation.target.classList.contains('active')) {
+       mutation.target.querySelectorAll('.mobile-video').forEach(videoDiv => {
+         if (!videoPlayers.has(videoDiv.id.split('-')[1])) {
+           initializeVideo(videoDiv); // Inicializar vídeo se ainda não estiver inicializado
+         }
+       });
+     }
+   });
+   });
+   
+   // Observar todas as seções do quiz para inicializar vídeos quando se tornam ativas
+   document.querySelectorAll('.quiz-section').forEach((section) => {
+   videoObserver.observe(section, { 
+     attributes: true, 
+     attributeFilter: ['class'],
+     subtree: true
+   });
+   });
+   
+   /*************************************************************
+   * 21) FUNÇÃO PARA INICIALIZAR TODAS AS GALERIAS
+   *************************************************************/
+   // Já definida anteriormente como initializeGalleries
+   
+   /*************************************************************
+   * 22) CLASSE PARA GERENCIAR GALERIAS DE IMAGENS
+   *************************************************************/
+   // Já definida anteriormente como Gallery
+   
+   /*************************************************************
+   * 23) FUNÇÃO PARA ATUALIZAR A FUNÇÃO showSection COM INICIALIZAÇÃO DE GALERIAS
+   *************************************************************/
+   // A função showSection já foi definida e atualizada anteriormente para incluir a inicialização de galerias
+   
+   /*************************************************************
+   * 24) FINALIZAÇÃO DA INICIALIZAÇÃO DE GALERIAS E EVENTOS DOMContentLoaded
+   *************************************************************/
+   // Já tratado anteriormente no evento DOMContentLoaded
+   
+   /*************************************************************
+   * 25) INICIALIZAÇÃO DE TODOS OS WIDGETS DE INPUT
+   *************************************************************/
+   document.querySelectorAll('.input-widget').forEach(setupInputWidget);
+   
+   </script>
+   <script src="https://www.youtube.com/iframe_api"></script>
+   <script>
+   /*************************************************************
+   * 26) CLASSE PARA GERENCIAR GALERIAS DE IMAGENS
+   *************************************************************/
+   // Já definida anteriormente como Gallery
+   
+   /*************************************************************
+   * 27) FUNÇÃO PARA INICIALIZAR GALERIAS EM UM CONTÊINER ESPECÍFICO
+   *************************************************************/
+   // Já definida anteriormente como initializeGalleries
+   
+   /*************************************************************
+   * 28) FUNÇÃO PARA ATUALIZAR A FUNÇÃO showSection COM INICIALIZAÇÃO DE GALERIAS
+   *************************************************************/
+   // Já definida anteriormente, não é necessário duplicar
+   
+   /*************************************************************
+   * 29) FINALIZAÇÃO DA INICIALIZAÇÃO DE GALERIAS E EVENTOS DOMContentLoaded
+   *************************************************************/
+   // Já tratado anteriormente no evento DOMContentLoaded
+   
 </script>
 </body>
 </html>
