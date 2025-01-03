@@ -2062,69 +2062,69 @@ função que envia os dados de analytics antes de redirecionar
           }, delay);
         });
       }
+      
+    /*************************************************************
+     * 9) FUNÇÃO PRINCIPAL PARA MOSTRAR UMA SEÇÃO
+     *************************************************************/
+    function showSection(sectionId) {
+      console.log('Showing section:', sectionId);
 
-      /*************************************************************
-       * 8) FUNÇÃO PRINCIPAL PARA MOSTRAR UMA SEÇÃO
-       *************************************************************/
-      function showSection(sectionId) {
-        console.log("Showing section:", sectionId);
-
-        // Remover 'active' de todas as seções e parar autoplay de galerias
-        const sections = document.querySelectorAll(".quiz-section");
-        sections.forEach((section) => {
-          section.classList.remove("active");
-          section.querySelectorAll(".mobile-gallery").forEach((gallery) => {
-            if (gallery.galleryInstance) {
-              gallery.galleryInstance.stopAutoplay();
-            }
-          });
-          // Ocultar botões e buscar cidade
-          const buttons = section.querySelectorAll(".mobile-button");
-          buttons.forEach((button) => {
-            button.style.opacity = "0";
-            button.style.transition = "none";
-            fetchUserCity();
-          });
-        });
-
-        // Encontrar e ativar a seção alvo
-        const targetSection = document.getElementById(sectionId);
-        if (targetSection) {
-          targetSection.classList.add("active"); // Tornar a seção ativa
-
-          // Forçar a rolagem para o topo
-          window.scrollTo({ top: 0, behavior: "auto" });
-          document.documentElement.scrollTop = 0;
-          document.body.scrollTop = 0;
-
-          // Exibir botões (com ou sem delay)
-          setupDelayedButtons(targetSection);
-          const regularButtons = targetSection.querySelectorAll(
-            ".mobile-button:not([data-delay])"
-          );
-          regularButtons.forEach((button) => {
-            button.style.opacity = "1";
-            button.style.transition = "opacity 0.3s ease";
-          });
-
-          // Chamadas extras: barras de progresso, inputs, etc.
-          animateProgressBars(targetSection);
-          interpolateVariables(targetSection);
-          setupInputWidget(targetSection.querySelector(".input-widget"));
-          initializeGalleries(targetSection); // Inicializar galerias na seção
-
-          // Buscar a cidade do usuário
-          fetchUserCity();
-
-          // Atualizar furthestSection se necessário
-          const indexNow = parseInt(sectionId.split("-")[1]) || 0;
-          const indexFurthest =
-            parseInt(quizAnalytics.furthestSection.split("-")[1]) || 0;
-          if (indexNow > indexFurthest) {
-            quizAnalytics.furthestSection = sectionId;
+      // Remover 'active' de todas as seções e parar autoplay de galerias
+      const sections = document.querySelectorAll('.quiz-section');
+      sections.forEach(section => {
+        section.classList.remove('active');
+        section.querySelectorAll('.mobile-gallery').forEach(gallery => {
+          if (gallery.galleryInstance) {
+            gallery.galleryInstance.stopAutoplay();
           }
+        });
+        // Ocultar botões e buscar cidade
+        const buttons = section.querySelectorAll('.mobile-button');
+        buttons.forEach(button => {
+          button.style.opacity = '0';
+          button.style.transition = 'none';
+          button.style.pointerEvents = 'none'; // Desabilitar interações ao esconder
+          fetchUserCity();
+        });
+      });
+
+      // Encontrar e ativar a seção alvo
+      const targetSection = document.getElementById(sectionId);
+      if (targetSection) {
+        targetSection.classList.add('active'); // Tornar a seção ativa
+
+        // Forçar a rolagem para o topo
+        window.scrollTo({ top: 0, behavior: 'auto' });
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+
+        // Exibir botões (com ou sem delay)
+function setupDelayedButtons(section) {
+  const buttons = section.querySelectorAll('.mobile-button[data-delay]');
+  buttons.forEach(button => {
+    // Inicialmente, esconder o botão e desabilitar interações
+    button.style.opacity = "0";
+    button.style.transition = "opacity 0.3s ease";
+    button.style.pointerEvents = "none"; // Desabilitar cliques e interações
+
+    const delay = parseFloat(button.getAttribute('data-delay')) * 1000;
+    setTimeout(() => {
+      // Iniciar a transição de opacidade
+      button.style.opacity = "1";
+
+      // Adicionar o ouvinte para o fim da transição
+      const onTransitionEnd = (e) => {
+        if (e.propertyName === 'opacity') {
+          button.style.pointerEvents = "auto"; // Habilitar cliques e interações
+          button.removeEventListener('transitionend', onTransitionEnd); // Remover o ouvinte
         }
-      }
+      };
+      button.addEventListener('transitionend', onTransitionEnd);
+    }, delay);
+  });
+}
+
+   
 
       /*************************************************************
        * 9) FUNÇÃO PARA TRATAR CONCLUSÃO DE PROGRESSO
