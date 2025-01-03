@@ -2073,10 +2073,9 @@ function setupDelayedButtons(section) {
 
    
    
-   /*************************************************************
-   * 8) FUNÇÃO PRINCIPAL PARA MOSTRAR UMA SEÇÃO
-   *************************************************************/
-
+/*************************************************************
+ * 8) FUNÇÃO PRINCIPAL PARA MOSTRAR UMA SEÇÃO
+ *************************************************************/
 function showSection(sectionId) {
   console.log("Showing section:", sectionId);
 
@@ -2095,7 +2094,6 @@ function showSection(sectionId) {
       button.style.opacity = "0";
       button.style.transition = "none";
       button.style.pointerEvents = "none"; // Garantir que estejam desabilitados
-      fetchUserCity();
     });
   });
 
@@ -2109,11 +2107,11 @@ function showSection(sectionId) {
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;
 
-    // Exibir botões (com ou sem delay)
+    // Exibir botões com delay
     setupDelayedButtons(targetSection);
-    const regularButtons = targetSection.querySelectorAll(
-      ".mobile-button:not([data-delay])"
-    );
+
+    // Exibir botões sem delay imediatamente
+    const regularButtons = targetSection.querySelectorAll(".mobile-button:not([data-delay])");
     regularButtons.forEach((button) => {
       button.style.opacity = "1";
       button.style.transition = "opacity 0.3s ease";
@@ -2131,13 +2129,15 @@ function showSection(sectionId) {
 
     // Atualizar furthestSection se necessário
     const indexNow = parseInt(sectionId.split("-")[1]) || 0;
-    const indexFurthest =
-      parseInt(quizAnalytics.furthestSection.split("-")[1]) || 0;
+    const indexFurthest = parseInt(quizAnalytics.furthestSection.split("-")[1]) || 0;
     if (indexNow > indexFurthest) {
       quizAnalytics.furthestSection = sectionId;
     }
   }
 }
+
+
+
 
    
 
@@ -2209,18 +2209,20 @@ function showSection(sectionId) {
         });
       }
 
-      /*************************************************************
-       * 11) EVENTO DOMContentLoaded PARA INICIALIZAR PRIMEIRA SEÇÃO
-       *************************************************************/
-      document.addEventListener("DOMContentLoaded", function () {
-        console.log("DOM fully loaded");
-        const firstSection = document.querySelector(".quiz-section");
-        if (firstSection) {
-          console.log("Activating first section");
-          firstSection.classList.add("active");
-          animateProgressBars(firstSection);
-        }
-      });
+/*************************************************************
+ * 11) EVENTO DOMContentLoaded PARA INICIALIZAR PRIMEIRA SEÇÃO
+ *************************************************************/
+document.addEventListener("DOMContentLoaded", function () {
+  console.log("DOM fully loaded");
+  const firstSection = document.querySelector(".quiz-section");
+  if (firstSection && firstSection.id) {
+    console.log("Activating first section using showSection");
+    showSection(firstSection.id); // Chama a função showSection para configurar a seção corretamente
+  } else {
+    console.error("Primeira seção não encontrada ou não possui um ID.");
+  }
+});
+
 
       /*************************************************************
        * 12) EVENTO DE CLIQUE PARA EXECUTAR FUNÇÕES ONCLICK DOS BOTÕES
