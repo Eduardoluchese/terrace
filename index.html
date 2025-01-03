@@ -964,16 +964,22 @@ try {
 * 7) FUNÇÃO PARA CONFIGURAR BOTÕES COM DELAY
 *************************************************************/
 function setupDelayedButtons(section) {
-const buttons = section.querySelectorAll('.mobile-button[data-delay]');
-buttons.forEach(button => {
-  button.style.opacity = "0";
-  button.style.transition = "opacity 0.3s ease";
-  const delay = parseFloat(button.getAttribute('data-delay')) * 1000;
-  setTimeout(() => {
-    button.style.opacity = "1";
-  }, delay);
-});
+  const buttons = section.querySelectorAll('.mobile-button[data-delay]');
+  buttons.forEach(button => {
+    // Inicialmente, esconder o botão e desabilitar interações
+    button.style.opacity = "0";
+    button.style.transition = "opacity 0.3s ease";
+    button.style.pointerEvents = "none"; // Desabilitar cliques e interações
+
+    const delay = parseFloat(button.getAttribute('data-delay')) * 1000;
+    setTimeout(() => {
+      // Tornar o botão visível e habilitar interações
+      button.style.opacity = "1";
+      button.style.pointerEvents = "auto"; // Habilitar cliques e interações
+    }, delay);
+  });
 }
+
 
 /*************************************************************
 * 8) FUNÇÃO PRINCIPAL PARA MOSTRAR UMA SEÇÃO
