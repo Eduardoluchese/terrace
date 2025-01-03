@@ -856,26 +856,79 @@ navigator.sendBeacon(ANALYTICS_CONFIG.webhookUrl, blob); // Enviar dados usando 
 * 5) EVENTO DE CLIQUE PARA GRAVAR RESPOSTAS E NAVEGAR ENTRE SEÇÕES
 *************************************************************/
 document.addEventListener("click", function (e) {
-const button = e.target.closest(".mobile-button"); // Identificar o botão clicado
-if (button) {
-  const buttonId = button.id;
-  const connection = connectionsData.find(
-    (conn) => conn.elementId === buttonId
-  );
-  if (connection) {
-    // Registrar a resposta correspondente à seção
-    const sectionId = connection.startIndex;
-    const resposta = button.querySelector(".text").textContent;
-    quizAnalytics.responses["section_" + sectionId] = resposta;
+  const button = e.target.closest(".mobile-button"); // Identificar o botão clicado
+  if (button) {
+    const buttonId = button.id;
+    const connection = connectionsData.find(
+      (conn) => conn.elementId === buttonId
+    );
+    if (connection) {
+      // Registrar a resposta correspondente à seção
+      const sectionId = connection.startIndex;
+      const resposta = button.querySelector(".text").textContent;
+      quizAnalytics.responses["section_" + sectionId] = resposta;
 
-    showSection("section-" + connection.endIndex); // Mostrar a próxima seção
+      showSection("section-" + connection.endIndex); // Mostrar a próxima seção
+    }
+    const link = button.getAttribute("data-link");
+    if (link) {
+      // Enviar analytics antes de redirecionar
+      quizAnalytics.endTime = Date.now(); // Registrar o tempo de término
+      sendAnalyticsAndRedirect(link);
+    }
   }
-  const link = button.getAttribute("data-link");
-  if (link) {
-    window.location.href = link; // Redirecionar se houver link
-  }
-}
 });
+ 
+/*************************************************************
+função que envia os dados de analytics antes de redirecionar
+*************************************************************/
+  function sendAnalyticsAndRedirect(url) {
+  // Sincronizar userVariables com quizAnalytics
+  quizAnalytics.nome = userVariables.nome || "";
+  quizAnalytics.email = userVariables.email || "";
+  quizAnalytics.whatsapp = userVariables.whatsapp || "";
+  quizAnalytics.city = quizAnalytics.city || "Desconhecida"; // Garantir que a cidade esteja definida
+
+  const dataToSend = [quizAnalytics];
+  const blob = new Blob(
+    [new URLSearchParams({ data: JSON.stringify(dataToSend) })],
+    { type: "application/x-www-form-urlencoded" }
+  );
+
+  // Enviar dados usando sendBeacon
+  const beaconSent = navigator.sendBeacon(ANALYTICS_CONFIG.webhookUrl, blob);
+
+  if (beaconSent) {
+    // Se sendBeacon retornou true, podemos redirecionar imediatamente
+    window.location.href = url;
+  } else {
+    // Se sendBeacon falhou, enviar via fetch com atraso
+    fetch(ANALYTICS_CONFIG.webhookUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        'data': JSON.stringify(dataToSend)
+      })
+    }).then(() => {
+      window.location.href = url;
+    }).catch((error) => {
+      console.error("Erro ao enviar analytics:", error);
+      // Mesmo em caso de erro, redirecionar
+      window.location.href = url;
+    });
+  }
+
+  // Alternativamente, adicionar um atraso para garantir o envio
+  /*
+  sendAnalytics().then(() => {
+    window.location.href = url;
+  }).catch((error) => {
+    console.error("Erro ao enviar analytics:", error);
+    window.location.href = url;
+  });
+  */
+}
+
 
 /*************************************************************
 * 6) FUNÇÃO PARA BUSCAR A CIDADE DO USUÁRIO
