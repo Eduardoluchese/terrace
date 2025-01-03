@@ -855,6 +855,8 @@ function handlePageHide() {
 // Adicionar listeners para pagehide e beforeunload
 window.addEventListener("pagehide", handlePageHide);
 window.addEventListener("beforeunload", handlePageHide);
+document.addEventListener("visibilitychange", handleVisibilityChange);
+
 
 
 /*************************************************************
