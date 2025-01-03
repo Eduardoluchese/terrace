@@ -1546,54 +1546,62 @@ const videoPlayers = new Map();
 * @param {HTMLElement} videoDiv - O div que contém o vídeo
 */
 function initializeVideo(videoDiv) {
-const uniqueId = videoDiv.id.split('-')[1];
-const startOverlay = videoDiv.querySelector(`#start-overlay-${uniqueId}`);
-const pauseOverlay = videoDiv.querySelector(`#pause-overlay-${uniqueId}`);
-const blurBg = videoDiv.querySelector(`#blur-bg-${uniqueId}`);
-const iframe = videoDiv.querySelector(`#youtube-video-${uniqueId}`);
+  const uniqueId = videoDiv.id.split('-')[1];
+  const startOverlay = videoDiv.querySelector(`#start-overlay-${uniqueId}`);
+  const pauseOverlay = videoDiv.querySelector(`#pause-overlay-${uniqueId}`);
+  const blurBg = videoDiv.querySelector(`#blur-bg-${uniqueId}`);
+  const iframe = videoDiv.querySelector(`#youtube-video-${uniqueId}`);
 
-if (!iframe) return; // Se não houver iframe, sair
+  if (!iframe) return; // Se não houver iframe, sair
 
-const player = new YT.Player(`youtube-video-${uniqueId}`, {
-  events: {
-    onReady: function() {
-      startOverlay.style.display = "flex"; // Mostrar overlay de início
-      blurBg.style.display = "block"; // Mostrar fundo borrado
+  const player = new YT.Player(`youtube-video-${uniqueId}`, {
+    events: {
+      onReady: function() {
+        startOverlay.style.display = "flex"; // Mostrar overlay de início
+        blurBg.style.display = "block"; // Mostrar fundo borrado
 
-      // Evento de clique no overlay de início para reproduzir vídeo
-      startOverlay.onclick = () => {
-        player.playVideo();
-        startOverlay.style.display = "none";
-        blurBg.style.display = "none";
-      };
+        // Definir a qualidade do vídeo para HD (1080p)
+        player.setPlaybackQuality('hd1080');
 
-      // Evento de clique no overlay de pausa para retomar vídeo
-      pauseOverlay.onclick = () => {
-        player.playVideo();
-        pauseOverlay.style.display = "none";
-        blurBg.style.display = "none";
-      };
-    },
-    onStateChange: function(event) {
-      if (event.data === YT.PlayerState.PAUSED) {
-        pauseOverlay.style.display = "flex"; // Mostrar overlay de pausa
-        blurBg.style.display = "block";
-      } else if (event.data === YT.PlayerState.ENDED) {
-        startOverlay.style.display = "flex"; // Mostrar overlay de fim
-        pauseOverlay.style.display = "none";
-        blurBg.style.display = "block";
-      } else if (event.data === YT.PlayerState.PLAYING) {
-        startOverlay.style.display = "none"; // Esconder overlays quando reproduzindo
-        pauseOverlay.style.display = "none";
-        blurBg.style.display = "none";
-      }
-    }
+        // Evento de clique no overlay de início para reproduzir vídeo
+        startOverlay.onclick = () => {
+          player.playVideo();
+          startOverlay.style.display = "none";
+          blurBg.style.display = "none";
+        };
+
+        // Evento de clique no overlay de pausa para retomar vídeo
+        pauseOverlay.onclick = () => {
+          player.playVideo();
+          pauseOverlay.style.display = "none";
+          blurBg.style.display = "none";
+        };
+      },
+ onStateChange: function(event) {
+  if (event.data === YT.PlayerState.PAUSED) {
+    pauseOverlay.style.display = "flex"; // Mostrar overlay de pausa
+    blurBg.style.display = "block";
+  } else if (event.data === YT.PlayerState.ENDED) {
+    startOverlay.style.display = "flex"; // Mostrar overlay de fim
+    pauseOverlay.style.display = "none";
+    blurBg.style.display = "block";
+  } else if (event.data === YT.PlayerState.PLAYING) {
+    startOverlay.style.display = "none"; // Esconder overlays quando reproduzindo
+    pauseOverlay.style.display = "none";
+    blurBg.style.display = "none";
+
+    // Assegurar que a qualidade esteja em HD
+    player.setPlaybackQuality('hd1080');
   }
-});
-
-// Armazena o player para uso posterior
-videoPlayers.set(uniqueId, player);
 }
+
+    }
+  });
+
+  // Armazena o player para uso posterior
+  videoPlayers.set(uniqueId, player);
+}
+
 
 /**
 * Função callback chamada quando a API do YouTube está pronta
