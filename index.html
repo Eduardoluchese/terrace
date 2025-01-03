@@ -2060,17 +2060,15 @@ function setupDelayedButtons(section) {
       // Tornar o botão visível
       button.style.opacity = "1";
 
-      // Adicionar um ouvinte para quando a transição de opacidade terminar
-      const onTransitionEnd = function (e) {
-        if (e.propertyName === 'opacity') {
-          button.style.pointerEvents = "auto"; // Habilitar cliques e interações
-          button.removeEventListener('transitionend', onTransitionEnd);
-        }
-      };
-      button.addEventListener('transitionend', onTransitionEnd);
+      // Habilitar interações após a transição de opacidade
+      // Considerando a duração da transição (0.3s), adicionamos um pequeno atraso
+      setTimeout(() => {
+        button.style.pointerEvents = "auto";
+      }, 300); // 300ms = duração da transição
     }, delay);
   });
 }
+
 
 
    
