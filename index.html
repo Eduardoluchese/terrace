@@ -834,28 +834,34 @@ try {
 }
 
 /*************************************************************
-* 4) QUANDO SAIR DA PÁGINA (pagehide e beforeunload), ENVIA DADOS
-*************************************************************/
-function handlePageHide() {
-  quizAnalytics.endTime = Date.now(); // Registrar o tempo de término
+    * 4) QUANDO SAIR DA PÁGINA (pagehide, beforeunload e visibilitychange), ENVIA DADOS
+    *************************************************************/
+    function handlePageHide() {
+      quizAnalytics.endTime = Date.now(); // Registrar o tempo de término
 
-  // Sincronizar userVariables com quizAnalytics
-  quizAnalytics.nome = userVariables.nome || "";
-  quizAnalytics.email = userVariables.email || "";
-  quizAnalytics.whatsapp = userVariables.whatsapp || "";
+      // Sincronizar userVariables com quizAnalytics
+      quizAnalytics.nome = userVariables.nome || "";
+      quizAnalytics.email = userVariables.email || "";
+      quizAnalytics.whatsapp = userVariables.whatsapp || "";
 
-  const dataToSend = [quizAnalytics];
-  const blob = new Blob(
-    [new URLSearchParams({ data: JSON.stringify(dataToSend) })],
-    { type: "application/x-www-form-urlencoded" }
-  );
-  navigator.sendBeacon(ANALYTICS_CONFIG.webhookUrl, blob); // Enviar dados usando sendBeacon
-}
+      const dataToSend = [quizAnalytics];
+      const blob = new Blob(
+        [new URLSearchParams({ data: JSON.stringify(dataToSend) })],
+        { type: "application/x-www-form-urlencoded" }
+      );
+      navigator.sendBeacon(ANALYTICS_CONFIG.webhookUrl, blob); // Enviar dados usando sendBeacon
+    }
 
-// Adicionar listeners para pagehide e beforeunload
-window.addEventListener("pagehide", handlePageHide);
-window.addEventListener("beforeunload", handlePageHide);
-document.addEventListener("visibilitychange", handleVisibilityChange);
+    function handleVisibilityChange() {
+      if (document.visibilityState === 'hidden') {
+        handlePageHide();
+      }
+    }
+
+    // Adicionar listeners para pagehide, beforeunload e visibilitychange
+    window.addEventListener("pagehide", handlePageHide);
+    window.addEventListener("beforeunload", handlePageHide);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
 
 
 
