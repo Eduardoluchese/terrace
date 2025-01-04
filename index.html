@@ -904,29 +904,32 @@
       /*************************************************************
        * 5) EVENTO DE CLIQUE PARA GRAVAR RESPOSTAS E NAVEGAR ENTRE SEÇÕES
        *************************************************************/
-      document.addEventListener("click", function (e) {
-        const button = e.target.closest(".mobile-button"); // Identificar o botão clicado
-        if (button) {
-          const buttonId = button.id;
-          const connection = connectionsData.find(
-            (conn) => conn.elementId === buttonId
-          );
-          if (connection) {
-            // Registrar a resposta correspondente à seção
-            const sectionId = connection.startIndex;
-            const resposta = button.querySelector(".text").textContent;
-            quizAnalytics.responses["section_" + sectionId] = resposta;
+document.addEventListener("click", function (e) {
+  const button = e.target.closest(".mobile-button"); // Identificar o botão clicado
+  if (button) {
+    const link = button.getAttribute("data-link");
+    if (link) {
+      // Se o botão possui data-link, priorizar o redirecionamento
+      quizAnalytics.endTime = Date.now(); // Registrar o tempo de término
+      sendAnalyticsAndRedirect(link);
+      return; // Evitar executar ações adicionais
+    }
 
-            showSection("section-" + connection.endIndex); // Mostrar a próxima seção
-          }
-          const link = button.getAttribute("data-link");
-          if (link) {
-            // Enviar analytics antes de redirecionar
-            quizAnalytics.endTime = Date.now(); // Registrar o tempo de término
-            sendAnalyticsAndRedirect(link);
-          }
-        }
-      });
+    const buttonId = button.id;
+    const connection = connectionsData.find(
+      (conn) => conn.elementId === buttonId
+    );
+    if (connection) {
+      // Registrar a resposta correspondente à seção
+      const sectionId = connection.startIndex;
+      const resposta = button.querySelector(".text").textContent;
+      quizAnalytics.responses["section_" + sectionId] = resposta;
+
+      showSection("section-" + connection.endIndex); // Mostrar a próxima seção
+    }
+  }
+});
+
 
       /*************************************************************
 função que envia os dados de analytics antes de redirecionar
@@ -1030,7 +1033,6 @@ function setupDelayedButtons(section) {
       button.style.opacity = "1";
 
       // Habilitar interações após a transição de opacidade
-      // Considerando a duração da transição (0.3s), adicionamos um pequeno atraso
       setTimeout(() => {
         button.style.pointerEvents = "auto";
       }, 300); // 300ms = duração da transição
@@ -1038,25 +1040,8 @@ function setupDelayedButtons(section) {
   });
 }
 
-
-
-
-/*************************************************************
- * 8) FUNÇÃO PRINCIPAL PARA MOSTRAR UMA SEÇÃO
- *************************************************************/
-function showSection(sectionId) {
-  console.log("Showing section:", sectionId);
-
-  // Remover 'active' de todas as seções e parar autoplay de galerias
-  const sections = document.querySelectorAll(".quiz-section");
-  sections.forEach((section) => {
-    section.classList.remove("active");
-    section.querySelectorAll(".mobile-gallery").forEach((gallery) => {
-      if (gallery.galleryInstance) {
-        gallery.galleryInstance.stopAutoplay();
-      }
-    });
-    // Ocultar botões e buscar cidade
+    
+/ Ocultar botões e buscar cidade
     const buttons = section.querySelectorAll(".mobile-button");
     buttons.forEach((button) => {
       button.style.opacity = "0";
@@ -1204,22 +1189,6 @@ document.addEventListener("DOMContentLoaded", function () {
             eval(onclick); // Executar função onclick
           }
         }
-      });
-
-      /*************************************************************
-       * 13) CONFIGURAÇÃO DE ANCORAS PARA BOTÕES MOBILE
-       *************************************************************/
-      document.querySelectorAll(".mobile-button").forEach(function (button) {
-        const anchor = document.createElement("a");
-        anchor.href = "javascript:void(0);";
-        anchor.style.display = "flex";
-        anchor.style.alignItems = "center";
-        anchor.style.width = "100%";
-        anchor.style.height = "100%";
-        while (button.firstChild) {
-          anchor.appendChild(button.firstChild); // Mover filhos para o anchor
-        }
-        button.appendChild(anchor); // Adicionar anchor ao botão
       });
 
       /*************************************************************
