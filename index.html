@@ -1204,22 +1204,6 @@ document.addEventListener("DOMContentLoaded", function () {
       });
 
       /*************************************************************
-       * 13) CONFIGURAÇÃO DE ANCORAS PARA BOTÕES MOBILE
-       *************************************************************/
-      document.querySelectorAll(".mobile-button").forEach(function (button) {
-        const anchor = document.createElement("a");
-        anchor.href = "javascript:void(0);";
-        anchor.style.display = "flex";
-        anchor.style.alignItems = "center";
-        anchor.style.width = "100%";
-        anchor.style.height = "100%";
-        while (button.firstChild) {
-          anchor.appendChild(button.firstChild); // Mover filhos para o anchor
-        }
-        button.appendChild(anchor); // Adicionar anchor ao botão
-      });
-
-      /*************************************************************
        * 14) CONFIGURAÇÃO DE CORES DE HOVER PARA BOTÕES MOBILE
        *************************************************************/
       document.querySelectorAll(".mobile-button").forEach(function (button) {
