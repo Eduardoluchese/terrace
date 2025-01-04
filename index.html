@@ -1040,7 +1040,7 @@ function setupDelayedButtons(section) {
 /*************************************************************
  * 8) FUNÇÃO PRINCIPAL PARA MOSTRAR UMA SEÇÃO
  *************************************************************/
-
+function showSection(sectionId) {
   console.log("Showing section:", sectionId);
 
   // Remover 'active' de todas as seções e parar autoplay de galerias
@@ -1099,6 +1099,7 @@ function setupDelayedButtons(section) {
     }
   }
 }
+
 
 
 
@@ -1171,19 +1172,20 @@ function setupDelayedButtons(section) {
       }
 
             
-        /*************************************************************
-         * 11) EVENTO DOMContentLoaded PARA INICIALIZAR PRIMEIRA SEÇÃO
-         *************************************************************/
-        document.addEventListener("DOMContentLoaded", function () {
-          console.log("DOM fully loaded");
-          const firstSection = document.querySelector(".quiz-section");
-          if (firstSection && firstSection.id) {
-            console.log("Activating first section using showSection");
-            showSection(firstSection.id); // Chama a função showSection para configurar a seção corretamente
-          } else {
-            console.error("Primeira seção não encontrada ou não possui um ID.");
-          }
-        });
+/*************************************************************
+ * 11) EVENTO DOMContentLoaded PARA INICIALIZAR PRIMEIRA SEÇÃO
+ *************************************************************/
+document.addEventListener("DOMContentLoaded", function () {
+  console.log("DOM fully loaded");
+  const firstSection = document.querySelector(".quiz-section");
+  if (firstSection && firstSection.id) {
+    console.log("Activating first section using showSection");
+    showSection(firstSection.id); // Chama a função showSection para configurar a seção corretamente
+  } else {
+    console.error("Primeira seção não encontrada ou não possui um ID.");
+  }
+});
+
 
       /*************************************************************
        * 12) EVENTO DE CLIQUE PARA EXECUTAR FUNÇÕES ONCLICK DOS BOTÕES
