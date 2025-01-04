@@ -901,32 +901,35 @@
         document.addEventListener("visibilitychange", handleVisibilityChange);
 
 
-      /*************************************************************
-       * 5) EVENTO DE CLIQUE PARA GRAVAR RESPOSTAS E NAVEGAR ENTRE SEÇÕES
-       *************************************************************/
-      document.addEventListener("click", function (e) {
-        const button = e.target.closest(".mobile-button"); // Identificar o botão clicado
-        if (button) {
-          const buttonId = button.id;
-          const connection = connectionsData.find(
-            (conn) => conn.elementId === buttonId
-          );
-          if (connection) {
-            // Registrar a resposta correspondente à seção
-            const sectionId = connection.startIndex;
-            const resposta = button.querySelector(".text").textContent;
-            quizAnalytics.responses["section_" + sectionId] = resposta;
+/*************************************************************
+ * 5) EVENTO DE CLIQUE PARA GRAVAR RESPOSTAS E NAVEGAR ENTRE SEÇÕES
+ *************************************************************/
+document.addEventListener("click", function (e) {
+  const button = e.target.closest(".mobile-button"); // Identificar o botão clicado
+  if (button) {
+    const link = button.getAttribute("data-link");
+    if (link) {
+      // Enviar analytics antes de redirecionar
+      quizAnalytics.endTime = Date.now(); // Registrar o tempo de término
+      sendAnalyticsAndRedirect(link);
+      return; // Evitar chamar showSection
+    }
 
-            showSection("section-" + connection.endIndex); // Mostrar a próxima seção
-          }
-          const link = button.getAttribute("data-link");
-          if (link) {
-            // Enviar analytics antes de redirecionar
-            quizAnalytics.endTime = Date.now(); // Registrar o tempo de término
-            sendAnalyticsAndRedirect(link);
-          }
-        }
-      });
+    const buttonId = button.id;
+    const connection = connectionsData.find(
+      (conn) => conn.elementId === buttonId
+    );
+    if (connection) {
+      // Registrar a resposta correspondente à seção
+      const sectionId = connection.startIndex;
+      const resposta = button.querySelector(".text").textContent;
+      quizAnalytics.responses["section_" + sectionId] = resposta;
+
+      showSection("section-" + connection.endIndex); // Mostrar a próxima seção
+    }
+  }
+});
+
 
       /*************************************************************
 função que envia os dados de analytics antes de redirecionar
@@ -1188,7 +1191,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-
 /*************************************************************
  * 12) EVENTO DE CLIQUE PARA EXECUTAR FUNÇÕES ONCLICK DOS BOTÕES
  *************************************************************/
@@ -1202,6 +1204,7 @@ document.addEventListener("click", function (e) {
     }
   }
 });
+
 
 
       /*************************************************************
