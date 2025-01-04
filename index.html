@@ -942,7 +942,7 @@ função que envia os dados de analytics antes de redirecionar
         buttons.forEach((button) => {
           // Inicialmente, esconder o botão e desabilitar interações
           button.style.opacity = "0";
-          button.style.transition = "opacity 0.3s ease";
+          // button.style.transition = "opacity 0.3s ease";
           button.style.pointerEvents = "none"; // Desabilitar cliques e interações
 
           const delay = parseFloat(button.getAttribute("data-delay")) * 1000;
