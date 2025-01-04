@@ -1189,19 +1189,20 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-      /*************************************************************
-       * 12) EVENTO DE CLIQUE PARA EXECUTAR FUNÇÕES ONCLICK DOS BOTÕES
-       *************************************************************/
-      document.addEventListener("click", function (e) {
-        const button = e.target.closest(".button");
-        if (button) {
-          const onclick = button.getAttribute("onclick");
-          if (onclick) {
-            console.log("Button clicked, executing:", onclick);
-            eval(onclick); // Executar função onclick
-          }
-        }
-      });
+/*************************************************************
+ * 12) EVENTO DE CLIQUE PARA EXECUTAR FUNÇÕES ONCLICK DOS BOTÕES
+ *************************************************************/
+document.addEventListener("click", function (e) {
+  const button = e.target.closest(".button");
+  if (button) {
+    const onclick = button.getAttribute("onclick");
+    if (onclick) {
+      console.log("Button clicked, executing:", onclick);
+      eval(onclick); // Executar função onclick
+    }
+  }
+});
+
 
       /*************************************************************
        * 14) CONFIGURAÇÃO DE CORES DE HOVER PARA BOTÕES MOBILE
