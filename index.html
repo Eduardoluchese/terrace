@@ -724,7 +724,7 @@
                 <div class="content" style="color: #000000;">
                     <div class="mobile-text" id="text-1735590205429-lzijoud10" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(131, 17, 0);"><h1>Parabéns! 🤩
 </h1></div><div class="mobile-text" id="text-1735590205429-p3a2sxzcy" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(122, 122, 122); position: relative;"><h3>Você acaba de descobrir por que investir em imóveis na planta é uma das estratégias mais seguras para multiplicar seu patrimônio.
-</h3></div><div class="mobile-text" id="text-1735590661437" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(131, 17, 0);"><h2>Tenho uma oportunidade única para te apresentar...
+</h3></div><div class="mobile-text" id="text-1735590661437" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(131, 17, 0);"><h2>Tenho uma oportunidade únicap ara te apresentar...
 </h2></div><button class="mobile-button" id="button-1735590700480" style="background: linear-gradient(45deg, rgb(181, 26, 0), rgb(131, 17, 0)); border-color: rgb(131, 17, 0); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#b51a00" data-delay=""><span class="emoji"></span><span class="text" style="color: rgb(255, 255, 255); text-align: center;">Conhecer oportunidade</span></button>
                 </div>
             </section>
@@ -733,7 +733,7 @@
                     <div class="mobile-text" id="text-1735590722042-p11waygg7" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(131, 17, 0); position: relative;"><h2>Conheça o Terrace Residence: Localização Premium no Centro da Capital do Vinho</h2></div><div class="mobile-text" id="text-1735591583781" style="font-weight: bold; font-style: normal; text-align: center; color: rgb(122, 122, 122); position: relative;"><h3>Investimento Exclusivo no Coração de Bento Gonçalves</h3></div><div id="video-1735600101685" class="mobile-video" style="position: relative;">
       <div class="container">
         <div class="video-container" style="padding-bottom: 124.8%;">
-          <iframe id="youtube-video-1735600101685" class="video-iframe" src="https://www.youtube-nocookie.com/embed/xgqJ4hkRh0I?controls=0&enablejsapi=1&modestbranding=1&showinfo=0title=0&fs=0&rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" title="."></iframe>
+          <iframe id="youtube-video-1735600101685" class="video-iframe" src="https://www.youtube-nocookie.com/embed/m6uhT_AC_oE?controls=0&enablejsapi=1&modestbranding=1&showinfo=0title=0&fs=0&rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen="" title="."></iframe>
           <div id="blur-bg-1735600101685" class="blur-background" style="display: block;"></div>
           <div id="start-overlay-1735600101685" class="overlay" style="display: flex; background-color: rgb(131, 17, 0); color: rgb(255, 255, 255);">
             <h1 class="overlay-title">Ligue o som e...</h1>
@@ -865,40 +865,41 @@
         }
       }
 
- /*************************************************************
-* 4) QUANDO SAIR DA PÁGINA (pagehide, beforeunload e visibilitychange), ENVIA DADOS
-*************************************************************/
-let dataSent = false; // Flag para evitar envios duplicados
+        /*************************************************************
+        * 4) QUANDO SAIR DA PÁGINA (pagehide, beforeunload e visibilitychange), ENVIA DADOS
+        *************************************************************/
+        let dataSent = false; // Flag para evitar envios duplicados
 
-function handlePageHide() {
-  if (dataSent) return; // Se os dados já foram enviados, não faz nada
-  dataSent = true; // Define a flag como true para prevenir futuros envios
+        function handlePageHide() {
+          if (dataSent) return; // Se os dados já foram enviados, não faz nada
+          dataSent = true; // Define a flag como true para prevenir futuros envios
 
-  quizAnalytics.endTime = Date.now(); // Registrar o tempo de término
+          quizAnalytics.endTime = Date.now(); // Registrar o tempo de término
 
-  // Sincronizar userVariables com quizAnalytics
-  quizAnalytics.nome = userVariables.nome || "";
-  quizAnalytics.email = userVariables.email || "";
-  quizAnalytics.whatsapp = userVariables.whatsapp || "";
+          // Sincronizar userVariables com quizAnalytics
+          quizAnalytics.nome = userVariables.nome || "";
+          quizAnalytics.email = userVariables.email || "";
+          quizAnalytics.whatsapp = userVariables.whatsapp || "";
 
-  const dataToSend = [quizAnalytics];
-  const blob = new Blob(
-    [new URLSearchParams({ data: JSON.stringify(dataToSend) })],
-    { type: "application/x-www-form-urlencoded" }
-  );
-  navigator.sendBeacon(ANALYTICS_CONFIG.webhookUrl, blob); // Enviar dados usando sendBeacon
-}
+          const dataToSend = [quizAnalytics];
+          const blob = new Blob(
+            [new URLSearchParams({ data: JSON.stringify(dataToSend) })],
+            { type: "application/x-www-form-urlencoded" }
+          );
+          navigator.sendBeacon(ANALYTICS_CONFIG.webhookUrl, blob); // Enviar dados usando sendBeacon
+        }
 
-function handleVisibilityChange() {
-  if (document.visibilityState === 'hidden') {
-    handlePageHide();
-  }
-}
+        function handleVisibilityChange() {
+          if (document.visibilityState === 'hidden') {
+            handlePageHide();
+          }
+        }
 
-// Adicionar listeners para pagehide, beforeunload e visibilitychange
-window.addEventListener("pagehide", handlePageHide);
-window.addEventListener("beforeunload", handlePageHide);
-document.addEventListener("visibilitychange", handleVisibilityChange);
+        // Adicionar listeners para pagehide, beforeunload e visibilitychange
+        window.addEventListener("pagehide", handlePageHide);
+        window.addEventListener("beforeunload", handlePageHide);
+        document.addEventListener("visibilitychange", handleVisibilityChange);
+
 
       /*************************************************************
        * 5) EVENTO DE CLIQUE PARA GRAVAR RESPOSTAS E NAVEGAR ENTRE SEÇÕES
@@ -1012,10 +1013,7 @@ função que envia os dados de analytics antes de redirecionar
         }
       }
 
-       /*************************************************************
-       * 7) FUNÇÃO PARA CONFIGURAR BOTÕES COM DELAY
-       *************************************************************/
-      /*************************************************************
+/*************************************************************
  * 7) FUNÇÃO PARA CONFIGURAR BOTÕES COM DELAY
  *************************************************************/
 function setupDelayedButtons(section) {
@@ -1039,8 +1037,6 @@ function setupDelayedButtons(section) {
     }, delay);
   });
 }
-
-
 
 /*************************************************************
  * 8) FUNÇÃO PRINCIPAL PARA MOSTRAR UMA SEÇÃO
@@ -1104,6 +1100,7 @@ function showSection(sectionId) {
     }
   }
 }
+
 
 
 
