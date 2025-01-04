@@ -1036,7 +1036,7 @@ função que envia os dados de analytics antes de redirecionar
 /*************************************************************
  * 8) FUNÇÃO PRINCIPAL PARA MOSTRAR UMA SEÇÃO
  *************************************************************/
-function showSection(sectionId) {
+
   console.log("Showing section:", sectionId);
 
   // Remover 'active' de todas as seções e parar autoplay de galerias
@@ -1048,7 +1048,7 @@ function showSection(sectionId) {
         gallery.galleryInstance.stopAutoplay();
       }
     });
-    // Ocultar botões
+    // Ocultar botões e buscar cidade
     const buttons = section.querySelectorAll(".mobile-button");
     buttons.forEach((button) => {
       button.style.opacity = "0";
@@ -1095,6 +1095,7 @@ function showSection(sectionId) {
     }
   }
 }
+
 
 
       /*************************************************************
