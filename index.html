@@ -865,35 +865,40 @@
         }
       }
 
-      /*************************************************************
-       * 4) QUANDO SAIR DA PÁGINA (pagehide, beforeunload e visibilitychange), ENVIA DADOS
-       *************************************************************/
-      function handlePageHide() {
-        quizAnalytics.endTime = Date.now(); // Registrar o tempo de término
+ /*************************************************************
+* 4) QUANDO SAIR DA PÁGINA (pagehide, beforeunload e visibilitychange), ENVIA DADOS
+*************************************************************/
+let dataSent = false; // Flag para evitar envios duplicados
 
-        // Sincronizar userVariables com quizAnalytics
-        quizAnalytics.nome = userVariables.nome || "";
-        quizAnalytics.email = userVariables.email || "";
-        quizAnalytics.whatsapp = userVariables.whatsapp || "";
+function handlePageHide() {
+  if (dataSent) return; // Se os dados já foram enviados, não faz nada
+  dataSent = true; // Define a flag como true para prevenir futuros envios
 
-        const dataToSend = [quizAnalytics];
-        const blob = new Blob(
-          [new URLSearchParams({ data: JSON.stringify(dataToSend) })],
-          { type: "application/x-www-form-urlencoded" }
-        );
-        navigator.sendBeacon(ANALYTICS_CONFIG.webhookUrl, blob); // Enviar dados usando sendBeacon
-      }
+  quizAnalytics.endTime = Date.now(); // Registrar o tempo de término
 
-      function handleVisibilityChange() {
-        if (document.visibilityState === "hidden") {
-          handlePageHide();
-        }
-      }
+  // Sincronizar userVariables com quizAnalytics
+  quizAnalytics.nome = userVariables.nome || "";
+  quizAnalytics.email = userVariables.email || "";
+  quizAnalytics.whatsapp = userVariables.whatsapp || "";
 
-      // Adicionar listeners para pagehide, beforeunload e visibilitychange
-      window.addEventListener("pagehide", handlePageHide);
-      window.addEventListener("beforeunload", handlePageHide);
-      document.addEventListener("visibilitychange", handleVisibilityChange);
+  const dataToSend = [quizAnalytics];
+  const blob = new Blob(
+    [new URLSearchParams({ data: JSON.stringify(dataToSend) })],
+    { type: "application/x-www-form-urlencoded" }
+  );
+  navigator.sendBeacon(ANALYTICS_CONFIG.webhookUrl, blob); // Enviar dados usando sendBeacon
+}
+
+function handleVisibilityChange() {
+  if (document.visibilityState === 'hidden') {
+    handlePageHide();
+  }
+}
+
+// Adicionar listeners para pagehide, beforeunload e visibilitychange
+window.addEventListener("pagehide", handlePageHide);
+window.addEventListener("beforeunload", handlePageHide);
+document.addEventListener("visibilitychange", handleVisibilityChange);
 
       /*************************************************************
        * 5) EVENTO DE CLIQUE PARA GRAVAR RESPOSTAS E NAVEGAR ENTRE SEÇÕES
