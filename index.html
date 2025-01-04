@@ -1147,22 +1147,7 @@ função que envia os dados de analytics antes de redirecionar
         }
       });
 
-      /*************************************************************
-       * 15) EVENTO DOMContentLoaded PARA CONFIGURAR BOTÕES COM DELAY
-       *************************************************************/
-      document.addEventListener("DOMContentLoaded", function () {
-        const delayedButtons = document.querySelectorAll(
-          ".mobile-button[data-delay]"
-        );
-        delayedButtons.forEach((button) => {
-          button.style.opacity = "0";
-          const delay = parseFloat(button.getAttribute("data-delay")) * 1000;
-          setTimeout(() => {
-            button.style.opacity = "1";
-            button.style.transition = "opacity 0.3s ease";
-          }, delay);
-        });
-      });
+
 
       /*************************************************************
        * 16) EVENTO DOMContentLoaded PARA CONFIGURAR MULTIPLE CHOICE E OBSERVER
