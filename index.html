@@ -755,7 +755,7 @@
           <div class="top-overlay"></div>
           <div class="bottom-overlay"></div>
         </div>
-      </div></div><button class="mobile-button" id="button-1735600131462" style="background: linear-gradient(45deg, rgb(181, 26, 0), rgb(131, 17, 0)); border-color: rgb(131, 17, 0); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#b51a00" data-delay="10" data-link="https://wa.me/5551980156915?text=Ol%C3%A1,%20quero%20mais%20informa%C3%A7%C3%B5es%20sobre%20o%20Terrace"><span class="emoji"></span><span class="text" style="color: rgb(255, 255, 255); text-align: center;">Chamar no whatsapp</span></button><button class="mobile-button" id="button-1736006865081" style="background: linear-gradient(45deg, rgb(181, 26, 0), rgb(131, 17, 0)); border-color: rgb(131, 17, 0); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#b51a00" data-delay="10" data-link="10"><span class="emoji"></span><span class="text" style="color: rgb(255, 255, 255); text-align: center;">Prefiro que me chamem</span></button>
+      </div></div><button class="mobile-button" id="button-1735600131462" style="background: linear-gradient(45deg, rgb(181, 26, 0), rgb(131, 17, 0)); border-color: rgb(131, 17, 0); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#b51a00" data-delay="10" data-link="https://wa.me/5551980156915?text=Ol%C3%A1,%20quero%20saber%20mais%20sobre%20o%20Recisdence"><span class="emoji"></span><span class="text" style="color: rgb(255, 255, 255); text-align: center;">Chamar no whatsapp</span></button><button class="mobile-button" id="button-1736006865081" style="background: linear-gradient(45deg, rgb(181, 26, 0), rgb(131, 17, 0)); border-color: rgb(131, 17, 0); position: relative; border-bottom-width: 8px; box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px -1px, rgba(0, 0, 0, 0.12) 0px 2px 4px -1px; transform: translateY(-2px); opacity: 1;" data-hover-color="#b51a00" data-delay="10" data-link="10"><span class="emoji"></span><span class="text" style="color: rgb(255, 255, 255); text-align: center;">Prefiro que me chamem</span></button>
                 </div>
             </section>
             <section id="section-9" class="quiz-section " style="background-color: #ffffff">
@@ -901,34 +901,34 @@
         document.addEventListener("visibilitychange", handleVisibilityChange);
 
 
-        /*************************************************************
-         * 5) EVENTO DE CLIQUE PARA GRAVAR RESPOSTAS E NAVEGAR ENTRE SEÇÕES
-         *************************************************************/
-        document.addEventListener("click", function (e) {
-          const button = e.target.closest(".mobile-button"); // Identificar o botão clicado
-          if (button) {
-            const link = button.getAttribute("data-link");
-            if (link) {
-              // Enviar analytics antes de redirecionar
-              quizAnalytics.endTime = Date.now(); // Registrar o tempo de término
-              sendAnalyticsAndRedirect(link);
-              return; // Evitar chamar showSection
-            }
+/*************************************************************
+ * 5) EVENTO DE CLIQUE PARA GRAVAR RESPOSTAS E NAVEGAR ENTRE SEÇÕES
+ *************************************************************/
+document.addEventListener("click", function (e) {
+  const button = e.target.closest(".mobile-button"); // Identificar o botão clicado
+  if (button) {
+    const link = button.getAttribute("data-link");
+    if (link) {
+      // Enviar analytics antes de redirecionar
+      quizAnalytics.endTime = Date.now(); // Registrar o tempo de término
+      sendAnalyticsAndRedirect(link);
+      return; // Evitar chamar showSection
+    }
 
-            const buttonId = button.id;
-            const connection = connectionsData.find(
-              (conn) => conn.elementId === buttonId
-            );
-            if (connection) {
-              // Registrar a resposta correspondente à seção
-              const sectionId = connection.startIndex;
-              const resposta = button.querySelector(".text").textContent;
-              quizAnalytics.responses["section_" + sectionId] = resposta;
+    const buttonId = button.id;
+    const connection = connectionsData.find(
+      (conn) => conn.elementId === buttonId
+    );
+    if (connection) {
+      // Registrar a resposta correspondente à seção
+      const sectionId = connection.startIndex;
+      const resposta = button.querySelector(".text").textContent;
+      quizAnalytics.responses["section_" + sectionId] = resposta;
 
-              showSection("section-" + connection.endIndex); // Mostrar a próxima seção
-            }
-          }
-        });
+      showSection("section-" + connection.endIndex); // Mostrar a próxima seção
+    }
+  }
+});
 
 
       /*************************************************************
@@ -1192,35 +1192,20 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-      /*************************************************************
-       * 12) EVENTO DE CLIQUE PARA EXECUTAR FUNÇÕES ONCLICK DOS BOTÕES
-       *************************************************************/
-      document.addEventListener("click", function (e) {
-        const button = e.target.closest(".button");
-        if (button) {
-          const onclick = button.getAttribute("onclick");
-          if (onclick) {
-            console.log("Button clicked, executing:", onclick);
-            eval(onclick); // Executar função onclick
-          }
-        }
-      });
+/*************************************************************
+ * 12) EVENTO DE CLIQUE PARA EXECUTAR FUNÇÕES ONCLICK DOS BOTÕES
+ *************************************************************/
+document.addEventListener("click", function (e) {
+  const button = e.target.closest(".button");
+  if (button) {
+    const onclick = button.getAttribute("onclick");
+    if (onclick) {
+      console.log("Button clicked, executing:", onclick);
+      eval(onclick); // Executar função onclick
+    }
+  }
+});
 
-      /*************************************************************
-       * 13) CONFIGURAÇÃO DE ANCORAS PARA BOTÕES MOBILE
-       *************************************************************/
-      document.querySelectorAll(".mobile-button").forEach(function (button) {
-        const anchor = document.createElement("a");
-        anchor.href = "javascript:void(0);";
-        anchor.style.display = "flex";
-        anchor.style.alignItems = "center";
-        anchor.style.width = "100%";
-        anchor.style.height = "100%";
-        while (button.firstChild) {
-          anchor.appendChild(button.firstChild); // Mover filhos para o anchor
-        }
-        button.appendChild(anchor); // Adicionar anchor ao botão
-      });
 
       /*************************************************************
        * 14) CONFIGURAÇÃO DE CORES DE HOVER PARA BOTÕES MOBILE
